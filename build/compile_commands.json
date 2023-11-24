@@ -1,0 +1,67 @@
+[
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Main.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Main.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Main.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Utils/Math.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Utils/Math.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Utils/Math.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Utils/AudioSystem.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Utils/AudioSystem.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Utils/AudioSystem.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/ConcreteGame.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/ConcreteGame.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Actor.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Actor.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Table.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Table.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Components/Component.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/Component.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/Component.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawComponent.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawComponent.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawSpriteComponent.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawSpriteComponent.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawAnimatedComponent.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawAnimatedComponent.cpp"
+},
+{
+  "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/ColliderComponents/AABBColliderComponent.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/ColliderComponents/AABBColliderComponent.cpp"
+}
+]
