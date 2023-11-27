@@ -48,27 +48,28 @@ void Piece::Move(const Vector2&UnitVec){
     
     Vector2 CurrPos = GetPosition();
     
+    /* calculate the next position */
+    Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
+    
     /* Check if the player wants to go to the adjacent table */
-    if((CurrPos.x-BOARD_ORIGIN_X)/BLOCK_SIZE == BOARD_WIDTH-1 && UnitVec.x > 0){ /* go to stash */
+    if(CurrPos.x + mPieceWidth == BOARD_WIDTH*BLOCK_SIZE+BOARD_ORIGIN_X && UnitVec.x > 0){
         SetPosition(Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y));
         return;
-    } else if((CurrPos.x-STASH_ORIGIN_X) / BLOCK_SIZE == 0 && UnitVec.x < 0){ /* go to board */
-        SetPosition(Vector2((BOARD_WIDTH-1)*BLOCK_SIZE+BOARD_ORIGIN_X, BOARD_ORIGIN_Y));
+    }
+    else if(CurrPos.x == STASH_ORIGIN_X && UnitVec.x < 0){
+        SetPosition(Vector2(BOARD_WIDTH*BLOCK_SIZE+BOARD_ORIGIN_X-mPieceWidth, BOARD_ORIGIN_Y));
         return;
     }
 
-    /* calculate the next position */
-    Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
-
-    /* calculate the table with based on the current table */
-    const Table *table = mGame->IsCursorOnBoard() ? mGame->GetBoard() : mGame->GetStash();
-    Vector2 TablePos    = table->GetPosition();
+    /* calculate the limit with based on the current table */
+    const Table *table = mGame->IsOnBoard(CurrPos.x) ? mGame->GetBoard() : mGame->GetStash();
+    Vector2 TablePos = table->GetPosition();
     int TableHeight = ((int)table->GetTableHeight()-1) * BLOCK_SIZE;
     int TableWidth  = ((int)table->GetTableWidth() -1) * BLOCK_SIZE;
     
-    /* limitates the cursor into the table */
-    NewPos.x = Math::Clamp((int)NewPos.x, (int)TablePos.x, TableWidth +(int)TablePos.x);
-    NewPos.y = Math::Clamp((int)NewPos.y, (int)TablePos.y, TableHeight+(int)TablePos.y);
+    /* limitates the player into the table */
+    NewPos.x = Math::Clamp((int)NewPos.x, (int)TablePos.x, TableWidth + (int)TablePos.x - mPieceWidth  + BLOCK_SIZE);
+    NewPos.y = Math::Clamp((int)NewPos.y, (int)TablePos.y, TableHeight+ (int)TablePos.y - mPieceHeight + BLOCK_SIZE);
     
     SetPosition(NewPos);
 }
@@ -107,13 +108,17 @@ void Piece::Place(){
 }
 
  void Piece::OnCollision(const std::vector<Actor*>&responses){
+ 
+    for(auto res : responses){ /* also check for pegs */
+        if(res->GetComponent<AABBColliderComponent>()->GetLayer() == ColliderLayer::PIECE)
+            return;
+    }
 
     Block *cursor = mGame->GetCursor();
     cursor->Enable();
     cursor->SetPosition(GetPosition());
     this->Disable();
-
- }
+}
 
 void Piece::DetectCollision(){
     

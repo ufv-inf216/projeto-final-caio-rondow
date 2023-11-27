@@ -46,7 +46,7 @@ public:
     virtual const Table *GetBoard() const = 0;
     virtual const Table *GetStash() const = 0;
     virtual bool GetAction() const = 0;
-    virtual bool IsCursorOnBoard() const = 0;
+    virtual bool IsOnBoard(const float xPos) const = 0;
 
 private:
     /* PRIVATE METHODS */

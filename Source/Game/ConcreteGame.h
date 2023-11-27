@@ -40,11 +40,8 @@ public:
     inline bool GetAction() const override{
         return mAction;
     }
-    inline bool IsCursorOnBoard() const override{
-
-        std::cout << (mCursor->GetPosition().x) << " " << (BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X) << "\n";
-
-        return (mCursor->GetPosition().x < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
+    inline bool IsOnBoard(const float xPos) const override{
+        return (xPos < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
     }
 
 private:

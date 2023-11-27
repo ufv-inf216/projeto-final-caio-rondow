@@ -38,6 +38,9 @@ public:
     Vector2 GetMax() const;
     Vector2 GetCenter() const;
     inline ColliderLayer GetLayer() const { return mLayer; }
+    inline void SwapSize(){
+        std::swap(mWidth, mHeight);
+    }
 private:
     Overlap GetMinOverlap(AABBColliderComponent *other) const;
 

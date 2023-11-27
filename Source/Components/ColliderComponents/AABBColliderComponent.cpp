@@ -50,16 +50,13 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
             responses.emplace_back( &collider->GetOwner() );
         }
     }
-    if(!responses.empty()) /* if collision occurs, resolve */ 
+    if(!responses.empty()) /* if a collision occurs, resolve it */ 
         mOwner->OnCollision(responses);
 }
 
 
 Vector2 AABBColliderComponent::GetMin() const{
-    // return mOwner->GetPosition() +Vector2(mWidth/2.0f, mHeight/2.0f) + mOffset;
-    // std::cout << mOwner << " " << mOwner->GetPosition().x << " " << mOwner->GetPosition().y << "\n";
     return mOwner->GetPosition() + mOffset;
-
 }
 
 Vector2 AABBColliderComponent::GetMax() const{

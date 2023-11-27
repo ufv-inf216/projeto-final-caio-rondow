@@ -18,13 +18,18 @@ void DrawSpriteComponent::Draw(SDL_Renderer *renderer){
     Vector2 pos = mOwner->GetPosition();
     float angle = mOwner->GetRotation();
     bool IsFlipped = mOwner->GetFlip();
-    
+
     SDL_Rect dstrect;
     dstrect.w = mWidth;
     dstrect.h = mHeight;
     dstrect.x = pos.x - BLOCK_SIZE/2.0f;
     dstrect.y = pos.y - BLOCK_SIZE/2.0f;
     
+    if((int)(angle/90.0f) % 2 != 0){
+        dstrect.x += BLOCK_SIZE/2.0f;
+        dstrect.y -= BLOCK_SIZE/2.0f;
+    }
+
     SDL_RendererFlip flip = (IsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 
     SDL_RenderCopyEx(renderer, mSpriteSheetSurface, nullptr, &dstrect, angle, nullptr, flip);

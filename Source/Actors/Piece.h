@@ -18,6 +18,9 @@ public:
     void OnUpdate(float DeltaTime) override;
     void DetectCollision() override;
 
+    inline int GetPieceWidth() const { return mPieceWidth; }
+    inline int GetPieceHeight() const { return mPieceHeight; }
+
 protected:
     AABBColliderComponent *mAABBColliderComponent;
     DrawAnimatedComponent *mDrawComponent;
@@ -27,8 +30,11 @@ protected:
 private:
     /* piece actions */
     inline void Rotate(float theta){
+        std::swap(mPieceWidth, mPieceHeight);
+        mAABBColliderComponent->SwapSize();
         float rot = GetRotation() + theta;
         SetRotation(rot);
+        Move(Vector2::Zero);
     }
     inline void Flip(){
         SetFlip(!mFlip);
