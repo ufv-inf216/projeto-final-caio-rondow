@@ -317,6 +317,7 @@ CMakeFiles/twisted-reality.dir/Source/Main.cpp.o: \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/Math.h \
  /usr/include/memory.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Block.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Piece.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Actor.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/../Components/Component.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/../Components/ColliderComponents/AABBColliderComponent.h \

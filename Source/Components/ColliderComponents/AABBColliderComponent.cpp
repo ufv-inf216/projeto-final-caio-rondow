@@ -37,75 +37,23 @@ bool AABBColliderComponent::Intersect(AABBColliderComponent *b) const{
 }
 
 void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> &colliders){
-
-    // Create a map to store collision responses
-    std::vector<AABBColliderComponent::Overlap> responses;
+    
+    std::vector<Actor*> responses;
 
     // Check collision against each target collider
     for(auto collider : colliders){
 
         if(collider == nullptr || collider == this || !collider->IsComponentEnabled())
             continue;
-            
+        
         if(Intersect(collider)){
-            if(collider->GetLayer() == ColliderLayer::PIECE){
-                Actor *actor = &collider->GetOwner();
-                if(actor != nullptr)
-                    actor->OnCollision();
-            } else if(collider->GetLayer() == ColliderLayer::WALL){
-
-                AABBColliderComponent::Overlap MinOverlap;
-                MinOverlap = GetMinOverlap(collider);
-                ResolveCollisions(MinOverlap);
-            }
+            responses.emplace_back( &collider->GetOwner() );
         }
     }
+    if(!responses.empty()) /* if collision occurs, resolve */ 
+        mOwner->OnCollision(responses);
 }
 
-void AABBColliderComponent::ResolveCollisions(){
-    // mOwner->OnCollision();
-}
-
-void AABBColliderComponent::DetectCollision(){
-
-    /* LEMBRAR DE FAZER PRO STASH TBM */
-
-    auto game = mOwner->GetGame();    
-    const Table *board = &game->GetBoard();
-    std::vector<AABBColliderComponent*> colliders;
-
-    for(auto wall : board->GetWalls()){
-        colliders.emplace_back(wall->GetComponent<AABBColliderComponent>());
-    }
-
-    for(auto piece : board->GetPieces()){
-        for(auto collider : piece->GetCollider()){
-            colliders.emplace_back(collider);
-        }
-    }
-
-    for(auto row : board->GetBlocks()){
-        for(auto col : row){
-            colliders.emplace_back(col->GetComponent<AABBColliderComponent>());
-        }
-    }
-
-    DetectCollision(colliders);
-}
-
-void AABBColliderComponent::ResolveCollisions(const AABBColliderComponent::Overlap &MinOverlap){
-    std::cout << "aqui\n";
-    Vector2 position = mOwner->GetPosition();
-
-    // if ( (MinOverlap.side == CollisionSide::down ) ||
-    //      (MinOverlap.side == CollisionSide::top  ) ) {
-    //     position += MinOverlap.distance;
-    // } else if ((MinOverlap.side == CollisionSide::right) ||
-    //            (MinOverlap.side == CollisionSide::left )) {
-    // }
-    position += MinOverlap.distance;
-    mOwner->SetPosition(position);
-}
 
 Vector2 AABBColliderComponent::GetMin() const{
     // return mOwner->GetPosition() +Vector2(mWidth/2.0f, mHeight/2.0f) + mOffset;

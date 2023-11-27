@@ -1,9 +1,8 @@
 #include "ConcreteGame.h"
 #include "SDL_image.h"
-#include "../Actors/Piece.h"
-#include "../Actors/Table.h"
 #include "../Components/DrawComponents/DrawComponent.h"    
-
+#include "../Actors/Block.h"
+#include "../Actors/Table.h"
 #include <sstream>
 
 /* PUBLIC METHODS */
@@ -12,8 +11,9 @@
 ConcreteGame::ConcreteGame(uint WindowWidth, uint WindowHeight):
     mTicksCount(0),
     mIsRunning(true),
+    mAction(false),
     mWindow(nullptr),
-    mCursor(nullptr),
+    // mCursor(nullptr),
     mRenderer(nullptr),
     mUpdatingActors(false),
     mWindowWidth(WindowWidth),
@@ -138,13 +138,14 @@ SDL_Texture *ConcreteGame::LoadTexture(const std::string&TextureFile) const{
 
 void ConcreteGame::LoadLevel(const std::string&LevelFile){
 
-    mBoard = new Table(this, BOARD_WIDTH, BOARD_HEIGHT);
-    mBoard->SetTablePosition(Vector2(0,0));
-    mCursor = mBoard->GetCursor(Vector2(0,0)); // get cursor at position 0,0
-    
-    // mStash = new Table(this, STASH_WIDTH, STASH_HEIGHT);
-    // mStash->SetTablePosition(Vector2(320,32));
-    // mBoard->Link(mStash, RIGHT);
+    Vector2 BoardOrigin = Vector2(BOARD_ORIGIN_X,BOARD_ORIGIN_Y);
+    Vector2 StashOrigin = Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y);
+
+    mBoard = new Table(this, BoardOrigin, BOARD_WIDTH, BOARD_HEIGHT);
+    mStash = new Table(this, StashOrigin, STASH_WIDTH, STASH_HEIGHT);
+
+    mCursor = new Block(this,true);
+    mCursor->SetPosition(BoardOrigin);
 
     std::ifstream ifs(LevelFile, std::ifstream::in);
     if(!ifs.is_open()){
@@ -166,23 +167,36 @@ void ConcreteGame::LoadLevel(const std::string&LevelFile){
         theta >> comma >> flip >> comma >> board;
 
         /* Create a new piece */
-        Piece *piece = new Piece(this, piece_t, Vector2(x,y), theta, flip);
-        if(!board){ /* add to board */
-            mBoard->AddPiece(piece);            
-        } else{ /* add to stash */
-            // mStash->AddPiece(piece);
+        Piece *p;
+        if(!board){
+            p = new Piece(this, false, x*BLOCK_SIZE + BoardOrigin.x, 
+                y*BLOCK_SIZE + BoardOrigin.y, 64, 96, piece_t, theta, flip);
+            mBoard->AddPiece(p);
+        } else{
+            p = new Piece(this, false, x*BLOCK_SIZE + StashOrigin.x,
+                y*BLOCK_SIZE + StashOrigin.y, 64, 96, piece_t, theta, flip);
+            mStash->AddPiece(p);
         }
     }
 }
 
 /* PRIVATE METHODS */
 void ConcreteGame::ProcessInput(){
+
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         switch (event.type)
         {
         case SDL_QUIT:
             Quit();
+            break;
+        case SDL_KEYDOWN:
+            if(!mAction){
+                mAction = true;
+            }
+            break;
+        case SDL_KEYUP:
+            mAction = false;
             break;
         }
     }

@@ -139,24 +139,10 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Actor.cpp -o CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.s
 
-CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
-CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: ../Source/Actors/Piece.cpp
-CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: CMakeFiles/twisted-reality.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -MF CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o.d -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp
-
-CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp > CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.i
-
-CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.s
-
 CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
 CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: ../Source/Actors/Block.cpp
 CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: CMakeFiles/twisted-reality.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o -MF CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o.d -o CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp
 
 CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.i: cmake_force
@@ -166,6 +152,20 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.i: cmake_force
 CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp -o CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.s
+
+CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
+CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: ../Source/Actors/Piece.cpp
+CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: CMakeFiles/twisted-reality.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -MF CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o.d -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp
+
+CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp > CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.i
+
+CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.s
 
 CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
 CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o: ../Source/Actors/Table.cpp
@@ -258,8 +258,8 @@ twisted__reality_OBJECTS = \
 "CMakeFiles/twisted-reality.dir/Source/Utils/AudioSystem.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.o" \
-"CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o" \
+"CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Components/Component.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o" \
@@ -275,8 +275,8 @@ twisted-reality: CMakeFiles/twisted-reality.dir/Source/Utils/Math.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Utils/AudioSystem.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.o
-twisted-reality: CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o
+twisted-reality: CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/Component.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o

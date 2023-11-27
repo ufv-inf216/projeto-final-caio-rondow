@@ -317,6 +317,7 @@ CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o: \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/Math.h \
  /usr/include/memory.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Block.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Piece.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Actor.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/../Components/Component.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/../Components/ColliderComponents/AABBColliderComponent.h \
@@ -328,6 +329,5 @@ CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o: \
  /opt/SDL2_image/include/SDL2/SDL_image.h /opt/SDL2/include/SDL2/SDL.h \
  /opt/SDL2/include/SDL2/SDL_version.h /opt/SDL2/include/SDL2/begin_code.h \
  /opt/SDL2/include/SDL2/close_code.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Piece.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Table.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Components/DrawComponents/DrawComponent.h
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Components/DrawComponents/DrawComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Table.h

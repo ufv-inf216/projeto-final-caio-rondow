@@ -13,8 +13,8 @@ add_executable(
     Source/Game/ConcreteGame.cpp
     
     Source/Actors/Actor.cpp
-    Source/Actors/Piece.cpp
     Source/Actors/Block.cpp
+    Source/Actors/Piece.cpp
     Source/Actors/Table.cpp
 
     Source/Components/Component.cpp

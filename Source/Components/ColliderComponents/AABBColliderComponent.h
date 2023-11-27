@@ -6,7 +6,7 @@
 enum class ColliderLayer{
     BLOCK,
     PIECE,
-    WALL
+    BRIDGE
 };
 
 enum class CollisionSide{
@@ -33,9 +33,6 @@ public:
 
     bool Intersect(AABBColliderComponent *other) const;
     void DetectCollision(std::vector<AABBColliderComponent*> &colliders);
-    void DetectCollision();
-    void ResolveCollisions(const Overlap &MinOverlap);
-    void ResolveCollisions();
     
     Vector2 GetMin() const;
     Vector2 GetMax() const;

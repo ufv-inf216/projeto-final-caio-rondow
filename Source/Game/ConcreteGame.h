@@ -31,14 +31,20 @@ public:
     inline Block *GetCursor() const override{
         return mCursor;
     }
-    inline void SetCursor(Block *cursor) override{
-        mCursor = cursor;
+    inline const Table *GetBoard() const override{
+        return mBoard;
     }
-    inline const Table&GetBoard() const override{
-        return *mBoard;
+    inline const Table *GetStash() const override{
+        return mStash;
     }
-    inline const Table&GetStash() const override{
-        return *mStash;
+    inline bool GetAction() const override{
+        return mAction;
+    }
+    inline bool IsCursorOnBoard() const override{
+
+        std::cout << (mCursor->GetPosition().x) << " " << (BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X) << "\n";
+
+        return (mCursor->GetPosition().x < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
     }
 
 private:
@@ -56,6 +62,7 @@ private:
     SDL_Renderer *mRenderer;
     uint mWindowWidth, mWindowHeight;
     bool mIsRunning, mUpdatingActors;
+    bool mAction;
     Uint32 mTicksCount;
 
     /* Game Actors */

@@ -327,6 +327,7 @@ CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComp
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/sstream \
  /usr/include/c++/11/bits/sstream.tcc \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/../../Game/../Actors/Block.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/../../Game/../Actors/Piece.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/../../Game/../Utils/AudioSystem.h \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/stl_map.h \

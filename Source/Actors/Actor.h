@@ -37,9 +37,19 @@ public:
     ActorState GetActorState() const;
     void SetActorState(ActorState state);
 
+    inline bool GetFlip() const{
+        return mFlip;
+    }
+    inline void SetFlip(const bool flip){
+        mFlip = flip;
+    }
+
     InterfaceGame *GetGame() const;
 
-    virtual void OnCollision(std::vector<AABBColliderComponent::Overlap>& responses);
+    virtual void OnCollision(const std::vector<Actor*>&responses);
+    virtual void OnCollision(bool status){};
+    virtual void OnCollision(){};
+    virtual void DetectCollision();
 
     template <typename T>
     T* GetComponent() const{
@@ -52,12 +62,14 @@ public:
         return nullptr;
     }
 
-    virtual void OnCollision(){};
-
+    /* Enable/Disable piece functions */
+    inline void Disable(){ mIsEnabled = false; }
+    inline void Enable(){ mIsEnabled = true; }
+    inline bool IsEnabled() const{ return mIsEnabled; }
     
 protected:
     /* PROTECTED METHODS */
-    
+
     /* Specific actor update code */
     virtual void OnUpdate(float DeltaTime);
     virtual void OnProcessInput(const Uint8 *KeyState);
@@ -68,6 +80,8 @@ protected:
     Vector2 mPosition;
     float mScale;
     float mRotation;
+    bool mFlip;
+    bool mIsEnabled;
     std::vector<Component*> mComponents;
 
 private:

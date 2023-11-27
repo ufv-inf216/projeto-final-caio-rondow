@@ -7,7 +7,9 @@ Actor::Actor(InterfaceGame *game):
     mScale(1.0f),
     mRotation(0.0f),
     mPosition(Vector2::Zero),
-    mState(ActorState::ACTIVE)
+    mState(ActorState::ACTIVE),
+    mIsEnabled(false),
+    mFlip(false)
 {
     mGame->AddActor(this);
 }
@@ -98,7 +100,11 @@ void Actor::OnProcessInput(const Uint8 *KeyState){
 
 }
 
-void Actor::OnCollision(std::vector<AABBColliderComponent::Overlap>& responses){
+void Actor::OnCollision(const std::vector<Actor*>& responses){
+    
+}
+
+void Actor::DetectCollision(){
     
 }
 

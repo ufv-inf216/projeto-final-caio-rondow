@@ -317,7 +317,7 @@ CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBCollider
  /usr/include/c++/11/bits/std_function.h \
  /usr/include/c++/11/pstl/execution_defs.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/ColliderComponents/../../Actors/Piece.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/ColliderComponents/../../Game/InterfaceGame.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/ColliderComponents/../../Actors/../Game/InterfaceGame.h \
  /usr/include/c++/11/fstream /usr/include/c++/11/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \

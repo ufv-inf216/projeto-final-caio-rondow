@@ -10,8 +10,15 @@
 
 #define BOARD_WIDTH 8
 #define BOARD_HEIGHT 4
+#define BOARD_ORIGIN_X 128
+#define BOARD_ORIGIN_Y 128
+
 #define STASH_WIDTH 4
 #define STASH_HEIGHT 8
+#define STASH_ORIGIN_X 512
+#define STASH_ORIGIN_Y 128
+
+#define BLOCK_SIZE 32
 
 class Actor;
 class Table;
@@ -36,9 +43,10 @@ public:
     virtual SDL_Texture *LoadTexture(const std::string&TextureFile) const = 0;
     virtual void LoadLevel(const std::string&LevelFile) = 0;
     virtual Block *GetCursor() const = 0;
-    virtual void SetCursor(Block *cursor) = 0;
-    virtual const Table&GetBoard() const = 0;
-    virtual const Table&GetStash() const = 0;
+    virtual const Table *GetBoard() const = 0;
+    virtual const Table *GetStash() const = 0;
+    virtual bool GetAction() const = 0;
+    virtual bool IsCursorOnBoard() const = 0;
 
 private:
     /* PRIVATE METHODS */

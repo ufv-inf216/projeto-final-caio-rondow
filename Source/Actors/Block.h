@@ -1,41 +1,17 @@
 #pragma once 
 
-#include "Actor.h"
+#include "Piece.h"
 
-#define UP 0
-#define DOWN 1
-#define LEFT 2 
-#define RIGHT 3 
 
-class DrawAnimatedComponent; 
-class AABBColliderComponent;
-
-class Block : public Actor{
+class Block : public Piece{
 public:
-    explicit Block(InterfaceGame *game, int dx=32, int dy=32, ColliderLayer layer=ColliderLayer::BLOCK);
-
-    /* Add adjacenct blocks */
-    inline void Link(Block *adj, uint dir){
-        if(dir >= 0 && dir < 4)
-            mAdjacents[dir] = adj;
-        else{
-            std::cerr << "invalid position.\n";
-            exit(EXIT_FAILURE);
-        }
-    }
-    Block *operator[](uint dir) const{
-        return mAdjacents[dir];
-    }
-    inline void SetSelected(const bool state){
-        mIsSelected = state;
-    }
+    explicit Block(InterfaceGame *game, bool enabled=false, float x=0, float y=0, uint xMax=BLOCK_SIZE, uint yMax=BLOCK_SIZE);
+    
     void OnUpdate(float DeltaTime) override;
-    void OnCollision(std::vector<AABBColliderComponent::Overlap>& responses) override;
- 
-private:
-    std::vector<Block*> mAdjacents;
-    bool mIsSelected;
+    void OnProcessInput(const Uint8 *KeyState) override;
+    void DetectCollision() override;
+    void OnCollision(const std::vector<Actor*>&responses) override;
 
-    DrawAnimatedComponent *mDrawComponent;
-    AABBColliderComponent *mAABBColliderComponent;
+private:
+    void Withdraw();
 };

@@ -26,13 +26,13 @@
 },
 {
   "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
-  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp",
-  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp"
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp"
 },
 {
   "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",
-  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp",
-  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.cpp"
+  "command": "/usr/bin/g++  -I/opt/SDL2/include -isystem /opt/SDL2/include/SDL2 -isystem /opt/SDL2_image/include/SDL2 -isystem /opt/SDL2_mixer/include/SDL2 -g -o CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp",
+  "file": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Piece.cpp"
 },
 {
   "directory": "/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build",

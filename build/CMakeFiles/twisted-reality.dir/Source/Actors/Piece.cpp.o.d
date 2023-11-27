@@ -296,8 +296,6 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: \
  /usr/include/memory.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/Component.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/ColliderComponents/AABBColliderComponent.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawSpriteComponent.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawComponent.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Game/InterfaceGame.h \
  /usr/include/c++/11/algorithm /usr/include/c++/11/utility \
  /usr/include/c++/11/bits/stl_relops.h \
@@ -325,4 +323,8 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/sstream \
  /usr/include/c++/11/bits/sstream.tcc \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawAnimatedComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawSpriteComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Table.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Block.h

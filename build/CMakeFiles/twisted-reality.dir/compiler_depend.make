@@ -393,6 +393,7 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Actor.cpp.o: ../Source/Actors/Actor
 CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: ../Source/Actors/Block.cpp \
   /usr/include/stdc-predef.h \
   ../Source/Actors/Block.h \
+  ../Source/Actors/Piece.h \
   ../Source/Actors/Actor.h \
   /opt/SDL2/include/SDL2/SDL.h \
   /opt/SDL2/include/SDL2/SDL_main.h \
@@ -746,7 +747,6 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: ../Source/Actors/Block
   /usr/include/memory.h \
   ../Source/Components/Component.h \
   ../Source/Components/ColliderComponents/AABBColliderComponent.h \
-  ../Source/Game/ConcreteGame.h \
   ../Source/Game/InterfaceGame.h \
   /usr/include/c++/11/algorithm \
   /usr/include/c++/11/utility \
@@ -780,12 +780,7 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: ../Source/Actors/Block
   /usr/include/c++/11/bits/fstream.tcc \
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/bits/sstream.tcc \
-  ../Source/Utils/AudioSystem.h \
-  /usr/include/c++/11/map \
-  /usr/include/c++/11/bits/stl_tree.h \
-  /usr/include/c++/11/bits/stl_map.h \
-  /usr/include/c++/11/bits/stl_multimap.h \
-  /opt/SDL2/include/SDL2/SDL_stdinc.h \
+  ../Source/Actors/Table.h \
   ../Source/Components/DrawComponents/DrawAnimatedComponent.h \
   ../Source/Components/DrawComponents/DrawSpriteComponent.h \
   ../Source/Components/DrawComponents/DrawComponent.h
@@ -1146,8 +1141,6 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: ../Source/Actors/Piece
   /usr/include/memory.h \
   ../Source/Components/Component.h \
   ../Source/Components/ColliderComponents/AABBColliderComponent.h \
-  ../Source/Components/DrawComponents/DrawSpriteComponent.h \
-  ../Source/Components/DrawComponents/DrawComponent.h \
   ../Source/Game/InterfaceGame.h \
   /usr/include/c++/11/algorithm \
   /usr/include/c++/11/utility \
@@ -1181,6 +1174,10 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Piece.cpp.o: ../Source/Actors/Piece
   /usr/include/c++/11/bits/fstream.tcc \
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/bits/sstream.tcc \
+  ../Source/Components/DrawComponents/DrawAnimatedComponent.h \
+  ../Source/Components/DrawComponents/DrawSpriteComponent.h \
+  ../Source/Components/DrawComponents/DrawComponent.h \
+  ../Source/Actors/Table.h \
   ../Source/Actors/Block.h
 
 CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o: ../Source/Actors/Table.cpp \
@@ -1539,9 +1536,7 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o: ../Source/Actors/Table
   /usr/include/memory.h \
   ../Source/Components/Component.h \
   ../Source/Components/ColliderComponents/AABBColliderComponent.h \
-  ../Source/Actors/Block.h \
   ../Source/Actors/Piece.h \
-  ../Source/Game/ConcreteGame.h \
   ../Source/Game/InterfaceGame.h \
   /usr/include/c++/11/algorithm \
   /usr/include/c++/11/utility \
@@ -1575,12 +1570,7 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o: ../Source/Actors/Table
   /usr/include/c++/11/bits/fstream.tcc \
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/bits/sstream.tcc \
-  ../Source/Utils/AudioSystem.h \
-  /usr/include/c++/11/map \
-  /usr/include/c++/11/bits/stl_tree.h \
-  /usr/include/c++/11/bits/stl_map.h \
-  /usr/include/c++/11/bits/stl_multimap.h \
-  /opt/SDL2/include/SDL2/SDL_stdinc.h
+  ../Source/Actors/Block.h
 
 CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o: ../Source/Components/ColliderComponents/AABBColliderComponent.cpp \
   /usr/include/stdc-predef.h \
@@ -2723,6 +2713,7 @@ CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComp
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/bits/sstream.tcc \
   ../Source/Actors/Block.h \
+  ../Source/Actors/Piece.h \
   ../Source/Utils/AudioSystem.h \
   /usr/include/c++/11/map \
   /usr/include/c++/11/bits/stl_tree.h \
@@ -3956,6 +3947,7 @@ CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o: ../Source/Game/Co
   ../Source/Utils/Math.h \
   /usr/include/memory.h \
   ../Source/Actors/Block.h \
+  ../Source/Actors/Piece.h \
   ../Source/Actors/Actor.h \
   ../Source/Components/Component.h \
   ../Source/Components/ColliderComponents/AABBColliderComponent.h \
@@ -3970,9 +3962,8 @@ CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o: ../Source/Game/Co
   /opt/SDL2/include/SDL2/SDL_version.h \
   /opt/SDL2/include/SDL2/begin_code.h \
   /opt/SDL2/include/SDL2/close_code.h \
-  ../Source/Actors/Piece.h \
-  ../Source/Actors/Table.h \
-  ../Source/Components/DrawComponents/DrawComponent.h
+  ../Source/Components/DrawComponents/DrawComponent.h \
+  ../Source/Actors/Table.h
 
 CMakeFiles/twisted-reality.dir/Source/Main.cpp.o: ../Source/Main.cpp \
   /usr/include/stdc-predef.h \
@@ -4361,6 +4352,7 @@ CMakeFiles/twisted-reality.dir/Source/Main.cpp.o: ../Source/Main.cpp \
   ../Source/Utils/Math.h \
   /usr/include/memory.h \
   ../Source/Actors/Block.h \
+  ../Source/Actors/Piece.h \
   ../Source/Actors/Actor.h \
   ../Source/Components/Component.h \
   ../Source/Components/ColliderComponents/AABBColliderComponent.h \
@@ -4955,16 +4947,6 @@ CMakeFiles/twisted-reality.dir/Source/Utils/Math.cpp.o: ../Source/Utils/Math.cpp
 
 /usr/include/c++/11/bits/stream_iterator.h:
 
-../Source/Components/ColliderComponents/AABBColliderComponent.cpp:
-
-../Source/Actors/Table.h:
-
-../Source/Actors/Piece.h:
-
-../Source/Actors/Piece.cpp:
-
-../Source/Components/DrawComponents/DrawComponent.h:
-
 /usr/include/c++/11/bits/stl_multimap.h:
 
 /usr/include/c++/11/bits/stl_map.h:
@@ -4976,6 +4958,16 @@ CMakeFiles/twisted-reality.dir/Source/Utils/Math.cpp.o: ../Source/Utils/Math.cpp
 ../Source/Utils/AudioSystem.h:
 
 ../Source/Game/ConcreteGame.h:
+
+../Source/Components/ColliderComponents/AABBColliderComponent.cpp:
+
+../Source/Actors/Piece.cpp:
+
+../Source/Components/DrawComponents/DrawComponent.h:
+
+../Source/Actors/Table.h:
+
+../Source/Actors/Piece.h:
 
 ../Source/Actors/Block.h:
 
