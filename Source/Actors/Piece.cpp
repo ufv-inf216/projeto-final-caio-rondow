@@ -6,6 +6,20 @@
 
 #define PIECE_L_WIDTH 64
 #define PIECE_L_HEIGHT 96
+#define PIECE_Z_WIDTH 64
+#define PIECE_Z_HEIGHT 96
+#define PIECE_I_WIDTH 32
+#define PIECE_I_HEIGHT 128
+#define PIECE_b_WIDTH 64
+#define PIECE_b_HEIGHT 96
+#define PIECE_c_WIDTH 64
+#define PIECE_c_HEIGHT 64
+#define PIECE_T_WIDTH 96
+#define PIECE_T_HEIGHT 64
+#define PIECE_f_WIDTH 96
+#define PIECE_f_HEIGHT 96
+#define PIECE_i_WIDTH 32
+#define PIECE_i_HEIGHT 96
 
 Piece::Piece(InterfaceGame *game, bool enabled, float x, float y, uint xMax, uint yMax, char PieceType, float rotation, bool flip):
     Actor(game),
@@ -14,17 +28,65 @@ Piece::Piece(InterfaceGame *game, bool enabled, float x, float y, uint xMax, uin
 {
 
     SetPosition(Vector2(x,y));
+    SetRotation(rotation);
     SetFlip(flip);
     enabled ? Enable() : Disable();
     
     switch (PieceType)
     {
+    /* RED */
     case 'L':
         mPieceWidth = PIECE_L_WIDTH;
         mPieceHeight = PIECE_L_HEIGHT;
         new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/L.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), xMax, yMax, ColliderLayer::PIECE);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
         break;
+    case 'Z':
+        mPieceWidth = PIECE_Z_WIDTH;
+        mPieceHeight = PIECE_Z_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/Z.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+    /* BLUE */
+    case 'I':
+        mPieceWidth = PIECE_I_WIDTH;
+        mPieceHeight = PIECE_I_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/I.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+    case 'b':
+        mPieceWidth = PIECE_b_WIDTH;
+        mPieceHeight = PIECE_b_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/b.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+    /* GREEN */
+    case 'c':
+        mPieceWidth = PIECE_c_WIDTH;
+        mPieceHeight = PIECE_c_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/c.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+    case 'T':
+        mPieceWidth = PIECE_T_WIDTH;
+        mPieceHeight = PIECE_T_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/T.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+    /* YELLOW */
+    case 'f':
+        mPieceWidth = PIECE_f_WIDTH;
+        mPieceHeight = PIECE_f_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/f.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+    case 'i':
+        mPieceWidth = PIECE_i_WIDTH;
+        mPieceHeight = PIECE_i_HEIGHT;
+        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/i.png", mPieceWidth, mPieceHeight, 10);
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
+        break;
+
     default: /* simple block */
 
         mPieceWidth  = BLOCK_SIZE;
@@ -33,7 +95,7 @@ Piece::Piece(InterfaceGame *game, bool enabled, float x, float y, uint xMax, uin
         std::string spritesheet = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.jpg";
         std::string spritedata  = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.json";
 
-        mDrawComponent = new DrawAnimatedComponent(this, spritesheet, spritedata, mIsEnabled ? 10 : 0);
+        mDrawComponent = new DrawAnimatedComponent(this, spritesheet, spritedata, mIsEnabled ? 9 : 0);
         mDrawComponent->AddAnimation("idle", {0});
         mDrawComponent->AddAnimation("cursor", {1});
         mDrawComponent->SetAnimation( IsEnabled() ? "cursor" : "idle" );

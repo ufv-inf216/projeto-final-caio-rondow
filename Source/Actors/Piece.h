@@ -30,11 +30,8 @@ protected:
 private:
     /* piece actions */
     inline void Rotate(float theta){
-        std::swap(mPieceWidth, mPieceHeight);
-        mAABBColliderComponent->SwapSize();
         float rot = GetRotation() + theta;
         SetRotation(rot);
-        Move(Vector2::Zero);
     }
     inline void Flip(){
         SetFlip(!mFlip);

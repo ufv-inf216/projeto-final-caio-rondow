@@ -169,8 +169,8 @@ void ConcreteGame::LoadLevel(const std::string&LevelFile){
         /* Create a new piece */
         Piece *p;
         if(!board){
-            p = new Piece(this, false, x*BLOCK_SIZE + BoardOrigin.x, 
-                y*BLOCK_SIZE + BoardOrigin.y, 64, 96, piece_t, theta, flip);
+            p = new Piece(this, false, x*BLOCK_SIZE + BoardOrigin.x - BLOCK_SIZE/2, 
+                y*BLOCK_SIZE + BoardOrigin.y - BLOCK_SIZE/2, 64, 96, piece_t, theta, flip);
             mBoard->AddPiece(p);
         } else{
             p = new Piece(this, false, x*BLOCK_SIZE + StashOrigin.x,
