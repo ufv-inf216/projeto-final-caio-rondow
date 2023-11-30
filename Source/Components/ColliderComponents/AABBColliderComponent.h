@@ -26,7 +26,7 @@ public:
         AABBColliderComponent *target;
     };
     
-    AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder=10);
+    AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder=10, bool isHollow);
 
     void Update(float DeltaTime) override;
     void ProcessInput(const Uint8 *KeyState) override;
@@ -47,4 +47,5 @@ private:
     ColliderLayer mLayer;
     uint mWidth, mHeight;
     Vector2 mOffset;
+    bool mIsHollow; /* If a node in pice is hollow, then this actor don't collide with pegs actor*/
 };

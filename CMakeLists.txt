@@ -9,7 +9,6 @@ add_executable(
     ${PROJECT_NAME}
     Source/Main.cpp
     Source/Utils/Math.cpp
-    Source/Utils/AudioSystem.cpp
     Source/Game/ConcreteGame.cpp
     
     Source/Actors/Actor.cpp
@@ -26,7 +25,7 @@ add_executable(
 
 find_package(SDL2 2.28.2 EXACT REQUIRED)
 find_package(SDL2_image REQUIRED)
-find_package(SDL2_mixer REQUIRED)
+
 
 include_directories(${SDL2_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} SDL2_image::SDL2_image)

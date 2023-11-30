@@ -7,12 +7,13 @@
 #include "../../Actors/Table.h"
 #include "../../Actors/Block.h"
 
-AABBColliderComponent::AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder):
+AABBColliderComponent::AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder, bool isHollow):
     Component(owner,UpdateOrder),
     mWidth(width),
     mHeight(height),
     mOffset(offset),
-    mLayer(layer)
+    mLayer(layer),
+    mIsHollow(isHollow)
 {
 
 }
@@ -43,7 +44,7 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
     // Check collision against each target collider
     for(auto collider : colliders){
 
-        if(collider == nullptr || collider == this || !collider->IsComponentEnabled())
+        if(collider == nullptr || collider == this || !collider->IsComponentEnabled()) /* if the tested collider is this collider or if it's null*/
             continue;
         
         if(Intersect(collider)){

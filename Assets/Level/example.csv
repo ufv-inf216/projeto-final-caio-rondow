@@ -1,2 +1,3 @@
 piece_t, piece_x, piece_y, piece_theta, piece_flip, piece_board
-c, 0, 0, 0, 0, 0 
+c, 0, 0, 0, 0, 0
+L, 0, 0, 0, 0, 1
