@@ -1,144 +1,99 @@
+#include "../Utils/Parser.h"
 #include "Piece.h"
-#include "../Components/DrawComponents/DrawAnimatedComponent.h"
-#include "../Components/ColliderComponents/AABBColliderComponent.h"
 #include "Table.h"
 #include "Block.h"
+#include <map>
 
-#define PIECE_L_WIDTH 64
-#define PIECE_L_HEIGHT 96
-#define PIECE_Z_WIDTH 64
-#define PIECE_Z_HEIGHT 96
-#define PIECE_I_WIDTH 32
-#define PIECE_I_HEIGHT 128
-#define PIECE_b_WIDTH 64
-#define PIECE_b_HEIGHT 96
-#define PIECE_c_WIDTH 64
-#define PIECE_c_HEIGHT 64
-#define PIECE_T_WIDTH 96
-#define PIECE_T_HEIGHT 64
-#define PIECE_f_WIDTH 96
-#define PIECE_f_HEIGHT 96
-#define PIECE_i_WIDTH 32
-#define PIECE_i_HEIGHT 96
 
-Piece::Piece(InterfaceGame *game, bool enabled, float x, float y, uint xMax, uint yMax, char PieceType, float rotation, bool flip):
+static const std::map<char, Vector2> PieceDim = {
+    {'L' , Vector2(64,96)},
+    {'Z' , Vector2(64,96)},
+    {'I' , Vector2(32,128)},
+    {'b' , Vector2(64,96)},
+    {'c' , Vector2(64,64)},
+    {'T' , Vector2(96,64)},
+    {'f' , Vector2(96,96)},
+    {'i' , Vector2(32,96)}
+}; 
+
+Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotation, bool flip):
     Actor(game),
     mCanProcessInput(false),
-    mPieceType(PieceType)
+    mPieceType(PieceType),
+    mIsEnabled(false),
+    mAABBColliderComponent(nullptr),
+    mDrawSpriteComponent(nullptr),
+    mDrawPolygonComponent(nullptr),
+    mDrawComponent(nullptr)
 {
-
     SetPosition(Vector2(x,y));
-    SetRotation(rotation);
-    SetFlip(flip);
-    enabled ? Enable() : Disable();
-    
-    switch (PieceType)
-    {
-    /* RED */
-    case 'L':
-        mPieceWidth = PIECE_L_WIDTH;
-        mPieceHeight = PIECE_L_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/L.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    case 'Z':
-        mPieceWidth = PIECE_Z_WIDTH;
-        mPieceHeight = PIECE_Z_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/Z.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    /* BLUE */
-    case 'I':
-        mPieceWidth = PIECE_I_WIDTH;
-        mPieceHeight = PIECE_I_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/I.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    case 'b':
-        mPieceWidth = PIECE_b_WIDTH;
-        mPieceHeight = PIECE_b_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/b.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    /* GREEN */
-    case 'c':
-        mPieceWidth = PIECE_c_WIDTH;
-        mPieceHeight = PIECE_c_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/c.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    case 'T':
-        mPieceWidth = PIECE_T_WIDTH;
-        mPieceHeight = PIECE_T_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/T.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    /* YELLOW */
-    case 'f':
-        mPieceWidth = PIECE_f_WIDTH;
-        mPieceHeight = PIECE_f_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/f.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
-    case 'i':
-        mPieceWidth = PIECE_i_WIDTH;
-        mPieceHeight = PIECE_i_HEIGHT;
-        new DrawSpriteComponent(this, "../Assets/Sprite/Pieces/i.png", mPieceWidth, mPieceHeight, 10);
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), mPieceWidth, mPieceHeight, ColliderLayer::PIECE);
-        break;
 
-    default: /* simple block */
+    /* Load Piece Components */
+    if(PieceType != char()){ /* if not a block */
 
-        mPieceWidth  = BLOCK_SIZE;
-        mPieceHeight = BLOCK_SIZE;
+        auto it = PieceDim.find(PieceType);
+        if(it == PieceDim.end()){
+            std::cerr << "Invalid type of piece : " << PieceType << "\n";
+            std::cerr << "valid types are: L,Z,I,b,c,T,f,i\n";
+            exit(EXIT_FAILURE);
+        }
 
-        std::string spritesheet = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.jpg";
-        std::string spritedata  = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.json";
+        this->SetWidth(PieceDim.at(PieceType).x);
+        this->SetHeight(PieceDim.at(PieceType).y);
+   
+        std::cout << mWidth << " " << mHeight << "\n";
+        /* Ajust piece */
+        this->Rotate(rotation);
 
-        mDrawComponent = new DrawAnimatedComponent(this, spritesheet, spritedata, mIsEnabled ? 9 : 0);
-        mDrawComponent->AddAnimation("idle", {0});
-        mDrawComponent->AddAnimation("cursor", {1});
-        mDrawComponent->SetAnimation( IsEnabled() ? "cursor" : "idle" );
-        mDrawComponent->SetAnimationFPS(1);
+        uint width  = this->GetWidth();
+        uint height = this->GetHeight();
+        std::cout << mWidth << " " << mHeight << "\n";
 
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), xMax, yMax, ColliderLayer::BLOCK);
-        break;
+        std::string PieceTexture = "../Assets/Sprite/Pieces/" + std::string(1,PieceType) + ".png";
+
+        std::cout << PieceTexture << "\n";
+
+        /* PIECE COLLIDER - DEBUG ONLY */
+        std::vector<Vector2> vertices;
+        vertices.push_back(Vector2(0,0));
+        vertices.push_back(Vector2(width,0));
+        vertices.push_back(Vector2(width,height));
+        vertices.push_back(Vector2(0,height));
+        /* PIECE COLLIDER - DEBUG ONLY */
+
+        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), width, height, ColliderLayer::PIECE);
+        mDrawSpriteComponent   = new DrawSpriteComponent(this, PieceTexture, width, height, 10);
+        mDrawPolygonComponent  = new DrawPolygonComponent(this, vertices);
+
+        mDrawPolygonComponent->SetColor(255,0,0,255);
     }
 }
 
 void Piece::Move(const Vector2&UnitVec){
-    
     Vector2 CurrPos = GetPosition();
-    
     /* calculate the next position */
     Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
-    
-    /* Check if the player wants to go to the adjacent table */
-    if(CurrPos.x + mPieceWidth == BOARD_WIDTH*BLOCK_SIZE+BOARD_ORIGIN_X && UnitVec.x > 0){
-        SetPosition(Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y));
-        return;
-    }
-    else if(CurrPos.x == STASH_ORIGIN_X && UnitVec.x < 0){
-        SetPosition(Vector2(BOARD_WIDTH*BLOCK_SIZE+BOARD_ORIGIN_X-mPieceWidth, BOARD_ORIGIN_Y));
-        return;
-    }
-
-    /* calculate the limit with based on the current table */
-    const Table *table = mGame->IsOnBoard(CurrPos.x) ? mGame->GetBoard() : mGame->GetStash();
-    Vector2 TablePos = table->GetPosition();
-    int TableHeight = ((int)table->GetTableHeight()-1) * BLOCK_SIZE;
-    int TableWidth  = ((int)table->GetTableWidth() -1) * BLOCK_SIZE;
-    
-    /* limitates the player into the table */
-    NewPos.x = Math::Clamp((int)NewPos.x, (int)TablePos.x, TableWidth + (int)TablePos.x - mPieceWidth  + BLOCK_SIZE);
-    NewPos.y = Math::Clamp((int)NewPos.y, (int)TablePos.y, TableHeight+ (int)TablePos.y - mPieceHeight + BLOCK_SIZE);
-    
     SetPosition(NewPos);
 }
 
+void Piece::Rotate(float theta){
+    SetRotation( GetRotation() - theta );
+}
+
+void Piece::Flip(){
+    SetFlip(!mFlip);
+}
+
 void Piece::OnUpdate(float DeltaTime){
+
     if(IsEnabled()){
         mCanProcessInput = !mGame->GetAction();
+        /* check if is for walls */
+        std::vector<AABBColliderComponent*> colliders;
+        for(auto wall : mGame->GetWalls()){
+            colliders.push_back( wall->GetComponent<AABBColliderComponent>() );
+        }
+        mAABBColliderComponent->DetectCollision(colliders);
     } else{
         mCanProcessInput = false;
     }
@@ -166,43 +121,38 @@ void Piece::OnProcessInput(const Uint8 *KeyState){
 }
 
 void Piece::Place(){
-    DetectCollision();
-}
 
- void Piece::OnCollision(const std::vector<Actor*>&responses){
- 
-    for(auto res : responses){ /* also check for pegs */
-        if(res->GetComponent<AABBColliderComponent>()->GetLayer() == ColliderLayer::PIECE)
-            return;
-    }
-
-    Block *cursor = mGame->GetCursor();
-    cursor->Enable();
-    cursor->SetPosition(GetPosition());
-    this->Disable();
-}
-
-void Piece::DetectCollision(){
-    
     std::vector<AABBColliderComponent*> colliders;
-
-    for(auto block : mGame->GetBoard()->GetBlocks()){
-        colliders.push_back( block->GetComponent<AABBColliderComponent>() );
-    }
 
     for(auto piece : mGame->GetBoard()->GetPieces()){
         colliders.push_back( piece->GetComponent<AABBColliderComponent>() );
     }
-
-    /* ATENTION! Also need to test collision with pegs */  
-
     for(auto piece : mGame->GetStash()->GetPieces()){
         colliders.push_back( piece->GetComponent<AABBColliderComponent>() );
     }
-
+    for(auto block : mGame->GetBoard()->GetBlocks()){
+        colliders.push_back( block->GetComponent<AABBColliderComponent>() );
+    }
     for(auto block : mGame->GetStash()->GetBlocks()){
         colliders.push_back( block->GetComponent<AABBColliderComponent>() );
     }
+
+    /* ATENTION! Also need to test collision with pegs */  
     
     this->GetComponent<AABBColliderComponent>()->DetectCollision(colliders);
+}
+
+ void Piece::OnCollision(const std::vector<Actor*>&responses){
+
+    if(responses.empty())
+        return;
+
+    for(auto res : responses){ /* also check for pegs */
+        if(res->GetComponent<AABBColliderComponent>()->GetLayer() == ColliderLayer::PIECE)
+            return;
+    }
+    Block *cursor = mGame->GetCursor();
+    cursor->Enable();
+    cursor->SetPosition(GetPosition());
+    this->Disable();
 }

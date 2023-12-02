@@ -330,4 +330,8 @@ CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o: \
  /opt/SDL2/include/SDL2/SDL_version.h /opt/SDL2/include/SDL2/begin_code.h \
  /opt/SDL2/include/SDL2/close_code.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Components/DrawComponents/DrawComponent.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Actors/Table.h
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/Parser.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/../Components/DrawComponents/DrawPolygonComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/../Components/DrawComponents/DrawAnimatedComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/../Components/DrawComponents/DrawSpriteComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Game/../Utils/../Actors/Table.h

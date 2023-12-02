@@ -327,4 +327,5 @@ CMakeFiles/twisted-reality.dir/Source/Actors/Block.cpp.o: \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/Table.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawAnimatedComponent.h \
  /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawSpriteComponent.h \
- /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawComponent.h
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawComponent.h \
+ /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Actors/../Components/DrawComponents/DrawPolygonComponent.h

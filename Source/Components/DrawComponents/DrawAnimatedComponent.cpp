@@ -29,8 +29,8 @@ void DrawAnimatedComponent::Draw(SDL_Renderer *renderer){
         Vector2 pos = mOwner->GetPosition();
         
         SDL_Rect *clipRect = mSpriteSheetData[SpriteIdx];
-        SDL_Rect renderQuad = {static_cast<int>(pos.x - clipRect->w/2.0f),
-                               static_cast<int>(pos.y - clipRect->h/2.0f),
+        SDL_Rect renderQuad = {static_cast<int>(pos.x),
+                               static_cast<int>(pos.y),
                                clipRect->w,
                                clipRect->h
                             };

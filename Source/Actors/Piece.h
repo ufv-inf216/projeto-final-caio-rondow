@@ -4,11 +4,13 @@
 #include "../Game/InterfaceGame.h"
 
 class DrawAnimatedComponent;
+class DrawSpriteComponent;
 class AABBColliderComponent;
+class DrawPolygonComponent;
 
 class Piece : public Actor{
 public:
-    explicit Piece(InterfaceGame *game, bool enabled=false, float x=0, float y=0, uint xMax=BLOCK_SIZE, uint yMax=BLOCK_SIZE, char PieceType='\0', float rotation=0.0f, bool flip=false);
+    explicit Piece(InterfaceGame *game, float x, float y, char PieceType=char(), float rotation=0.0f, bool flip=false);
     
     /* piece actions */
     void Move(const Vector2&UnitVec);
@@ -16,26 +18,28 @@ public:
     void OnCollision(const std::vector<Actor*>&responses) override;
     void OnProcessInput(const Uint8 *KeyState) override;
     void OnUpdate(float DeltaTime) override;
-    void DetectCollision() override;
 
-    inline int GetPieceWidth() const { return mPieceWidth; }
-    inline int GetPieceHeight() const { return mPieceHeight; }
+    inline char GetPieceType() const { return mPieceType; }
+
+    /* Enable/Disable piece functions */
+    inline void Disable(){ mIsEnabled = false; }
+    inline void Enable(){ mIsEnabled = true; }
+    inline bool IsEnabled() const{ return mIsEnabled; }
 
 protected:
+    /* piece components */
     AABBColliderComponent *mAABBColliderComponent;
+    DrawPolygonComponent *mDrawPolygonComponent; /* DEBUG ONLY */
     DrawAnimatedComponent *mDrawComponent;
-    int mPieceWidth, mPieceHeight;
+    
     bool mCanProcessInput;
-
-private:
-    /* piece actions */
-    inline void Rotate(float theta){
-        float rot = GetRotation() + theta;
-        SetRotation(rot);
-    }
-    inline void Flip(){
-        SetFlip(!mFlip);
-    }
-    void Place();
+    bool mIsEnabled;
     char mPieceType;
+private:
+    DrawSpriteComponent *mDrawSpriteComponent;
+
+    /* piece actions */
+    void Rotate(float theta);
+    void Flip();
+    void Place();
 };

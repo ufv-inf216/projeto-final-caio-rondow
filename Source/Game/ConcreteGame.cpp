@@ -2,8 +2,7 @@
 #include "SDL_image.h"
 #include "../Components/DrawComponents/DrawComponent.h"    
 #include "../Actors/Block.h"
-#include "../Actors/Table.h"
-#include <sstream>
+#include "../Utils/Parser.h"
 
 /* PUBLIC METHODS */
 
@@ -138,46 +137,15 @@ SDL_Texture *ConcreteGame::LoadTexture(const std::string&TextureFile) const{
 
 void ConcreteGame::LoadLevel(const std::string&LevelFile){
 
-    Vector2 BoardOrigin = Vector2(BOARD_ORIGIN_X,BOARD_ORIGIN_Y);
+    Vector2 BoardOrigin = Vector2(BOARD_ORIGIN_X, BOARD_ORIGIN_Y);
     Vector2 StashOrigin = Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y);
 
-    mBoard = new Table(this, BoardOrigin, BOARD_WIDTH, BOARD_HEIGHT);
-    mStash = new Table(this, StashOrigin, STASH_WIDTH, STASH_HEIGHT);
+    mBoard  = new Table(this, BoardOrigin, BOARD_WIDTH, BOARD_HEIGHT);
+    mStash  = new Table(this, StashOrigin, STASH_WIDTH, STASH_HEIGHT);
+    mCursor = new Block(this, BOARD_ORIGIN_X, BOARD_ORIGIN_Y, true);
 
-    mCursor = new Block(this,true);
-    mCursor->SetPosition(BoardOrigin);
-
-    std::ifstream ifs(LevelFile, std::ifstream::in);
-    if(!ifs.is_open()){
-        std::cerr << "In void ConcreteGame::LoadLevel(const std::string&LevelFile)\n";
-        std::cerr << "Could not open " << LevelFile << ".\n";
-        exit(EXIT_FAILURE);
-    }
-
-    std::string row;
-    std::getline(ifs, row); /* ignore header */
-    while (std::getline(ifs, row)) {
-        int x, y, theta, flip, board;
-        std::istringstream iss(row);
-        char piece_t, comma;
-
-        /* parse csv */
-        iss >> piece_t >> comma >> 
-        x >> comma >> y >> comma >> 
-        theta >> comma >> flip >> comma >> board;
-
-        /* Create a new piece */
-        Piece *p;
-        if(!board){
-            p = new Piece(this, false, x*BLOCK_SIZE + BoardOrigin.x - BLOCK_SIZE/2, 
-                y*BLOCK_SIZE + BoardOrigin.y - BLOCK_SIZE/2, 64, 96, piece_t, theta, flip);
-            mBoard->AddPiece(p);
-        } else{
-            p = new Piece(this, false, x*BLOCK_SIZE + StashOrigin.x,
-                y*BLOCK_SIZE + StashOrigin.y, 64, 96, piece_t, theta, flip);
-            mStash->AddPiece(p);
-        }
-    }
+    parser::RaiseWalls(mWalls, this);
+    parser::LoadTable(LevelFile, *mBoard, *mStash);
 }
 
 /* PRIVATE METHODS */

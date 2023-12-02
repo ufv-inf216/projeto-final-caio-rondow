@@ -223,10 +223,24 @@ CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteCompon
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawSpriteComponent.cpp -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.s
 
+CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
+CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o: ../Source/Components/DrawComponents/DrawPolygonComponent.cpp
+CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o: CMakeFiles/twisted-reality.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o -MF CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o.d -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawPolygonComponent.cpp
+
+CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawPolygonComponent.cpp > CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.i
+
+CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawPolygonComponent.cpp -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.s
+
 CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
 CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o: ../Source/Components/DrawComponents/DrawAnimatedComponent.cpp
 CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o: CMakeFiles/twisted-reality.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o -MF CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o.d -o CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/DrawComponents/DrawAnimatedComponent.cpp
 
 CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComp
 CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o: CMakeFiles/twisted-reality.dir/flags.make
 CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o: ../Source/Components/ColliderComponents/AABBColliderComponent.cpp
 CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o: CMakeFiles/twisted-reality.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o -MF CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o.d -o CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o -c /home/oica/dev/sdl2-projects/projeto-final-caio-rondow/Source/Components/ColliderComponents/AABBColliderComponent.cpp
 
 CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.i: cmake_force
@@ -264,6 +278,7 @@ twisted__reality_OBJECTS = \
 "CMakeFiles/twisted-reality.dir/Source/Components/Component.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.o" \
+"CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o" \
 "CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o"
 
@@ -281,6 +296,7 @@ twisted-reality: CMakeFiles/twisted-reality.dir/Source/Actors/Table.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/Component.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.o
+twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/Source/Components/ColliderComponents/AABBColliderComponent.cpp.o
 twisted-reality: CMakeFiles/twisted-reality.dir/build.make
@@ -288,7 +304,7 @@ twisted-reality: /opt/SDL2/lib/libSDL2.so
 twisted-reality: /opt/SDL2_image/lib/libSDL2_image.so
 twisted-reality: /opt/SDL2_mixer/lib/libSDL2_mixer.so
 twisted-reality: CMakeFiles/twisted-reality.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable twisted-reality"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable twisted-reality"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/twisted-reality.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

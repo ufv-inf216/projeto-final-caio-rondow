@@ -1,6 +1,7 @@
 #include "DrawSpriteComponent.h"
 #include "../../Actors/Actor.h"
 #include "../../Game/InterfaceGame.h"
+#include "../../Actors/Piece.h"
 
 /* CONSTRUCTOR */
 DrawSpriteComponent::DrawSpriteComponent(Actor *owner, const std::string&TextureFile, int width, int height, int DrawOrder):
@@ -16,9 +17,10 @@ DrawSpriteComponent::DrawSpriteComponent(Actor *owner, const std::string&Texture
 void DrawSpriteComponent::Draw(SDL_Renderer *renderer){
     
     Vector2 pos = mOwner->GetPosition();
-    float angle = mOwner->GetRotation();
+    float angle = (int)mOwner->GetRotation()%360;
     bool IsFlipped = mOwner->GetFlip();
 
+    SDL_Point center = {BLOCK_SIZE/2, BLOCK_SIZE/2};
     SDL_Rect dstrect;
     dstrect.w = mWidth;
     dstrect.h = mHeight;
@@ -26,6 +28,5 @@ void DrawSpriteComponent::Draw(SDL_Renderer *renderer){
     dstrect.y = pos.y;
 
     SDL_RendererFlip flip = (IsFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-
-    SDL_RenderCopyEx(renderer, mSpriteSheetSurface, nullptr, &dstrect, angle, nullptr, flip);
+    SDL_RenderCopyEx(renderer, mSpriteSheetSurface, nullptr, &dstrect, angle, &center, flip);
 }

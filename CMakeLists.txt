@@ -20,6 +20,7 @@ add_executable(
     Source/Components/Component.cpp
     Source/Components/DrawComponents/DrawComponent.cpp
     Source/Components/DrawComponents/DrawSpriteComponent.cpp
+    Source/Components/DrawComponents/DrawPolygonComponent.cpp
     Source/Components/DrawComponents/DrawAnimatedComponent.cpp
     Source/Components/ColliderComponents/AABBColliderComponent.cpp
 )

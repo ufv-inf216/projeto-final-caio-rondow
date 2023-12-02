@@ -47,11 +47,18 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
             continue;
         
         if(Intersect(collider)){
+            if(collider->GetLayer() == ColliderLayer::WALL){
+                static int i=0;
+                std::cout << "colisao com a parede " << i++ << "\n"; 
+                ResolveCollisions(GetMinOverlap(collider));
+                return;
+            }
+
             responses.emplace_back( &collider->GetOwner() );
         }
     }
-    if(!responses.empty()) /* if a collision occurs, resolve it */ 
-        mOwner->OnCollision(responses);
+    /* resolve collisions */
+    mOwner->OnCollision(responses);
 }
 
 
@@ -69,23 +76,42 @@ Vector2 AABBColliderComponent::GetCenter() const{
     return Vector2(MinPos.x + (float)mWidth/2.0f, MinPos.y + (float)mHeight/2.0f);
 }
 
-AABBColliderComponent::Overlap AABBColliderComponent::GetMinOverlap(AABBColliderComponent *other) const{
+AABBColliderComponent::Overlap AABBColliderComponent::GetMinOverlap(AABBColliderComponent *b) const{
 
     Vector2 aMin = GetMin(); Vector2 aMax = GetMax();
-    Vector2 bMin = other->GetMin(); Vector2 bMax = other->GetMax();
+    Vector2 bMin = b->GetMin(); Vector2 bMax = b->GetMax();
 
-    std::unordered_map<int, AABBColliderComponent::Overlap> overlaps;
-    overlaps[0] = {Vector2::UnitX * (bMax.x - aMin.x), CollisionSide::left, other};
-    overlaps[1] = {Vector2::UnitX * (bMin.x - aMax.x), CollisionSide::right,other};
-    overlaps[2] = {Vector2::UnitY * (bMax.y - aMin.y), CollisionSide::top,  other};
-    overlaps[3] = {Vector2::UnitY * (bMin.y - aMax.y), CollisionSide::down, other};
+    std::unordered_map<int, Overlap> overlaps;
+    overlaps[0] = {Vector2::UnitX * (bMax.x - aMin.x), CollisionSide::left, b};
+    overlaps[1] = {Vector2::UnitX * (bMin.x - aMax.x), CollisionSide::right,b};
+    overlaps[2] = {Vector2::UnitY * (bMax.y - aMin.y), CollisionSide::top,  b};
+    overlaps[3] = {Vector2::UnitY * (bMin.y - aMax.y), CollisionSide::down, b};
 
-    AABBColliderComponent::Overlap MinOverlap = overlaps[0];
+    Overlap minOverlap = overlaps[0];
     for(int i = 1; i < overlaps.size(); i++) {
-        if(overlaps[i].distance.LengthSq() < MinOverlap.distance.LengthSq()) {
-            MinOverlap = overlaps[i];
+        if(overlaps[i].distance.LengthSq() < minOverlap.distance.LengthSq()) {
+            minOverlap = overlaps[i];
         }
     }
 
-    return MinOverlap;
+    return minOverlap;
+}
+
+void AABBColliderComponent::ResolveCollisions(const Overlap& minOverlap){
+    
+    Vector2 position = mOwner->GetPosition();
+    position += minOverlap.distance;
+    auto game = mOwner->GetGame();
+    int width = mOwner->GetWidth();
+
+    if(minOverlap.side == CollisionSide::right && game->IsOnBoard(position)){
+        std::cout << "go to stash\n";
+        position = Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y);
+
+    } else if(minOverlap.side == CollisionSide::left && !game->IsOnBoard(position)){
+        std::cout << "go to board\n";
+        position = Vector2(BOARD_ORIGIN_X+BLOCK_SIZE*BOARD_WIDTH-width, BOARD_ORIGIN_Y);
+    }
+
+    mOwner->SetPosition(position);
 }

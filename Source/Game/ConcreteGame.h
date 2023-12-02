@@ -37,11 +37,14 @@ public:
     inline const Table *GetStash() const override{
         return mStash;
     }
+    inline const std::vector<Block*> &GetWalls() const{ 
+        return mWalls; 
+    }
     inline bool GetAction() const override{
         return mAction;
     }
-    inline bool IsOnBoard(const float xPos) const override{
-        return (xPos < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
+    inline bool IsOnBoard(const Vector2 &pos) const override{
+        return (pos.x < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
     }
 
 private:
@@ -71,4 +74,5 @@ private:
     Table *mBoard;
     Table *mStash;
     Block *mCursor;
+    std::vector<Block*> mWalls; /* this is the wall cells around the table */
 };

@@ -19,4 +19,5 @@ private:
     uint mTableWidth, mTableHeight;
     std::vector<Block*> mTable;     /* this is the table cells */
     std::vector<Piece*> mPieces;    /* this is the pieces on the table */
+    
 };

@@ -6,7 +6,7 @@
 enum class ColliderLayer{
     BLOCK,
     PIECE,
-    BRIDGE
+    WALL
 };
 
 enum class CollisionSide{
@@ -34,15 +34,21 @@ public:
     bool Intersect(AABBColliderComponent *other) const;
     void DetectCollision(std::vector<AABBColliderComponent*> &colliders);
     
+    inline void SetWidth(uint width) { mWidth = width; }
+    inline void SetHeight(uint height) { mHeight = height; } 
     Vector2 GetMin() const;
     Vector2 GetMax() const;
     Vector2 GetCenter() const;
     inline ColliderLayer GetLayer() const { return mLayer; }
-    inline void SwapSize(){
+    inline void Swap(){
         std::swap(mWidth, mHeight);
     }
+    inline uint GetCollisorWidth() const { return mWidth; }
+    inline uint GetCollisorHeight() const { return mHeight; }
+
 private:
     Overlap GetMinOverlap(AABBColliderComponent *other) const;
+    void ResolveCollisions(const Overlap& minOverlap);
 
     ColliderLayer mLayer;
     uint mWidth, mHeight;

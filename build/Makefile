@@ -321,6 +321,30 @@ Source/Components/DrawComponents/DrawComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/twisted-reality.dir/build.make CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.s
 .PHONY : Source/Components/DrawComponents/DrawComponent.cpp.s
 
+Source/Components/DrawComponents/DrawPolygonComponent.o: Source/Components/DrawComponents/DrawPolygonComponent.cpp.o
+.PHONY : Source/Components/DrawComponents/DrawPolygonComponent.o
+
+# target to build an object file
+Source/Components/DrawComponents/DrawPolygonComponent.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/twisted-reality.dir/build.make CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o
+.PHONY : Source/Components/DrawComponents/DrawPolygonComponent.cpp.o
+
+Source/Components/DrawComponents/DrawPolygonComponent.i: Source/Components/DrawComponents/DrawPolygonComponent.cpp.i
+.PHONY : Source/Components/DrawComponents/DrawPolygonComponent.i
+
+# target to preprocess a source file
+Source/Components/DrawComponents/DrawPolygonComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/twisted-reality.dir/build.make CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.i
+.PHONY : Source/Components/DrawComponents/DrawPolygonComponent.cpp.i
+
+Source/Components/DrawComponents/DrawPolygonComponent.s: Source/Components/DrawComponents/DrawPolygonComponent.cpp.s
+.PHONY : Source/Components/DrawComponents/DrawPolygonComponent.s
+
+# target to generate assembly for a file
+Source/Components/DrawComponents/DrawPolygonComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/twisted-reality.dir/build.make CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.s
+.PHONY : Source/Components/DrawComponents/DrawPolygonComponent.cpp.s
+
 Source/Components/DrawComponents/DrawSpriteComponent.o: Source/Components/DrawComponents/DrawSpriteComponent.cpp.o
 .PHONY : Source/Components/DrawComponents/DrawSpriteComponent.o
 
@@ -474,6 +498,9 @@ help:
 	@echo "... Source/Components/DrawComponents/DrawComponent.o"
 	@echo "... Source/Components/DrawComponents/DrawComponent.i"
 	@echo "... Source/Components/DrawComponents/DrawComponent.s"
+	@echo "... Source/Components/DrawComponents/DrawPolygonComponent.o"
+	@echo "... Source/Components/DrawComponents/DrawPolygonComponent.i"
+	@echo "... Source/Components/DrawComponents/DrawPolygonComponent.s"
 	@echo "... Source/Components/DrawComponents/DrawSpriteComponent.o"
 	@echo "... Source/Components/DrawComponents/DrawSpriteComponent.i"
 	@echo "... Source/Components/DrawComponents/DrawSpriteComponent.s"

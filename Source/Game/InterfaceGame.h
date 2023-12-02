@@ -11,12 +11,12 @@
 #define BOARD_WIDTH 8
 #define BOARD_HEIGHT 4
 #define BOARD_ORIGIN_X 128
-#define BOARD_ORIGIN_Y 128
+#define BOARD_ORIGIN_Y 256
 
 #define STASH_WIDTH 4
 #define STASH_HEIGHT 8
 #define STASH_ORIGIN_X 512
-#define STASH_ORIGIN_Y 128
+#define STASH_ORIGIN_Y BOARD_ORIGIN_Y
 
 #define BLOCK_SIZE 32
 
@@ -45,8 +45,9 @@ public:
     virtual Block *GetCursor() const = 0;
     virtual const Table *GetBoard() const = 0;
     virtual const Table *GetStash() const = 0;
+    virtual const std::vector<Block*> &GetWalls() const = 0;
     virtual bool GetAction() const = 0;
-    virtual bool IsOnBoard(const float xPos) const = 0;
+    virtual bool IsOnBoard(const Vector2 &pos) const = 0;
 
 private:
     /* PRIVATE METHODS */

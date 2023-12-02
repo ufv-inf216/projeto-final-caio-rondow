@@ -47,9 +47,6 @@ public:
     InterfaceGame *GetGame() const;
 
     virtual void OnCollision(const std::vector<Actor*>&responses);
-    virtual void OnCollision(bool status){};
-    virtual void OnCollision(){};
-    virtual void DetectCollision();
 
     template <typename T>
     T* GetComponent() const{
@@ -62,11 +59,12 @@ public:
         return nullptr;
     }
 
-    /* Enable/Disable piece functions */
-    inline void Disable(){ mIsEnabled = false; }
-    inline void Enable(){ mIsEnabled = true; }
-    inline bool IsEnabled() const{ return mIsEnabled; }
-    
+    /* Actor width/height */
+    inline int GetWidth() const { return mWidth; }
+    inline int GetHeight() const { return mHeight; }
+    inline void SetWidth(const uint width) { mWidth = width; }
+    inline void SetHeight(const uint height) { mHeight = height; }
+
 protected:
     /* PROTECTED METHODS */
 
@@ -81,8 +79,8 @@ protected:
     float mScale;
     float mRotation;
     bool mFlip;
-    bool mIsEnabled;
     std::vector<Component*> mComponents;
+    int mWidth, mHeight;
 
 private:
     /* PRIVATE METHODS */

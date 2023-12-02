@@ -15,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawAnimatedComponent.cpp.o.d"
   "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o"
   "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawComponent.cpp.o.d"
+  "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o"
+  "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawPolygonComponent.cpp.o.d"
   "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.o"
   "CMakeFiles/twisted-reality.dir/Source/Components/DrawComponents/DrawSpriteComponent.cpp.o.d"
   "CMakeFiles/twisted-reality.dir/Source/Game/ConcreteGame.cpp.o"
