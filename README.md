@@ -4,24 +4,24 @@
 
 ### SOUND
 
-- [] SFX
-- [] SOUNDTRACK
+- [ ] SFX
+- [ ] SOUNDTRACK
 
 ### USER INTERFACE (UI)
 
-- [] Main Menu
-- [] GUI*
-- [] Gameplay Submenu*
+- [ ] Main Menu
+- [ ] GUI*
+- [ ] Gameplay Submenu*
 
 ### ART
 - [x] Add pieces sprites v1
 - [x] Add block sprites v1
-- [] Add pegs sprites v1
-- [] Add pieces sprites v2
-- [] Add block sprites v2
-- [] Add pegs sprites v2
-- [] Add piece animation*
-- [] Add level background
+- [ ] Add pegs sprites v1
+- [ ] Add pieces sprites v2
+- [ ] Add block sprites v2
+- [ ] Add pegs sprites v2
+- [ ] Add piece animation*
+- [ ] Add level background
 
 ### GAMEPLAY
 
@@ -29,13 +29,13 @@
 
 - [x] Move function
 - [x] Rotate function
-- [] Flip function
+- [ ] Flip function
 - [x] Place function
-- [] Static Collisors
-- [] Add Pegs
-- [] Collisions:
-    * piece x piece - ok
-    * piece x peg
+- [ ] Static Collisors
+- [ ] Add Pegs
+- [ ] Collisions:
+    - [x] piece x piece
+    - [ ] piece x peg
 
 #### Blocks
 
@@ -44,14 +44,14 @@
 - [x] Move Cursor
 - [x] Grab function
 - [x] Collisions:
-    - block x piece - ok
+    - [x] block x piece
 - [x] Manage animation:
-    - Enabled block  - ok
-    - Disabled block - ok
+    - [x] Enabled block
+    - [x] Disabled block
 - [x] Add Collision Walls
 - [x] Resolve Wall Collisions:
-    - piece  x wall - ok
-    - cursor x wall - ok
+    - [x] piece  x wall
+    - [x] cursor x wall
 - [x] Resolve stash-to-board/board-to-stash
 
 #### Tables
