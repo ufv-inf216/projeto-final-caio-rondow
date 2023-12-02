@@ -41,17 +41,13 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
         this->SetWidth(PieceDim.at(PieceType).x);
         this->SetHeight(PieceDim.at(PieceType).y);
    
-        std::cout << mWidth << " " << mHeight << "\n";
         /* Ajust piece */
         this->Rotate(rotation);
 
         uint width  = this->GetWidth();
         uint height = this->GetHeight();
-        std::cout << mWidth << " " << mHeight << "\n";
 
         std::string PieceTexture = "../Assets/Sprite/Pieces/" + std::string(1,PieceType) + ".png";
-
-        std::cout << PieceTexture << "\n";
 
         /* PIECE COLLIDER - DEBUG ONLY */
         std::vector<Vector2> vertices;
