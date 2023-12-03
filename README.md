@@ -12,6 +12,7 @@
 - [ ] Main Menu
 - [ ] GUI*
 - [ ] Gameplay Submenu*
+- [ ] Scene change*
 
 ### ART
 - [x] Add pieces sprites v1
@@ -63,3 +64,8 @@
 #### Debug
 
 - [x] Add collider polygon
+
+#### Game
+
+- [x] Add level parser
+- [ ] Add IsLevelComplete function

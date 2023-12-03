@@ -47,6 +47,13 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
             continue;
         
         if(Intersect(collider)){
+            
+            if(collider->GetLayer() == ColliderLayer::PIECE){
+                std::cout << "collision block x piece\n";
+                responses.emplace_back( &collider->GetOwner() );
+                break;
+            }
+
             if(collider->GetLayer() == ColliderLayer::WALL){
                 static int i=0;
                 std::cout << "colisao com a parede " << i++ << "\n"; 
@@ -98,20 +105,7 @@ AABBColliderComponent::Overlap AABBColliderComponent::GetMinOverlap(AABBCollider
 }
 
 void AABBColliderComponent::ResolveCollisions(const Overlap& minOverlap){
-    
     Vector2 position = mOwner->GetPosition();
     position += minOverlap.distance;
-    auto game = mOwner->GetGame();
-    int width = mOwner->GetWidth();
-
-    if(minOverlap.side == CollisionSide::right && game->IsOnBoard(position)){
-        std::cout << "go to stash\n";
-        position = Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y);
-
-    } else if(minOverlap.side == CollisionSide::left && !game->IsOnBoard(position)){
-        std::cout << "go to board\n";
-        position = Vector2(BOARD_ORIGIN_X+BLOCK_SIZE*BOARD_WIDTH-width, BOARD_ORIGIN_Y);
-    }
-
     mOwner->SetPosition(position);
 }

@@ -4,7 +4,6 @@
 #include "Block.h"
 #include <map>
 
-
 static const std::map<char, Vector2> PieceDim = {
     {'L' , Vector2(64,96)},
     {'Z' , Vector2(64,96)},
@@ -14,7 +13,14 @@ static const std::map<char, Vector2> PieceDim = {
     {'T' , Vector2(96,64)},
     {'f' , Vector2(96,96)},
     {'i' , Vector2(32,96)}
-}; 
+};
+
+static const std::vector<Vector2> offset = {
+    Vector2(0,0),
+    Vector2(0,32),
+    Vector2(0,64),
+    Vector2(32,64)
+};
 
 Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotation, bool flip):
     Actor(game),
@@ -49,19 +55,26 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
 
         std::string PieceTexture = "../Assets/Sprite/Pieces/" + std::string(1,PieceType) + ".png";
 
-        /* PIECE COLLIDER - DEBUG ONLY */
-        std::vector<Vector2> vertices;
-        vertices.push_back(Vector2(0,0));
-        vertices.push_back(Vector2(width,0));
-        vertices.push_back(Vector2(width,height));
-        vertices.push_back(Vector2(0,height));
-        /* PIECE COLLIDER - DEBUG ONLY */
+        for(int i=0; i<4; i++){
+            auto collider = new AABBColliderComponent(this,offset[i],BLOCK_SIZE,BLOCK_SIZE,ColliderLayer::PIECE);
+            mColliders.emplace_back(collider);
+        
+            /* PIECE COLLIDER - DEBUG ONLY */
+            std::vector<Vector2> vertices;
+            vertices.push_back(Vector2(offset[i].x,offset[i].y));
+            vertices.push_back(Vector2(offset[i].x+BLOCK_SIZE,offset[i].y));
+            vertices.push_back(Vector2(offset[i].x+BLOCK_SIZE,offset[i].y+BLOCK_SIZE));
+            vertices.push_back(Vector2(offset[i].x,offset[i].y+BLOCK_SIZE));
+            auto polygon = new DrawPolygonComponent(this, vertices);
+            polygon->SetColor(0,0,255,255);
+            mDrawPolygons.emplace_back(polygon);
+            /* PIECE COLLIDER - DEBUG ONLY */
+        }
+        
+        // mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), width, height, ColliderLayer::PIECE);
+        mDrawSpriteComponent = new DrawSpriteComponent(this, PieceTexture, width, height, 10);
+        // mDrawPolygonComponent  = new DrawPolygonComponent(this, vertices);
 
-        mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), width, height, ColliderLayer::PIECE);
-        mDrawSpriteComponent   = new DrawSpriteComponent(this, PieceTexture, width, height, 10);
-        mDrawPolygonComponent  = new DrawPolygonComponent(this, vertices);
-
-        mDrawPolygonComponent->SetColor(255,0,0,255);
     }
 }
 
@@ -73,6 +86,17 @@ void Piece::Move(const Vector2&UnitVec){
 }
 
 void Piece::Rotate(float theta){
+    
+    int i=0;
+    for(auto collider : mColliders){
+        Vector2 offset = collider->GetOffset();
+        double x = offset.x;
+        double y = offset.y;
+        RotateCounterClockWise(x, y, 0, 0, 90.0f);
+        collider->SetOffset(Vector2(x,y));
+        mDrawPolygons[i++]->SetVertices(Vector2(x,y));
+    }
+
     SetRotation( GetRotation() - theta );
 }
 
@@ -81,7 +105,7 @@ void Piece::Flip(){
 }
 
 void Piece::OnUpdate(float DeltaTime){
-
+    
     if(IsEnabled()){
         mCanProcessInput = !mGame->GetAction();
         /* check if is for walls */
@@ -89,7 +113,8 @@ void Piece::OnUpdate(float DeltaTime){
         for(auto wall : mGame->GetWalls()){
             colliders.push_back( wall->GetComponent<AABBColliderComponent>() );
         }
-        mAABBColliderComponent->DetectCollision(colliders);
+        for(auto collider : mColliders)
+            collider->DetectCollision(colliders);
     } else{
         mCanProcessInput = false;
     }
@@ -151,4 +176,14 @@ void Piece::Place(){
     cursor->Enable();
     cursor->SetPosition(GetPosition());
     this->Disable();
+}
+
+void Piece::RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta){
+    x -= cx;
+    y -= cy;
+    double radianTheta = theta * M_PI / 180.0;
+    int newX = x*(int)cos(radianTheta)+y*(int)sin(radianTheta);
+    int newY = -x*(int)sin(radianTheta)+y*(int)cos(radianTheta);
+    x = newX + cx;
+    y = newY + cy;
 }

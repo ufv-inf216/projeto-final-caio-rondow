@@ -20,6 +20,9 @@ public:
     void OnUpdate(float DeltaTime) override;
 
     inline char GetPieceType() const { return mPieceType; }
+    inline const std::vector<AABBColliderComponent*> &GetColliders() const{
+        return mColliders;
+    }
 
     /* Enable/Disable piece functions */
     inline void Disable(){ mIsEnabled = false; }
@@ -29,17 +32,21 @@ public:
 protected:
     /* piece components */
     AABBColliderComponent *mAABBColliderComponent;
-    DrawPolygonComponent *mDrawPolygonComponent; /* DEBUG ONLY */
     DrawAnimatedComponent *mDrawComponent;
+
+    std::vector<AABBColliderComponent*> mColliders;
+    DrawPolygonComponent *mDrawPolygonComponent; /* DEBUG ONLY */
     
     bool mCanProcessInput;
     bool mIsEnabled;
     char mPieceType;
 private:
     DrawSpriteComponent *mDrawSpriteComponent;
-
+    std::vector<DrawPolygonComponent*> mDrawPolygons; /* DEBUG ONLY */
     /* piece actions */
     void Rotate(float theta);
     void Flip();
     void Place();
+    /* Change collider based on rotation and flip */
+    void RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta);
 };

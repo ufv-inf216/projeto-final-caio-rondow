@@ -60,11 +60,18 @@ public:
     }
 
     /* Actor width/height */
-    inline int GetWidth() const { return mWidth; }
-    inline int GetHeight() const { return mHeight; }
+    inline int GetWidth() const { 
+        if( (int)(mRotation/90.0f) % 2 != 0 )
+            return mHeight;
+        return mWidth; 
+    }
+    inline int GetHeight() const {
+        if( (int)(mRotation/90.0f) % 2 != 0 )
+            return mWidth;
+        return mHeight;
+    }
     inline void SetWidth(const uint width) { mWidth = width; }
     inline void SetHeight(const uint height) { mHeight = height; }
-
 protected:
     /* PROTECTED METHODS */
 
@@ -81,6 +88,7 @@ protected:
     bool mFlip;
     std::vector<Component*> mComponents;
     int mWidth, mHeight;
+    Vector2 mLastMv;
 
 private:
     /* PRIVATE METHODS */

@@ -33,3 +33,10 @@ void DrawPolygonComponent::Draw(SDL_Renderer *renderer){
                                  pos.x + mVertices[0].x,
                                  pos.y + mVertices[0].y);
 }
+
+void DrawPolygonComponent::SetVertices(const Vector2 &v){
+    mVertices[0] = Vector2(v.x, v.y);
+    mVertices[1] = Vector2(v.x+BLOCK_SIZE, v.y);
+    mVertices[2] = Vector2(v.x+BLOCK_SIZE, v.y+BLOCK_SIZE);
+    mVertices[3] = Vector2(v.x, v.y+BLOCK_SIZE);
+}

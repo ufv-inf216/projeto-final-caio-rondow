@@ -143,6 +143,8 @@ void ConcreteGame::LoadLevel(const std::string&LevelFile){
     mBoard  = new Table(this, BoardOrigin, BOARD_WIDTH, BOARD_HEIGHT);
     mStash  = new Table(this, StashOrigin, STASH_WIDTH, STASH_HEIGHT);
     mCursor = new Block(this, BOARD_ORIGIN_X, BOARD_ORIGIN_Y, true);
+    // mCursor = new Block(this, STASH_ORIGIN_X, STASH_ORIGIN_Y, true);
+
 
     parser::RaiseWalls(mWalls, this);
     parser::LoadTable(LevelFile, *mBoard, *mStash);

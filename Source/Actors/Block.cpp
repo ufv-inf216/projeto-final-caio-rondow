@@ -42,6 +42,7 @@ void Block::OnUpdate(float DeltaTime){
             colliders.push_back( wall->GetComponent<AABBColliderComponent>() );
         }
         mAABBColliderComponent->DetectCollision(colliders);
+        
     } else{
         mCanProcessInput = false;
         mDrawComponent->SetAnimation("idle");
@@ -66,21 +67,31 @@ void Block::OnProcessInput(const Uint8 *KeyState){
 void Block::OnCollision(const std::vector<Actor*>&responses){
     if(responses.empty())
         return;
+
     Block *cursor = mGame->GetCursor();
     cursor->Disable();
+
+    for(auto res : responses){
+        std::cout << &res << "\n";
+    }
     static_cast<Piece*>(responses[0])->Enable();
 }
 
 void Block::Grab(){
+
+    std::cout << "aqui\n";
+
     std::vector<AABBColliderComponent*> colliders;
 
     for(auto piece : mGame->GetBoard()->GetPieces()){
-        colliders.push_back( piece->GetComponent<AABBColliderComponent>() );
+        for(auto collider : piece->GetColliders())
+            colliders.push_back(collider);
     }
 
     for(auto piece : mGame->GetStash()->GetPieces()){
-        colliders.push_back( piece->GetComponent<AABBColliderComponent>() );
+        for(auto collider : piece->GetColliders())
+            colliders.push_back(collider);
     }
-    
+
     this->GetComponent<AABBColliderComponent>()->DetectCollision(colliders);
 }

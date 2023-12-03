@@ -15,6 +15,8 @@ public:
         mColor[2] = b;
         mColor[3] = a;
     }
+    void SetVertices(const Vector2 &vertex);
+
 protected:
     int mDrawOrder;
     std::vector<Vector2> mVertices;
