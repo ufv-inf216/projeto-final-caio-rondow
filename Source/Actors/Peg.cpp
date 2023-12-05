@@ -6,10 +6,11 @@ Peg::Peg(InterfaceGame *game, float x, float y, char PegType):
     Block(game, x, y)
 {
     std::string PieceTexture = "../Assets/Sprite/Pegs/" + std::string(1,PegType) + ".png";
-    mDrawSpriteComponent = new DrawSpriteComponent(this, PieceTexture, BLOCK_SIZE, BLOCK_SIZE, 10);
+    new DrawSpriteComponent(this, PieceTexture, BLOCK_SIZE, BLOCK_SIZE, PEG_DRAW_ORDER);
 
-    mAABBColliderComponent = new AABBColliderComponent(
-        this, Vector2(0,0), BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::PEG
+    new AABBColliderComponent(
+        this, Vector2(0,0), BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::PEG,
+        PEG_UPDATE_ORDER
     );
 
     /* SHOW PEG COLLIDER - DEBUG ONLY */
@@ -18,6 +19,6 @@ Peg::Peg(InterfaceGame *game, float x, float y, char PegType):
     vertices.push_back(Vector2(BLOCK_SIZE,0));
     vertices.push_back(Vector2(BLOCK_SIZE,BLOCK_SIZE));
     vertices.push_back(Vector2(0,BLOCK_SIZE));
-    mDrawPolygonComponent = new DrawPolygonComponent(this, vertices);
+    new DrawPolygonComponent(this, vertices);
     /* SHOW PEG COLLIDER - DEBUG ONLY */
 }

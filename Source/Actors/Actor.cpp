@@ -8,9 +8,7 @@ Actor::Actor(InterfaceGame *game):
     mRotation(0.0f),
     mPosition(Vector2::Zero),
     mState(ActorState::ACTIVE),
-    mFlip(false),
-    mWidth(BLOCK_SIZE),
-    mHeight(BLOCK_SIZE)
+    mFlip(false)
 {
     mGame->AddActor(this);
 }
@@ -90,8 +88,6 @@ InterfaceGame *Actor::GetGame() const{
     return mGame;
 }
 
-/* PROTECTED METHODS */
-
 /* Specific actor update code */
 void Actor::OnUpdate(float DeltaTime){
 
@@ -102,7 +98,7 @@ void Actor::OnProcessInput(const Uint8 *KeyState){
 }
 
 void Actor::OnCollision(const std::vector<Actor*>& responses){
-    
+
 }
 
 /* PRIVATE METHODS */

@@ -4,7 +4,7 @@
 Wall::Wall(InterfaceGame *game, float x, float y, uint WallWidth, uint WallHeight):
     Block(game, x, y)
 {
-    mAABBColliderComponent = new AABBColliderComponent(
+    new AABBColliderComponent(
         this, Vector2(0,0), WallWidth, WallHeight, ColliderLayer::WALL
     );
     
@@ -14,6 +14,6 @@ Wall::Wall(InterfaceGame *game, float x, float y, uint WallWidth, uint WallHeigh
     vertices.push_back(Vector2(WallWidth,0));
     vertices.push_back(Vector2(WallWidth,WallHeight));
     vertices.push_back(Vector2(0,WallHeight));
-    mDrawPolygonComponent = new DrawPolygonComponent(this, vertices);
+    new DrawPolygonComponent(this, vertices);
     /* SHOW WALL COLLIDER - DEBUG ONLY */
 }

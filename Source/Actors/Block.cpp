@@ -7,6 +7,6 @@ Block::Block(InterfaceGame *game, float x, float y, bool enable):
 {
     /* could be a cursor, instead of a static block */
     mIsEnabled = enable;
-    std::string TextureFile = "../Assets/Sprite/Blocks/block.png";
-    new DrawSpriteComponent(this,TextureFile,BLOCK_SIZE,BLOCK_SIZE,0);
+    std::string TextureFile = "../Assets/Sprite/Table/block.png";
+    new DrawSpriteComponent(this,TextureFile,BLOCK_SIZE,BLOCK_SIZE,BLOCK_DRAW_ORDER);
 }

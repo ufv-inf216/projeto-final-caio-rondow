@@ -4,76 +4,27 @@
 #include "Block.h"
 #include "Cursor.h"
 #include "Peg.h"
-#include <map>
-
-#define RED_L 0x0
-#define RED_Z 0x1
-
-#define GREEN_c 0x2
-#define GREEN_T 0x3
-
-#define BLUE_b 0x4
-#define BLUE_I 0x5
-
-#define YELLOW_i 0x6
-#define YELLOW_f 0x7
-
-#define PEG 0x9
-
-static const std::map<char, int> CharToIndex = {
-    {'L',RED_L},
-    {'Z',RED_Z},
-    {'c',GREEN_c},
-    {'T',GREEN_T},
-    {'b',BLUE_b},
-    {'I',BLUE_I},
-    {'i',YELLOW_i},
-    {'f',YELLOW_f},
-    {'P',PEG},
-};
-
-
-static const std::map<char, Vector2> PieceDim = {
-    {'L' , Vector2(64,96)},
-    {'Z' , Vector2(64,96)},
-    {'c' , Vector2(64,64)},
-    {'T' , Vector2(96,64)},
-    {'b' , Vector2(64,96)},
-    {'I' , Vector2(32,128)},
-    {'i' , Vector2(32,96)},
-    {'f' , Vector2(96,96)},
-    {'P' , Vector2(32,32)}
-};
-
-static const std::vector<Vector3> offset = {
-    Vector3(0,0,true),
-    Vector3(0,32,false),
-    Vector3(0,64,true),
-    Vector3(32,64,false)
-};
 
 Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotation, bool flip):
     Actor(game),
+    mDrawSpriteComponent(nullptr),
     mCanProcessInput(false),
     mPieceType(PieceType),
     mIsEnabled(false),
     mCanPlace(false),
-    mAABBColliderComponent(nullptr),
-    mDrawSpriteComponent(nullptr),
-    mDrawPolygonComponent(nullptr),
-    mDrawComponent(nullptr)
+    mWidth(BLOCK_SIZE), 
+    mHeight(BLOCK_SIZE)
 {
     /* piece start position */
     SetPosition(Vector2(x,y));
 
     /* Load Piece Components */
     if(PieceType != char()){ /* if not a block */
-
         parser::LoadPiece(this, mColliders, mDrawPolygons, rotation);
-
     }
 }
 
+/* piece actions */
 void Piece::Move(const Vector2&UnitVec){
 
     Vector2 CurrPos = GetPosition();
@@ -84,64 +35,30 @@ void Piece::Move(const Vector2&UnitVec){
 
 void Piece::Rotate(float theta){
     
-    int i=0;
-    for(auto collider : mColliders){
+    /* no rotation case */
+    if(theta == 0.0f)
+        return;
+
+    int i = 0;
+    for(AABBColliderComponent *collider : mColliders){
         
         Vector2 offset = collider->GetOffset();
         double x = offset.x;
         double y = offset.y;
         
-        if(theta < 0){
-            RotateClockWise(x,y,0,0,90.0f);
-        }
-        else{
-            RotateCounterClockWise(x,y,0,0,90.0f);
-        }
-
+        /* calculate collider new position */
+        RotateCounterClockWise(x,y,0,0,theta);
+  
+        /* update collider */
         collider->SetOffset(Vector2(x,y));
         mDrawPolygons[i++]->SetVertices(Vector2(x,y));
     }
 
-    SetRotation( GetRotation() - theta );
-}
+    /* update current width/height */
+    std::swap(mWidth, mHeight);
 
-void Piece::Flip(){
-    SetFlip(!mFlip);
-}
-
-void Piece::OnUpdate(float DeltaTime){
-    mCanProcessInput = IsEnabled() ? !mGame->GetAction() : false;
-
-    if(IsEnabled()){
-        /* check wall collision */
-        std::vector<AABBColliderComponent*> other;
-        for(Wall *wall : mGame->GetWalls()){
-            other.push_back( wall->GetComponent<AABBColliderComponent>() );
-        }
-        for(AABBColliderComponent *collider : mColliders)
-            collider->DetectCollision(other);
-    }
-}
-
-void Piece::OnProcessInput(const Uint8 *KeyState){
-    if(!IsEnabled() || !mCanProcessInput)
-        return;
-    if(KeyState[SDL_SCANCODE_W])
-        Move(Vector2::NegUnitY);
-    else if(KeyState[SDL_SCANCODE_A])
-        Move(Vector2::NegUnitX);
-    else if(KeyState[SDL_SCANCODE_S])
-        Move(Vector2::UnitY);
-    else if(KeyState[SDL_SCANCODE_D])
-        Move(Vector2::UnitX);
-    else if(KeyState[SDL_SCANCODE_E])
-        Rotate(90.0f);
-    else if(KeyState[SDL_SCANCODE_Q])
-        Rotate(-90.0f);
-    else if(KeyState[SDL_SCANCODE_F])
-        Flip();
-    else if(KeyState[SDL_SCANCODE_SPACE])
-        Place();
+    float NewRotation = (int)(GetRotation() - theta) % 360;
+    SetRotation(NewRotation);
 }
 
 void Piece::Place(){
@@ -164,19 +81,103 @@ void Piece::Place(){
         if(mCanPlace == false) /* if at least one collided, break */ 
             break;
     }
-
+ 
     if(mCanPlace){
         Cursor *cursor = mGame->GetCursor();
+        Vector2 PiecePos = this->GetPosition();
         cursor->Enable();
-        cursor->SetPosition(GetPosition());
+        cursor->SetPosition(PiecePos);
         this->Disable();
     }
 }
 
- void Piece::OnCollision(const std::vector<Actor*>&responses){
+void Piece::Flip(){
+    SetFlip(!mFlip);
+}
+
+void Piece::OnCollision(const std::vector<Actor*>&responses){
     mCanPlace = responses.empty() ? true : false;
 }
 
+void Piece::OnProcessInput(const Uint8 *KeyState){
+    if(!IsEnabled() || !mCanProcessInput)
+        return;
+    if(KeyState[SDL_SCANCODE_W])
+        Move(Vector2::NegUnitY);
+    else if(KeyState[SDL_SCANCODE_A])
+        Move(Vector2::NegUnitX);
+    else if(KeyState[SDL_SCANCODE_S])
+        Move(Vector2::UnitY);
+    else if(KeyState[SDL_SCANCODE_D])
+        Move(Vector2::UnitX);
+    else if(KeyState[SDL_SCANCODE_E])
+        Rotate(PIECE_ROTATION_ANGLE);
+    else if(KeyState[SDL_SCANCODE_Q])
+        Rotate(-PIECE_ROTATION_ANGLE);
+    else if(KeyState[SDL_SCANCODE_F])
+        Flip();
+    else if(KeyState[SDL_SCANCODE_SPACE])
+        Place();
+}
+
+void Piece::OnUpdate(float DeltaTime){
+    mCanProcessInput = IsEnabled() ? !mGame->GetAction() : false;
+
+    if(IsEnabled()){
+        /* check wall collision */
+        std::vector<AABBColliderComponent*> other;
+        for(Wall *wall : mGame->GetWalls()){
+            other.push_back( wall->GetComponent<AABBColliderComponent>() );
+        }
+        for(AABBColliderComponent *collider : mColliders)
+            collider->DetectCollision(other);
+    }
+}
+
+const std::vector<AABBColliderComponent*> &Piece::GetColliders() const{
+    return mColliders;
+}
+
+char Piece::GetPieceType() const {
+    return mPieceType; 
+}
+
+/* return piece index of the piece type */
+int Piece::ToIndex() const{
+    auto it = PieceToIndex.find(mPieceType);
+    return it->second;
+}
+
+/* mIsEnabled state makes the piece freeze or move */
+void Piece::Disable(){ 
+    mIsEnabled = false; 
+}
+
+void Piece::Enable(){ 
+    mIsEnabled = true; 
+}
+
+bool Piece::IsEnabled() const{ 
+    return mIsEnabled; 
+}
+
+void Piece::SetWidth(const uint width){
+    mWidth = width;
+}
+
+uint Piece::GetWidth() const{
+    return mWidth;
+}
+
+void Piece::SetHeight(const uint height){
+    mHeight = height;
+}
+
+uint Piece::GetHeight() const{
+    return mHeight;
+}
+
+/* Change collider based on rotation and flip */
 void Piece::RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta){
     x -= cx;
     y -= cy;
@@ -195,9 +196,4 @@ void Piece::RotateClockWise(double& x, double& y, double cx, double cy, double t
     int newY = x*(int)sin(radianTheta)+y*(int)cos(radianTheta);
     x = newX + cx;
     y = newY + cy;
-}
-
-int Piece::ToIndex() const{
-    auto it = CharToIndex.find(mPieceType);
-    return it->second;
 }

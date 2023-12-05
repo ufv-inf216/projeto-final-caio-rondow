@@ -3,7 +3,6 @@
 #include "Actor.h"
 #include "../Game/InterfaceGame.h"
 
-class DrawAnimatedComponent;
 class DrawSpriteComponent;
 class AABBColliderComponent;
 class DrawPolygonComponent;
@@ -22,36 +21,37 @@ public:
     void OnProcessInput(const Uint8 *KeyState) override;
     void OnUpdate(float DeltaTime) override;
 
-    inline char GetPieceType() const { return mPieceType; }
-    /* get piece index from piece type */
+    const std::vector<AABBColliderComponent*> &GetColliders() const;
+    char GetPieceType() const;
+    
+    /* return piece index of the piece type */
     int ToIndex() const;
 
-    inline const std::vector<AABBColliderComponent*> &GetColliders() const{
-        return mColliders;
-    }
+    /* mIsEnabled state makes the piece freeze or move */
+    bool IsEnabled() const;
+    void Disable();
+    void Enable();
 
-    /* Enable/Disable piece functions */
-    inline void Disable(){ mIsEnabled = false; }
-    inline void Enable(){ mIsEnabled = true; }
-    inline bool IsEnabled() const{ return mIsEnabled; }
+    void SetWidth(const uint width);
+    uint GetWidth() const;
+
+    void SetHeight(const uint height);
+    uint GetHeight() const;
     
 protected:
-    /* piece components */
-    AABBColliderComponent *mAABBColliderComponent;
-    DrawSpriteComponent *mDrawSpriteComponent;
-    DrawAnimatedComponent *mDrawComponent;
-
-    std::vector<AABBColliderComponent*> mColliders;
-    DrawPolygonComponent *mDrawPolygonComponent; /* DEBUG ONLY */
-    
     bool mCanProcessInput;
     bool mIsEnabled;
     char mPieceType;
+    bool mCanPlace;
+    uint mWidth, mHeight;
+
 private:
+    /* piece components */
     std::vector<DrawPolygonComponent*> mDrawPolygons; /* DEBUG ONLY */
+    std::vector<AABBColliderComponent*> mColliders;
+    DrawSpriteComponent *mDrawSpriteComponent;
+    
     /* Change collider based on rotation and flip */
     void RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta);
     void RotateClockWise(double& x, double& y, double cx, double cy, double theta);
-
-    bool mCanPlace;
 };

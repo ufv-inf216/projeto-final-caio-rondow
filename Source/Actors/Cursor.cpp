@@ -7,16 +7,19 @@
 Cursor::Cursor(InterfaceGame *game, float x, float y, bool enable):
     Block(game, x, y, enable)
 {
-    std::string SpriteSheet = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.jpg";
-    std::string SpriteData  = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.json";
+    std::string SpriteSheet = "../Assets/Sprite/Table/table.png";
+    std::string SpriteData  = "../Assets/Sprite/Table/table.json";
 
-    mDrawAnimComponent = new DrawAnimatedComponent(this, SpriteSheet, SpriteData, (IsEnabled() ? 9 : 0));
+    mDrawAnimComponent = new DrawAnimatedComponent(this, SpriteSheet, SpriteData, CURSOR_DRAW_ORDER);
     mDrawAnimComponent->AddAnimation("idle", {0});
     mDrawAnimComponent->AddAnimation("cursor", {1});
-    mDrawAnimComponent->SetAnimation( IsEnabled() ? "cursor" : "idle" );
+    mDrawAnimComponent->SetAnimation("cursor");
     mDrawAnimComponent->SetAnimationFPS(1);
 
-    mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::BLOCK);
+    mAABBColliderComponent = new AABBColliderComponent(
+        this, Vector2(0,0), BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::BLOCK,
+        CURSOR_UPDATE_ORDER    
+    );
 }
 
 void Cursor::OnUpdate(float DeltaTime){
@@ -56,6 +59,7 @@ void Cursor::OnCollision(const std::vector<Actor*>&responses){
     if(responses.empty())
         return;
     this->Disable();
+    this->SetPosition(Vector2(0,0));
     static_cast<Piece*>(responses[0])->Enable();
 }
 

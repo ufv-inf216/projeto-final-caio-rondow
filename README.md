@@ -17,10 +17,10 @@
 ### ART
 - [x] Add pieces sprites v1
 - [x] Add block sprites v1
-- [ ] Add pegs sprites v1
-- [ ] Add pieces sprites v2
-- [ ] Add block sprites v2
-- [ ] Add pegs sprites v2
+- [x] Add pegs sprites v1
+- [x] Add pieces sprites v2
+- [x] Add block sprites v2
+- [x] Add pegs sprites v2
 - [ ] Add piece animation*
 - [ ] Add level background
 
@@ -32,11 +32,11 @@
 - [x] Rotate function
 - [ ] Flip function
 - [x] Place function
-- [ ] Static Collisors
-- [ ] Add Pegs
-- [ ] Collisions:
+- [x] Multiple Collisors
+- [x] Add Pegs
+- [x] Collisions:
     - [x] piece x piece
-    - [ ] piece x peg
+    - [x] piece x peg
 
 #### Blocks
 
@@ -53,7 +53,7 @@
 - [x] Resolve Wall Collisions:
     - [x] piece  x wall
     - [x] cursor x wall
-- [x] Resolve stash-to-board/board-to-stash
+- [ ] Resolve stash-to-board/board-to-stash
 
 #### Tables
 

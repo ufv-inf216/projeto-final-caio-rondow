@@ -49,10 +49,10 @@ static const int PieceOffset[8][36] = {
     }, // GREEN c
     
     {
-        BLOCK_SIZE,0,false,
-        0,BLOCK_SIZE,false,
-        BLOCK_SIZE,BLOCK_SIZE,true,
-        2*BLOCK_SIZE, BLOCK_SIZE,true
+        BLOCK_SIZE,0,true,
+        0,BLOCK_SIZE,true,
+        BLOCK_SIZE,BLOCK_SIZE,false,
+        2*BLOCK_SIZE, BLOCK_SIZE,false
     }, // GREEN T
 
     {
@@ -178,6 +178,7 @@ namespace parser{
     }
 
     static void LoadPiece(Piece *piece, std::vector<AABBColliderComponent*>&colliders, std::vector<DrawPolygonComponent*>&polygons, float rotation){
+        
         int idx = piece->ToIndex();
         
         uint width  = PieceShape[idx][0];
@@ -186,15 +187,11 @@ namespace parser{
 
         piece->SetWidth(width);
         piece->SetHeight(height);
-
         piece->Rotate(rotation);
         
-        // width  = piece->GetWidth();
-        // height = piece->GetHeight();
-
         std::string PieceTexture = "../Assets/Sprite/Pieces/" + 
                                     std::string(1,piece->GetPieceType()) + ".png";
-        new DrawSpriteComponent(piece, PieceTexture, width, height, 11);
+        new DrawSpriteComponent(piece, PieceTexture, piece->GetWidth(), piece->GetHeight(), PIECE_DRAW_ORDER);
         
         for(int i=0; i<NumColliders; i++){
             
@@ -207,7 +204,8 @@ namespace parser{
             std::cout << x << " " << y << " " << IsHollow << "\n";
 
             AABBColliderComponent *collider = new AABBColliderComponent(
-                piece,offset,BLOCK_SIZE,BLOCK_SIZE,ColliderLayer::PIECE,10,IsHollow
+                piece, offset, BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::PIECE,
+                PIECE_UPDATE_ORDER, IsHollow
             );
 
             colliders.emplace_back(collider);
@@ -219,7 +217,7 @@ namespace parser{
             vertices.push_back(Vector2(x+BLOCK_SIZE,y+BLOCK_SIZE));
             vertices.push_back(Vector2(x,y+BLOCK_SIZE));
             DrawPolygonComponent *polygon = new DrawPolygonComponent(piece, vertices);
-            polygon->SetColor(0,0,255,255);
+            polygon->SetColor(255,255,0,255);
             polygons.emplace_back(polygon);
             /* PIECE COLLIDER - DEBUG ONLY */
         }

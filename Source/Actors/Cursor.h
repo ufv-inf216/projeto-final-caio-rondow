@@ -2,6 +2,8 @@
 
 #include "Block.h"
 
+class DrawAnimatedComponent;
+
 class Cursor : public Block{
 public:
     explicit Cursor(InterfaceGame *game, float x, float y, bool enable);
@@ -13,6 +15,7 @@ public:
 private:
     void GrabPiece();
 
-    /* components */
+    /* cursor components */
     DrawAnimatedComponent *mDrawAnimComponent;
+    AABBColliderComponent *mAABBColliderComponent;
 };

@@ -1,11 +1,16 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+
 #include <algorithm>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 #include <vector>
+#include <map>
+
 #include "../Utils/Math.h"
 
 #define BOARD_WIDTH 8
@@ -19,6 +24,46 @@
 #define STASH_ORIGIN_Y BOARD_ORIGIN_Y
 
 #define BLOCK_SIZE 32
+
+#define PIECE_ROTATION_ANGLE 90.0f
+
+#define BLOCK_UPDATE_ORDER 0
+#define PEG_UPDATE_ORDER 1
+#define PIECE_UPDATE_ORDER 2
+#define CURSOR_UPDATE_ORDER 3
+
+#define BLOCK_DRAW_ORDER 0
+#define PEG_DRAW_ORDER 1
+#define PIECE_DRAW_ORDER 2
+#define CURSOR_DRAW_ORDER 3
+
+#define RED_L_INDEX 0x0
+#define RED_Z_INDEX 0x1
+
+#define GREEN_c_INDEX 0x2
+#define GREEN_T_INDEX 0x3
+
+#define BLUE_b_INDEX 0x4
+#define BLUE_I_INDEX 0x5
+
+#define YELLOW_i_INDEX 0x6
+#define YELLOW_f_INDEX 0x7
+
+#define PEG_INDEX 0x9
+
+/* this map is just to make it easier to 
+create levels */
+const std::map<char, int> PieceToIndex = {
+    {'L',   RED_L_INDEX},
+    {'Z',   RED_Z_INDEX},
+    {'c',   GREEN_c_INDEX},
+    {'T',   GREEN_T_INDEX},
+    {'b',   BLUE_b_INDEX},
+    {'I',   BLUE_I_INDEX},
+    {'i',   YELLOW_i_INDEX},
+    {'f',   YELLOW_f_INDEX},
+    {'P',   PEG_INDEX},
+};
 
 class DrawComponent;
 class Actor;
