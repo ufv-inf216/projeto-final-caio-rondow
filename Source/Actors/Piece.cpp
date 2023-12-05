@@ -6,23 +6,50 @@
 #include "Peg.h"
 #include <map>
 
+#define RED_L 0x0
+#define RED_Z 0x1
+
+#define GREEN_c 0x2
+#define GREEN_T 0x3
+
+#define BLUE_b 0x4
+#define BLUE_I 0x5
+
+#define YELLOW_i 0x6
+#define YELLOW_f 0x7
+
+#define PEG 0x9
+
+static const std::map<char, int> CharToIndex = {
+    {'L',RED_L},
+    {'Z',RED_Z},
+    {'c',GREEN_c},
+    {'T',GREEN_T},
+    {'b',BLUE_b},
+    {'I',BLUE_I},
+    {'i',YELLOW_i},
+    {'f',YELLOW_f},
+    {'P',PEG},
+};
+
+
 static const std::map<char, Vector2> PieceDim = {
     {'L' , Vector2(64,96)},
     {'Z' , Vector2(64,96)},
-    {'I' , Vector2(32,128)},
-    {'b' , Vector2(64,96)},
     {'c' , Vector2(64,64)},
     {'T' , Vector2(96,64)},
-    {'f' , Vector2(96,96)},
+    {'b' , Vector2(64,96)},
+    {'I' , Vector2(32,128)},
     {'i' , Vector2(32,96)},
+    {'f' , Vector2(96,96)},
     {'P' , Vector2(32,32)}
 };
 
-static const std::vector<Vector2> offset = {
-    Vector2(0,0),
-    Vector2(0,32),
-    Vector2(0,64),
-    Vector2(32,64)
+static const std::vector<Vector3> offset = {
+    Vector3(0,0,true),
+    Vector3(0,32,false),
+    Vector3(0,64,true),
+    Vector3(32,64,false)
 };
 
 Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotation, bool flip):
@@ -42,59 +69,17 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
     /* Load Piece Components */
     if(PieceType != char()){ /* if not a block */
 
-        auto it = PieceDim.find(PieceType);
-        if(it == PieceDim.end()){
-            std::cerr << "Invalid type of piece : " << PieceType << "\n";
-            std::cerr << "valid types are: P,L,Z,I,b,c,T,f,i\n";
-            exit(EXIT_FAILURE);
-        }
+        parser::LoadPiece(this, mColliders, mDrawPolygons, rotation);
 
-        this->SetWidth(PieceDim.at(PieceType).x);
-        this->SetHeight(PieceDim.at(PieceType).y);
-   
-        /* Ajust piece */
-        this->Rotate(rotation);
-
-        uint width  = this->GetWidth();
-        uint height = this->GetHeight();
-
-        std::string PieceTexture = "../Assets/Sprite/Pieces/" + std::string(1,PieceType) + ".png";
-
-        for(int i=0; i<4; i++){ /* ATENTION - CHANGE THIS SIZE DYNAMICALLY */
-
-            auto collider = new AABBColliderComponent(this,offset[i],BLOCK_SIZE,BLOCK_SIZE,ColliderLayer::PIECE);
-            mColliders.emplace_back(collider);
-        
-            /* PIECE COLLIDER - DEBUG ONLY */
-            std::vector<Vector2> vertices;
-            vertices.push_back(Vector2(offset[i].x,offset[i].y));
-            vertices.push_back(Vector2(offset[i].x+BLOCK_SIZE,offset[i].y));
-            vertices.push_back(Vector2(offset[i].x+BLOCK_SIZE,offset[i].y+BLOCK_SIZE));
-            vertices.push_back(Vector2(offset[i].x,offset[i].y+BLOCK_SIZE));
-            auto polygon = new DrawPolygonComponent(this, vertices);
-            polygon->SetColor(0,0,255,255);
-            mDrawPolygons.emplace_back(polygon);
-            /* PIECE COLLIDER - DEBUG ONLY */
-        }
-        
-        mDrawSpriteComponent = new DrawSpriteComponent(this, PieceTexture, width, height, 10);
     }
 }
 
 void Piece::Move(const Vector2&UnitVec){
-    
+
     Vector2 CurrPos = GetPosition();
     /* calculate the next position */
     Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
     SetPosition(NewPos);
-
-    /* check wall collision */
-    std::vector<AABBColliderComponent*> other;
-    for(Wall *wall : mGame->GetWalls()){
-        other.push_back( wall->GetComponent<AABBColliderComponent>() );
-    }
-    for(AABBColliderComponent *collider : mColliders)
-        collider->DetectCollision(other);
 }
 
 void Piece::Rotate(float theta){
@@ -110,7 +95,7 @@ void Piece::Rotate(float theta){
             RotateClockWise(x,y,0,0,90.0f);
         }
         else{
-            RotateCounterClockWise(x, y, 0, 0, 90.0f);
+            RotateCounterClockWise(x,y,0,0,90.0f);
         }
 
         collider->SetOffset(Vector2(x,y));
@@ -126,6 +111,16 @@ void Piece::Flip(){
 
 void Piece::OnUpdate(float DeltaTime){
     mCanProcessInput = IsEnabled() ? !mGame->GetAction() : false;
+
+    if(IsEnabled()){
+        /* check wall collision */
+        std::vector<AABBColliderComponent*> other;
+        for(Wall *wall : mGame->GetWalls()){
+            other.push_back( wall->GetComponent<AABBColliderComponent>() );
+        }
+        for(AABBColliderComponent *collider : mColliders)
+            collider->DetectCollision(other);
+    }
 }
 
 void Piece::OnProcessInput(const Uint8 *KeyState){
@@ -133,19 +128,19 @@ void Piece::OnProcessInput(const Uint8 *KeyState){
         return;
     if(KeyState[SDL_SCANCODE_W])
         Move(Vector2::NegUnitY);
-    if(KeyState[SDL_SCANCODE_A])
+    else if(KeyState[SDL_SCANCODE_A])
         Move(Vector2::NegUnitX);
-    if(KeyState[SDL_SCANCODE_S])
+    else if(KeyState[SDL_SCANCODE_S])
         Move(Vector2::UnitY);
-    if(KeyState[SDL_SCANCODE_D])
+    else if(KeyState[SDL_SCANCODE_D])
         Move(Vector2::UnitX);
-    if(KeyState[SDL_SCANCODE_E])
+    else if(KeyState[SDL_SCANCODE_E])
         Rotate(90.0f);
-    if(KeyState[SDL_SCANCODE_Q])
+    else if(KeyState[SDL_SCANCODE_Q])
         Rotate(-90.0f);
-    if(KeyState[SDL_SCANCODE_F])
+    else if(KeyState[SDL_SCANCODE_F])
         Flip();
-    if(KeyState[SDL_SCANCODE_SPACE])
+    else if(KeyState[SDL_SCANCODE_SPACE])
         Place();
 }
 
@@ -200,4 +195,9 @@ void Piece::RotateClockWise(double& x, double& y, double cx, double cy, double t
     int newY = x*(int)sin(radianTheta)+y*(int)cos(radianTheta);
     x = newX + cx;
     y = newY + cy;
+}
+
+int Piece::ToIndex() const{
+    auto it = CharToIndex.find(mPieceType);
+    return it->second;
 }

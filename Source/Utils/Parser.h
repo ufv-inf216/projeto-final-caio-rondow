@@ -11,6 +11,80 @@
 #include <sstream>
 #include <fstream>
 
+static const int PieceShape[9][3]{
+/*  @params:
+    width           height          number of colliders */
+    {2*BLOCK_SIZE,  3*BLOCK_SIZE,   4}, // RED L
+    {2*BLOCK_SIZE,  3*BLOCK_SIZE,   4}, // RED Z
+    {2*BLOCK_SIZE,  2*BLOCK_SIZE,   3}, // GREEN c
+    {3*BLOCK_SIZE,  2*BLOCK_SIZE,   4}, // GREEN T
+    {2*BLOCK_SIZE,  3*BLOCK_SIZE,   5}, // BLUE b
+    {BLOCK_SIZE,    4*BLOCK_SIZE,   4}, // BLUE I
+    {BLOCK_SIZE,    3*BLOCK_SIZE,   3}, // YELLOW i
+    {3*BLOCK_SIZE,  3*BLOCK_SIZE,   5}, // YELLOW f
+    {BLOCK_SIZE,    BLOCK_SIZE,     1}  // PEG
+};
+
+static const int PieceOffset[8][36] = {
+    /*  @params:
+        i collider offset.x, i collider offset.y, Does the collider have a hole? */
+    {   
+        0,0,true,
+        0,BLOCK_SIZE,false,
+        0,2*BLOCK_SIZE,true,
+        BLOCK_SIZE,2*BLOCK_SIZE,false
+    }, // RED L
+
+    {
+        0,0,false,
+        0,BLOCK_SIZE,false,
+        BLOCK_SIZE,BLOCK_SIZE,true,
+        BLOCK_SIZE,2*BLOCK_SIZE,false
+    }, // RED Z
+
+    {
+        0,0,false,
+        0,BLOCK_SIZE,true,
+        BLOCK_SIZE,BLOCK_SIZE,true
+    }, // GREEN c
+    
+    {
+        BLOCK_SIZE,0,false,
+        0,BLOCK_SIZE,false,
+        BLOCK_SIZE,BLOCK_SIZE,true,
+        2*BLOCK_SIZE, BLOCK_SIZE,true
+    }, // GREEN T
+
+    {
+        0,0,false,
+        0,BLOCK_SIZE,false,
+        BLOCK_SIZE,BLOCK_SIZE,true,
+        0,2*BLOCK_SIZE,false,
+        BLOCK_SIZE,2*BLOCK_SIZE,true
+    }, // BLUE b
+
+    {
+        0,0,false,
+        0,BLOCK_SIZE,false,
+        0,2*BLOCK_SIZE,true,
+        0,3*BLOCK_SIZE,false
+    }, // BLUE I
+
+    {
+        0,0,true,
+        0,BLOCK_SIZE,false,
+        0,2*BLOCK_SIZE,false,
+    }, // YELLOW i
+    
+    {
+        BLOCK_SIZE,0,true,
+        2*BLOCK_SIZE,0,true,
+        0,BLOCK_SIZE,true,
+        BLOCK_SIZE,BLOCK_SIZE,false,
+        BLOCK_SIZE,2*BLOCK_SIZE,false
+    }, // YELLOW f
+};
+
 namespace parser{
 
     static void LoadTable(const std::string &filename, Table &board, Table&stash){
@@ -48,7 +122,6 @@ namespace parser{
 
                 /* red peg        blue peg       green peg      yellow peg */
                 if(type == 'R' || type == 'B' || type == 'G' || type == 'Y'){
-                    std::cout << type << "\n";
                     peg = new Peg(board.GetGame(), x, y, type);
                     board.AddPeg(peg);
                 } else{
@@ -103,4 +176,52 @@ namespace parser{
         );
         walls.emplace_back(StashRightWall);
     }
+
+    static void LoadPiece(Piece *piece, std::vector<AABBColliderComponent*>&colliders, std::vector<DrawPolygonComponent*>&polygons, float rotation){
+        int idx = piece->ToIndex();
+        
+        uint width  = PieceShape[idx][0];
+        uint height = PieceShape[idx][1];
+        uint NumColliders = PieceShape[idx][2];
+
+        piece->SetWidth(width);
+        piece->SetHeight(height);
+
+        piece->Rotate(rotation);
+        
+        // width  = piece->GetWidth();
+        // height = piece->GetHeight();
+
+        std::string PieceTexture = "../Assets/Sprite/Pieces/" + 
+                                    std::string(1,piece->GetPieceType()) + ".png";
+        new DrawSpriteComponent(piece, PieceTexture, width, height, 11);
+        
+        for(int i=0; i<NumColliders; i++){
+            
+            float x = (float)PieceOffset[idx][i*3];
+            float y = (float)PieceOffset[idx][i*3 + 1];
+            bool IsHollow = PieceOffset[idx][i*3 + 2];
+
+            Vector2 offset = Vector2(x,y);
+
+            std::cout << x << " " << y << " " << IsHollow << "\n";
+
+            AABBColliderComponent *collider = new AABBColliderComponent(
+                piece,offset,BLOCK_SIZE,BLOCK_SIZE,ColliderLayer::PIECE,10,IsHollow
+            );
+
+            colliders.emplace_back(collider);
+
+            /* PIECE COLLIDER - DEBUG ONLY */
+            std::vector<Vector2> vertices;
+            vertices.push_back(Vector2(x,y));
+            vertices.push_back(Vector2(x+BLOCK_SIZE,y));
+            vertices.push_back(Vector2(x+BLOCK_SIZE,y+BLOCK_SIZE));
+            vertices.push_back(Vector2(x,y+BLOCK_SIZE));
+            DrawPolygonComponent *polygon = new DrawPolygonComponent(piece, vertices);
+            polygon->SetColor(0,0,255,255);
+            polygons.emplace_back(polygon);
+            /* PIECE COLLIDER - DEBUG ONLY */
+        }
+    }   
 };

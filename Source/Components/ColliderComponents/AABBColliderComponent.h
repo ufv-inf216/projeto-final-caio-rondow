@@ -27,7 +27,7 @@ public:
         AABBColliderComponent *target;
     };
     
-    AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder=10);
+    AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder=10, bool IsHollow=false);
 
     void Update(float DeltaTime) override;
     void ProcessInput(const Uint8 *KeyState) override;
@@ -54,4 +54,5 @@ private:
     ColliderLayer mLayer;
     uint mWidth, mHeight;
     Vector2 mOffset;
+    bool mIsHollow;
 };

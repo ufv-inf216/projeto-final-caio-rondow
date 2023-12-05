@@ -14,12 +14,18 @@ public:
     
     /* piece actions */
     void Move(const Vector2&UnitVec);
+    void Rotate(float theta);
+    void Place();
+    void Flip();
 
     void OnCollision(const std::vector<Actor*>&responses) override;
     void OnProcessInput(const Uint8 *KeyState) override;
     void OnUpdate(float DeltaTime) override;
 
     inline char GetPieceType() const { return mPieceType; }
+    /* get piece index from piece type */
+    int ToIndex() const;
+
     inline const std::vector<AABBColliderComponent*> &GetColliders() const{
         return mColliders;
     }
@@ -43,10 +49,6 @@ protected:
     char mPieceType;
 private:
     std::vector<DrawPolygonComponent*> mDrawPolygons; /* DEBUG ONLY */
-    /* piece actions */
-    void Rotate(float theta);
-    void Flip();
-    void Place();
     /* Change collider based on rotation and flip */
     void RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta);
     void RotateClockWise(double& x, double& y, double cx, double cy, double theta);

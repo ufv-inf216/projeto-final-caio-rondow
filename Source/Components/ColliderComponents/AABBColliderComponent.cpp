@@ -7,12 +7,13 @@
 #include "../../Actors/Table.h"
 #include "../../Actors/Block.h"
 
-AABBColliderComponent::AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder):
+AABBColliderComponent::AABBColliderComponent(Actor *owner, const Vector2&offset, uint width, uint height, ColliderLayer layer, int UpdateOrder, bool IsHollow):
     Component(owner,UpdateOrder),
     mWidth(width),
     mHeight(height),
     mOffset(offset),
-    mLayer(layer)
+    mLayer(layer),
+    mIsHollow(IsHollow)
 {
 
 }
@@ -53,21 +54,21 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
                 std::cout << "colisao bloco com peça " << i++ << "\n";
                 responses.emplace_back( &collider->GetOwner() );
                 break;
-            }
-
-            if(collider->GetLayer() == ColliderLayer::WALL){
+            } 
+            else if(collider->GetLayer() == ColliderLayer::PEG && !mIsHollow){
+                responses.emplace_back( &collider->GetOwner() );
+                break;
+            } 
+            else if(collider->GetLayer() == ColliderLayer::WALL){
                 std::cout << "colisao com a parede " << i++ << "\n"; 
                 ResolveCollisions(GetMinOverlap(collider));
                 return;
             }
-
-            responses.emplace_back( &collider->GetOwner() );
         }
     }
-    /* resolve collisions */
+    /* resolve collision */
     mOwner->OnCollision(responses);
 }
-
 
 Vector2 AABBColliderComponent::GetMin() const{
     return mOwner->GetPosition() + mOffset;
