@@ -201,8 +201,6 @@ namespace parser{
 
             Vector2 offset = Vector2(x,y);
 
-            std::cout << x << " " << y << " " << IsHollow << "\n";
-
             AABBColliderComponent *collider = new AABBColliderComponent(
                 piece, offset, BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::PIECE,
                 PIECE_UPDATE_ORDER, IsHollow

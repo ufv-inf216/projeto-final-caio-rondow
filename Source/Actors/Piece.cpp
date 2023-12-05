@@ -13,7 +13,8 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
     mIsEnabled(false),
     mCanPlace(false),
     mWidth(BLOCK_SIZE), 
-    mHeight(BLOCK_SIZE)
+    mHeight(BLOCK_SIZE),
+    mFront(true)
 {
     /* piece start position */
     SetPosition(Vector2(x,y));
@@ -28,8 +29,40 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
 void Piece::Move(const Vector2&UnitVec){
 
     Vector2 CurrPos = GetPosition();
+    float CurrRot   = GetRotation();
+
     /* calculate the next position */
     Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
+
+    /* Check if the player wants to go to stash
+        or to board */
+    bool GoToStash = CurrPos.x + mFront*mWidth + !mFront*BLOCK_SIZE == BLOCK_SIZE*BOARD_WIDTH+BOARD_ORIGIN_X;
+    bool GoToBoard = CurrPos.x + (!mFront)*(-(int)mWidth+BLOCK_SIZE) == STASH_ORIGIN_X;
+
+    if( UnitVec.x > 0 && GoToStash ){ /* Move to STASH */
+        
+        while(mRotation != 0){
+            Rotate(PIECE_ROTATION_ANGLE);
+        }
+        NewPos = Vector2(STASH_ORIGIN_X, NewPos.y);
+        while(mRotation != CurrRot){
+            Rotate(PIECE_ROTATION_ANGLE);
+        }
+    } 
+    else if( UnitVec.x < 0 && GoToBoard ){ /* Move to BOARD */
+        
+        while(mRotation != 0){
+            Rotate(PIECE_ROTATION_ANGLE);
+        }
+        NewPos = Vector2(
+            BOARD_ORIGIN_X+(BOARD_WIDTH-1)*BLOCK_SIZE,
+            (int)(NewPos.y)%(BOARD_HEIGHT*BLOCK_SIZE)+BOARD_ORIGIN_Y
+        );
+        while(mRotation != CurrRot){
+            Rotate(PIECE_ROTATION_ANGLE);
+        }
+    }
+
     SetPosition(NewPos);
 }
 
@@ -59,6 +92,12 @@ void Piece::Rotate(float theta){
 
     float NewRotation = (int)(GetRotation() - theta) % 360;
     SetRotation(NewRotation);
+    
+    if(abs(mRotation) == 0 || abs(mRotation) == 90){
+        mFront = true;
+    } else{
+        mFront = false;
+    }
 }
 
 void Piece::Place(){

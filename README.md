@@ -53,7 +53,7 @@
 - [x] Resolve Wall Collisions:
     - [x] piece  x wall
     - [x] cursor x wall
-- [ ] Resolve stash-to-board/board-to-stash
+- [x] Resolve stash-to-board/board-to-stash
 
 #### Tables
 

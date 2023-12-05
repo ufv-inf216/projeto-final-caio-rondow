@@ -44,6 +44,7 @@ protected:
     char mPieceType;
     bool mCanPlace;
     uint mWidth, mHeight;
+    bool mFront;
 
 private:
     /* piece components */

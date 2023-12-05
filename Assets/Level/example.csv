@@ -1,5 +1,5 @@
 piece_t, piece_x, piece_y, piece_theta, piece_flip, piece_board
-L, 0, 0, 0, 0, 1
+f, 0, 0, 0, 0, 0
 R, 2, 2, 0, 0, 1
 G, 2, 1, 0, 0, 1
 B, 0, 2, 0, 0, 1

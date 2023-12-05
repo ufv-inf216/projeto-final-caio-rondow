@@ -39,7 +39,6 @@ bool AABBColliderComponent::Intersect(AABBColliderComponent *b) const{
 
 void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> &colliders){
     
-    static int i=0;
     std::vector<Actor*> responses;
 
     // Check collision against each target collider
@@ -51,7 +50,6 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
         if(Intersect(collider)){
             
             if(collider->GetLayer() == ColliderLayer::PIECE){
-                std::cout << "colisao bloco com peça " << i++ << "\n";
                 responses.emplace_back( &collider->GetOwner() );
                 break;
             } 
@@ -60,7 +58,6 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
                 break;
             } 
             else if(collider->GetLayer() == ColliderLayer::WALL){
-                std::cout << "colisao com a parede " << i++ << "\n"; 
                 ResolveCollisions(GetMinOverlap(collider));
                 return;
             }
@@ -106,7 +103,22 @@ AABBColliderComponent::Overlap AABBColliderComponent::GetMinOverlap(AABBCollider
 }
 
 void AABBColliderComponent::ResolveCollisions(const Overlap& minOverlap){
+    
+    InterfaceGame *game = mOwner->GetGame();
+    
     Vector2 position = mOwner->GetPosition();
     position += minOverlap.distance;
+
+    // if(GetMin().x < STASH_ORIGIN_X && !game->IsOnBoard(position)){
+    //     int x = BOARD_ORIGIN_X+(BOARD_WIDTH-1)*BLOCK_SIZE;
+    //     int y = (int)(position.y)%(BOARD_HEIGHT*BLOCK_SIZE)+BOARD_ORIGIN_Y;
+    //     position = Vector2(x,y);
+    // } else if(GetMax().x >= BLOCK_SIZE*BOARD_WIDTH+BOARD_ORIGIN_X && game->IsOnBoard(position)){
+    //     std::cout << "ir para o stash\n";
+    //     int x = STASH_ORIGIN_X+BLOCK_SIZE;
+    //     int y = STASH_ORIGIN_Y+2*BLOCK_SIZE;
+    //     position = Vector2(x,y);
+    // } 
+
     mOwner->SetPosition(position);
 }
