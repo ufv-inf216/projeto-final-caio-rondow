@@ -28,10 +28,11 @@ public:
     inline void Disable(){ mIsEnabled = false; }
     inline void Enable(){ mIsEnabled = true; }
     inline bool IsEnabled() const{ return mIsEnabled; }
-
+    
 protected:
     /* piece components */
     AABBColliderComponent *mAABBColliderComponent;
+    DrawSpriteComponent *mDrawSpriteComponent;
     DrawAnimatedComponent *mDrawComponent;
 
     std::vector<AABBColliderComponent*> mColliders;
@@ -41,7 +42,6 @@ protected:
     bool mIsEnabled;
     char mPieceType;
 private:
-    DrawSpriteComponent *mDrawSpriteComponent;
     std::vector<DrawPolygonComponent*> mDrawPolygons; /* DEBUG ONLY */
     /* piece actions */
     void Rotate(float theta);
@@ -49,4 +49,7 @@ private:
     void Place();
     /* Change collider based on rotation and flip */
     void RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta);
+    void RotateClockWise(double& x, double& y, double cx, double cy, double theta);
+
+    bool mCanPlace;
 };

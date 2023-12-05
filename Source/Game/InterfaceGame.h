@@ -20,10 +20,11 @@
 
 #define BLOCK_SIZE 32
 
+class DrawComponent;
 class Actor;
 class Table;
-class DrawComponent;
-class Block;
+class Cursor;
+class Wall;
 
 class InterfaceGame{ /* this is the game interface */
 public:
@@ -34,18 +35,24 @@ public:
     virtual void EnterMainLoop() = 0;
     virtual void ShutDown() = 0;
     virtual void Quit() = 0;
+    
     virtual uint GetWindowWidth() const = 0;
     virtual uint GetWindowHeight() const = 0;
+    
     virtual void AddActor(Actor *actor) = 0;
     virtual void RemoveActor(Actor *actor) = 0;
+    
     virtual void AddDrawable(DrawComponent *drawable) = 0;
     virtual void RemoveDrawable(DrawComponent *drawable) = 0;
+    
     virtual SDL_Texture *LoadTexture(const std::string&TextureFile) const = 0;
     virtual void LoadLevel(const std::string&LevelFile) = 0;
-    virtual Block *GetCursor() const = 0;
+    
+    virtual Cursor *GetCursor() const = 0;
     virtual const Table *GetBoard() const = 0;
     virtual const Table *GetStash() const = 0;
-    virtual const std::vector<Block*> &GetWalls() const = 0;
+    virtual const std::vector<Wall*> &GetWalls() const = 0;
+    
     virtual bool GetAction() const = 0;
     virtual bool IsOnBoard(const Vector2 &pos) const = 0;
 

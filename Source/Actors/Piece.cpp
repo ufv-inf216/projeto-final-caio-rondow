@@ -2,6 +2,8 @@
 #include "Piece.h"
 #include "Table.h"
 #include "Block.h"
+#include "Cursor.h"
+#include "Peg.h"
 #include <map>
 
 static const std::map<char, Vector2> PieceDim = {
@@ -12,7 +14,8 @@ static const std::map<char, Vector2> PieceDim = {
     {'c' , Vector2(64,64)},
     {'T' , Vector2(96,64)},
     {'f' , Vector2(96,96)},
-    {'i' , Vector2(32,96)}
+    {'i' , Vector2(32,96)},
+    {'P' , Vector2(32,32)}
 };
 
 static const std::vector<Vector2> offset = {
@@ -27,11 +30,13 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
     mCanProcessInput(false),
     mPieceType(PieceType),
     mIsEnabled(false),
+    mCanPlace(false),
     mAABBColliderComponent(nullptr),
     mDrawSpriteComponent(nullptr),
     mDrawPolygonComponent(nullptr),
     mDrawComponent(nullptr)
 {
+    /* piece start position */
     SetPosition(Vector2(x,y));
 
     /* Load Piece Components */
@@ -40,7 +45,7 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
         auto it = PieceDim.find(PieceType);
         if(it == PieceDim.end()){
             std::cerr << "Invalid type of piece : " << PieceType << "\n";
-            std::cerr << "valid types are: L,Z,I,b,c,T,f,i\n";
+            std::cerr << "valid types are: P,L,Z,I,b,c,T,f,i\n";
             exit(EXIT_FAILURE);
         }
 
@@ -55,7 +60,8 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
 
         std::string PieceTexture = "../Assets/Sprite/Pieces/" + std::string(1,PieceType) + ".png";
 
-        for(int i=0; i<4; i++){
+        for(int i=0; i<4; i++){ /* ATENTION - CHANGE THIS SIZE DYNAMICALLY */
+
             auto collider = new AABBColliderComponent(this,offset[i],BLOCK_SIZE,BLOCK_SIZE,ColliderLayer::PIECE);
             mColliders.emplace_back(collider);
         
@@ -71,28 +77,42 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
             /* PIECE COLLIDER - DEBUG ONLY */
         }
         
-        // mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), width, height, ColliderLayer::PIECE);
         mDrawSpriteComponent = new DrawSpriteComponent(this, PieceTexture, width, height, 10);
-        // mDrawPolygonComponent  = new DrawPolygonComponent(this, vertices);
-
     }
 }
 
 void Piece::Move(const Vector2&UnitVec){
+    
     Vector2 CurrPos = GetPosition();
     /* calculate the next position */
     Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
     SetPosition(NewPos);
+
+    /* check wall collision */
+    std::vector<AABBColliderComponent*> other;
+    for(Wall *wall : mGame->GetWalls()){
+        other.push_back( wall->GetComponent<AABBColliderComponent>() );
+    }
+    for(AABBColliderComponent *collider : mColliders)
+        collider->DetectCollision(other);
 }
 
 void Piece::Rotate(float theta){
     
     int i=0;
     for(auto collider : mColliders){
+        
         Vector2 offset = collider->GetOffset();
         double x = offset.x;
         double y = offset.y;
-        RotateCounterClockWise(x, y, 0, 0, 90.0f);
+        
+        if(theta < 0){
+            RotateClockWise(x,y,0,0,90.0f);
+        }
+        else{
+            RotateCounterClockWise(x, y, 0, 0, 90.0f);
+        }
+
         collider->SetOffset(Vector2(x,y));
         mDrawPolygons[i++]->SetVertices(Vector2(x,y));
     }
@@ -105,19 +125,7 @@ void Piece::Flip(){
 }
 
 void Piece::OnUpdate(float DeltaTime){
-    
-    if(IsEnabled()){
-        mCanProcessInput = !mGame->GetAction();
-        /* check if is for walls */
-        std::vector<AABBColliderComponent*> colliders;
-        for(auto wall : mGame->GetWalls()){
-            colliders.push_back( wall->GetComponent<AABBColliderComponent>() );
-        }
-        for(auto collider : mColliders)
-            collider->DetectCollision(colliders);
-    } else{
-        mCanProcessInput = false;
-    }
+    mCanProcessInput = IsEnabled() ? !mGame->GetAction() : false;
 }
 
 void Piece::OnProcessInput(const Uint8 *KeyState){
@@ -143,39 +151,35 @@ void Piece::OnProcessInput(const Uint8 *KeyState){
 
 void Piece::Place(){
 
-    std::vector<AABBColliderComponent*> colliders;
+    std::vector<AABBColliderComponent*> other;
 
-    for(auto piece : mGame->GetBoard()->GetPieces()){
-        colliders.push_back( piece->GetComponent<AABBColliderComponent>() );
+    for(Piece *piece : mGame->GetBoard()->GetPieces()){
+        other.push_back( piece->GetComponent<AABBColliderComponent>() );
     }
-    for(auto piece : mGame->GetStash()->GetPieces()){
-        colliders.push_back( piece->GetComponent<AABBColliderComponent>() );
+    for(Piece *piece : mGame->GetStash()->GetPieces()){
+        other.push_back( piece->GetComponent<AABBColliderComponent>() );
     }
-    for(auto block : mGame->GetBoard()->GetBlocks()){
-        colliders.push_back( block->GetComponent<AABBColliderComponent>() );
+    for(Peg *peg : mGame->GetBoard()->GetPegs()){
+        other.push_back( peg->GetComponent<AABBColliderComponent>() );
     }
-    for(auto block : mGame->GetStash()->GetBlocks()){
-        colliders.push_back( block->GetComponent<AABBColliderComponent>() );
-    }
-
-    /* ATENTION! Also need to test collision with pegs */  
     
-    this->GetComponent<AABBColliderComponent>()->DetectCollision(colliders);
+    /* check collision for piece multiple colliders */
+    for(AABBColliderComponent *collider : mColliders){
+        collider->DetectCollision(other);
+        if(mCanPlace == false) /* if at least one collided, break */ 
+            break;
+    }
+
+    if(mCanPlace){
+        Cursor *cursor = mGame->GetCursor();
+        cursor->Enable();
+        cursor->SetPosition(GetPosition());
+        this->Disable();
+    }
 }
 
  void Piece::OnCollision(const std::vector<Actor*>&responses){
-
-    if(responses.empty())
-        return;
-
-    for(auto res : responses){ /* also check for pegs */
-        if(res->GetComponent<AABBColliderComponent>()->GetLayer() == ColliderLayer::PIECE)
-            return;
-    }
-    Block *cursor = mGame->GetCursor();
-    cursor->Enable();
-    cursor->SetPosition(GetPosition());
-    this->Disable();
+    mCanPlace = responses.empty() ? true : false;
 }
 
 void Piece::RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta){
@@ -184,6 +188,16 @@ void Piece::RotateCounterClockWise(double& x, double& y, double cx, double cy, d
     double radianTheta = theta * M_PI / 180.0;
     int newX = x*(int)cos(radianTheta)+y*(int)sin(radianTheta);
     int newY = -x*(int)sin(radianTheta)+y*(int)cos(radianTheta);
+    x = newX + cx;
+    y = newY + cy;
+}
+
+void Piece::RotateClockWise(double& x, double& y, double cx, double cy, double theta){
+    x -= cx;
+    y -= cy;
+    double radianTheta = theta * M_PI / 180.0;
+    int newX = x*(int)cos(radianTheta)-y*(int)sin(radianTheta);
+    int newY = x*(int)sin(radianTheta)+y*(int)cos(radianTheta);
     x = newX + cx;
     y = newY + cy;
 }

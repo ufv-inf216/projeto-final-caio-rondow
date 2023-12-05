@@ -10,25 +10,31 @@ public:
     
     /* Constructors */
     ConcreteGame(uint WindowWidth, uint WindowHeight);
+    
     /* Game Loop */
     bool InitGame() override;
     void EnterMainLoop() override;
     void ShutDown() override;
     void Quit() override;
+    
     /* Game Window */
     uint GetWindowWidth() const override;
     uint GetWindowHeight() const override;
+    
     /* Actors */
     void AddActor(Actor *actor) override;
     void RemoveActor(Actor *actor) override;
+    
     /* Drawables */
     void AddDrawable(DrawComponent *drawable) override;
     void RemoveDrawable(DrawComponent *drawable) override;
+    
     /* Load methods */
     SDL_Texture *LoadTexture(const std::string&TextureFile) const override;
     void LoadLevel(const std::string&LevelFile) override;
+    
     /* Game specific */
-    inline Block *GetCursor() const override{
+    inline Cursor *GetCursor() const override{
         return mCursor;
     }
     inline const Table *GetBoard() const override{
@@ -37,7 +43,7 @@ public:
     inline const Table *GetStash() const override{
         return mStash;
     }
-    inline const std::vector<Block*> &GetWalls() const{ 
+    inline const std::vector<Wall*> &GetWalls() const{ 
         return mWalls; 
     }
     inline bool GetAction() const override{
@@ -73,6 +79,6 @@ private:
     /* Game Specific */
     Table *mBoard;
     Table *mStash;
-    Block *mCursor;
-    std::vector<Block*> mWalls; /* this is the wall cells around the table */
+    Cursor *mCursor;
+    std::vector<Wall*> mWalls; /* this is the wall cells around the table */
 };

@@ -38,6 +38,7 @@ bool AABBColliderComponent::Intersect(AABBColliderComponent *b) const{
 
 void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> &colliders){
     
+    static int i=0;
     std::vector<Actor*> responses;
 
     // Check collision against each target collider
@@ -49,13 +50,12 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
         if(Intersect(collider)){
             
             if(collider->GetLayer() == ColliderLayer::PIECE){
-                std::cout << "collision block x piece\n";
+                std::cout << "colisao bloco com peça " << i++ << "\n";
                 responses.emplace_back( &collider->GetOwner() );
                 break;
             }
 
             if(collider->GetLayer() == ColliderLayer::WALL){
-                static int i=0;
                 std::cout << "colisao com a parede " << i++ << "\n"; 
                 ResolveCollisions(GetMinOverlap(collider));
                 return;

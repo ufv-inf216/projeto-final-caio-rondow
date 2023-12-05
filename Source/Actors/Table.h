@@ -4,6 +4,7 @@
 
 class Piece;
 class Block;
+class Peg;
 
 class Table : public Actor{
 public:
@@ -11,13 +12,17 @@ public:
 
     inline uint GetTableWidth() const{ return mTableWidth; }
     inline uint GetTableHeight() const{ return mTableHeight; }
-    inline void AddPiece(Piece *p){ mPieces.emplace_back(p); }
-    inline const std::vector<Piece*> &GetPieces() const{ return mPieces; }
-    inline const std::vector<Block*> &GetBlocks() const{ return mTable; }
+    
+    void AddPiece(Piece *piece);
+    void AddPeg(Peg *peg);
+
+    const std::vector<Piece*> &GetPieces() const;
+    const std::vector<Block*> &GetBlocks() const;
+    const std::vector<Peg*> &GetPegs() const;
 
 private:
     uint mTableWidth, mTableHeight;
     std::vector<Block*> mTable;     /* this is the table cells */
     std::vector<Piece*> mPieces;    /* this is the pieces on the table */
-    
+    std::vector<Peg*> mPegs;      /* this is the fixed pegs on the table */  
 };

@@ -12,10 +12,13 @@ add_executable(
     Source/Utils/AudioSystem.cpp
     Source/Game/ConcreteGame.cpp
     
+    Source/Actors/Cursor.cpp
     Source/Actors/Actor.cpp
     Source/Actors/Block.cpp
     Source/Actors/Piece.cpp
     Source/Actors/Table.cpp
+    Source/Actors/Wall.cpp
+    Source/Actors/Peg.cpp
 
     Source/Components/Component.cpp
     Source/Components/DrawComponents/DrawComponent.cpp

@@ -5,6 +5,8 @@
 #include "../Actors/Table.h"
 #include "../Actors/Piece.h"
 #include "../Actors/Block.h"
+#include "../Actors/Wall.h"
+#include "../Actors/Peg.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -24,7 +26,8 @@ namespace parser{
         std::getline(ifs, row); /* ignore header */
         while (std::getline(ifs, row)) {
             
-            Piece *p;
+            Piece *piece;
+            Peg *peg;
             float x, y;
             float rotation;
             bool flip, isBoard;
@@ -40,49 +43,64 @@ namespace parser{
 
             /* Create a new piece */
             if(isBoard){
-
                 x = x*BLOCK_SIZE + BOARD_ORIGIN_X;
                 y = y*BLOCK_SIZE + BOARD_ORIGIN_Y;
-                p = new Piece(board.GetGame(), x, y, type, rotation, flip);
-                board.AddPiece(p);
+
+                /* red peg        blue peg       green peg      yellow peg */
+                if(type == 'R' || type == 'B' || type == 'G' || type == 'Y'){
+                    std::cout << type << "\n";
+                    peg = new Peg(board.GetGame(), x, y, type);
+                    board.AddPeg(peg);
+                } else{
+                    piece = new Piece(board.GetGame(), x, y, type, rotation, flip);
+                    board.AddPiece(piece);
+                }
 
             } else{
 
                 x = x*BLOCK_SIZE + STASH_ORIGIN_X;
                 y = y*BLOCK_SIZE + STASH_ORIGIN_Y;
-                p = new Piece(stash.GetGame(), x, y, type, rotation, flip);
-                stash.AddPiece(p);
+                piece = new Piece(stash.GetGame(), x, y, type, rotation, flip);
+                stash.AddPiece(piece);
             }
         }
     }
 
-    static void RaiseWalls(std::vector<Block*> &walls, InterfaceGame *game){
+    static void RaiseWalls(InterfaceGame *game, std::vector<Wall*> &walls){
 
         uint WindowWidth = game->GetWindowWidth();
 
         /* CREATE TOP WALL */
-        Block *TopWall = new Block(game,0,0,false,ColliderLayer::WALL, WindowWidth, BOARD_ORIGIN_Y);
+        Wall *TopWall = new Wall(game,0,0,WindowWidth,BOARD_ORIGIN_Y);
         walls.emplace_back(TopWall);
         
         /* CREATE MIDDLE WALL (BETWEEN BOARD AND STASH) */
-        Block *MidWall = new Block(game,BOARD_ORIGIN_X+BLOCK_SIZE*BOARD_WIDTH,0,
-            false,ColliderLayer::WALL,STASH_ORIGIN_X - (BOARD_ORIGIN_X+BLOCK_SIZE*BOARD_WIDTH),WindowWidth);
+        Wall *MidWall = new Wall(
+            game,BOARD_ORIGIN_X+BLOCK_SIZE*BOARD_WIDTH,0,
+            STASH_ORIGIN_X-(BOARD_ORIGIN_X+BLOCK_SIZE*BOARD_WIDTH),WindowWidth
+        );
         walls.emplace_back(MidWall);
-        
+
         /* CREATE BOARD-LEFT WALL */
-        Block *BoardLeftWall = new Block(game,0,0,false,ColliderLayer::WALL, BOARD_ORIGIN_X, WindowWidth);
+        Wall *BoardLeftWall = new Wall(game,0,0,BOARD_ORIGIN_X, WindowWidth);
         walls.emplace_back(BoardLeftWall);
-        
+
         /* CREATE BOARD-BOTTOM WALL */
-        Block *BoardBottomWall = new Block(game,0,BOARD_ORIGIN_Y+BOARD_HEIGHT*BLOCK_SIZE,false,ColliderLayer::WALL,STASH_ORIGIN_X, WindowWidth);
+        Wall *BoardBottomWall = new Wall(
+            game,0,BOARD_ORIGIN_Y+BOARD_HEIGHT*BLOCK_SIZE,STASH_ORIGIN_X, WindowWidth
+        );
         walls.emplace_back(BoardBottomWall);
-        
+
         /* CREATE STASH-BOTTOM WALL */
-        Block *StashBottomWall = new Block(game,0,STASH_ORIGIN_Y+STASH_HEIGHT*BLOCK_SIZE,false,ColliderLayer::WALL,WindowWidth,WindowWidth);
-        walls.emplace_back(StashBottomWall); 
-        
+        Wall *StashBottomWall = new Wall(
+            game,0,STASH_ORIGIN_Y+STASH_HEIGHT*BLOCK_SIZE,WindowWidth,WindowWidth
+        );
+        walls.emplace_back(StashBottomWall);
+
         /* CREATE STASH-RIGHT WALL */
-        Block *StashRightWall = new Block(game,STASH_ORIGIN_X+STASH_WIDTH*BLOCK_SIZE,0,false,ColliderLayer::WALL,WindowWidth,WindowWidth);
+        Wall *StashRightWall = new Wall(
+            game,STASH_ORIGIN_X+STASH_WIDTH*BLOCK_SIZE,0,WindowWidth,WindowWidth
+        );
         walls.emplace_back(StashRightWall);
     }
 };

@@ -1,97 +1,12 @@
 #include "Block.h"
-#include "Table.h"
-#include "../Components/DrawComponents/DrawAnimatedComponent.h"
-#include "../Components/DrawComponents/DrawPolygonComponent.h"
+#include "../Components/DrawComponents/DrawSpriteComponent.h"
 
-Block::Block(InterfaceGame *game, float x, float y, bool enable, ColliderLayer layer, uint CollisorWidth, uint CollisorHeight):
+/* create a block */
+Block::Block(InterfaceGame *game, float x, float y, bool enable):
     Piece(game, x, y)
 {
+    /* could be a cursor, instead of a static block */
     mIsEnabled = enable;
-    std::string spritesheet = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.jpg";
-    std::string spritedata  = "../Assets/Sprite/NodeDebug/DebugSpriteSheet.json";
-
-    mDrawComponent = new DrawAnimatedComponent(this, spritesheet, spritedata, mIsEnabled ? 9 : 0);
-    mDrawComponent->AddAnimation("idle", {0});
-    mDrawComponent->AddAnimation("cursor", {1});
-    mDrawComponent->SetAnimation( IsEnabled() ? "cursor" : "idle" );
-    mDrawComponent->SetAnimationFPS(1);
-
-    mAABBColliderComponent = new AABBColliderComponent(this, Vector2(0,0), CollisorWidth, CollisorHeight, layer);
-    
-    /* WALL COLLIDER - DEBUG ONLY */
-    if(layer == ColliderLayer::WALL){
-    
-        std::vector<Vector2> vertices;
-        vertices.push_back(Vector2(0,0));
-        vertices.push_back(Vector2(CollisorWidth,0));
-        vertices.push_back(Vector2(CollisorWidth,CollisorHeight));
-        vertices.push_back(Vector2(0,CollisorHeight));
-        mDrawPolygonComponent = new DrawPolygonComponent(this, vertices);
-    }
-    /* WALL COLLIDER - DEBUG ONLY */
-    
-}
-
-void Block::OnUpdate(float DeltaTime){
-    if(IsEnabled()){
-        mCanProcessInput = !mGame->GetAction();
-        mDrawComponent->SetAnimation("cursor");
-        /* check if is for walls */
-        std::vector<AABBColliderComponent*> colliders;
-        for(auto wall : mGame->GetWalls()){
-            colliders.push_back( wall->GetComponent<AABBColliderComponent>() );
-        }
-        mAABBColliderComponent->DetectCollision(colliders);
-        
-    } else{
-        mCanProcessInput = false;
-        mDrawComponent->SetAnimation("idle");
-    }
-}
-
-void Block::OnProcessInput(const Uint8 *KeyState){
-    if(!IsEnabled() || !mCanProcessInput)
-        return;
-    if(KeyState[SDL_SCANCODE_W])
-        Move(Vector2::NegUnitY);
-    if(KeyState[SDL_SCANCODE_A])
-        Move(Vector2::NegUnitX);
-    if(KeyState[SDL_SCANCODE_S])
-        Move(Vector2::UnitY);
-    if(KeyState[SDL_SCANCODE_D])
-        Move(Vector2::UnitX);
-    if(KeyState[SDL_SCANCODE_SPACE])
-        Grab();
-}
-
-void Block::OnCollision(const std::vector<Actor*>&responses){
-    if(responses.empty())
-        return;
-
-    Block *cursor = mGame->GetCursor();
-    cursor->Disable();
-
-    for(auto res : responses){
-        std::cout << &res << "\n";
-    }
-    static_cast<Piece*>(responses[0])->Enable();
-}
-
-void Block::Grab(){
-
-    std::cout << "aqui\n";
-
-    std::vector<AABBColliderComponent*> colliders;
-
-    for(auto piece : mGame->GetBoard()->GetPieces()){
-        for(auto collider : piece->GetColliders())
-            colliders.push_back(collider);
-    }
-
-    for(auto piece : mGame->GetStash()->GetPieces()){
-        for(auto collider : piece->GetColliders())
-            colliders.push_back(collider);
-    }
-
-    this->GetComponent<AABBColliderComponent>()->DetectCollision(colliders);
+    std::string TextureFile = "../Assets/Sprite/Blocks/block.png";
+    new DrawSpriteComponent(this,TextureFile,BLOCK_SIZE,BLOCK_SIZE,0);
 }

@@ -88,7 +88,6 @@ protected:
     bool mFlip;
     std::vector<Component*> mComponents;
     int mWidth, mHeight;
-    Vector2 mLastMv;
 
 private:
     /* PRIVATE METHODS */
