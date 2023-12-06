@@ -7,6 +7,11 @@ class DrawSpriteComponent;
 class AABBColliderComponent;
 class DrawPolygonComponent;
 
+enum class PieceTable{
+    BOARD,
+    STASH
+};
+
 class Piece : public Actor{
 public:
     explicit Piece(InterfaceGame *game, float x, float y, char PieceType=char(), float rotation=0.0f, bool flip=false);
@@ -37,13 +42,17 @@ public:
 
     void SetHeight(const uint height);
     uint GetHeight() const;
+
+    void SetPieceTable(const PieceTable table);
+    PieceTable GetPieceTable() const;
     
 protected:
     bool mCanProcessInput;
     bool mIsEnabled;
     char mPieceType;
     bool mCanPlace;
-    uint mWidth, mHeight;
+    uint mHeight;
+    uint mWidth;
     bool mFront;
 
 private:
@@ -55,4 +64,7 @@ private:
     /* Change collider based on rotation and flip */
     void RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta);
     void RotateClockWise(double& x, double& y, double cx, double cy, double theta);
+    
+    /* Which board the piece is in it */
+    PieceTable mCurrentTable;
 };

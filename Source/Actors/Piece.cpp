@@ -7,6 +7,7 @@
 
 Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotation, bool flip):
     Actor(game),
+    mCurrentTable(PieceTable::BOARD),
     mDrawSpriteComponent(nullptr),
     mCanProcessInput(false),
     mPieceType(PieceType),
@@ -130,6 +131,13 @@ void Piece::Place(){
     if(mCanPlace){
         
         Vector2 PiecePos = this->GetPosition();
+
+        /* update current board state */
+        if(mGame->IsOnBoard(PiecePos)){
+            mCurrentTable = PieceTable::BOARD;
+        } else{
+            mCurrentTable = PieceTable::STASH;
+        }
         
         Cursor *cursor = mGame->GetCursor();
         cursor->Enable();
@@ -224,6 +232,14 @@ void Piece::SetHeight(const uint height){
 
 uint Piece::GetHeight() const{
     return mHeight;
+}
+
+void Piece::SetPieceTable(const PieceTable table){
+    mCurrentTable = table;
+}
+
+PieceTable Piece::GetPieceTable() const{
+    return mCurrentTable;
 }
 
 /* Change collider based on rotation and flip */

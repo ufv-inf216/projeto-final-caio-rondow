@@ -227,6 +227,33 @@ void ConcreteGame::UpdateActors(float DeltaTime){
         actor->Update(DeltaTime);
     }
 
+    /* update pieces */
+    std::vector<Piece*> RemoveFromBoard;
+    std::vector<Piece*> RemoveFromStash;
+
+    std::cout << "BOARD: ";
+    for(Piece *piece : mBoard->GetPieces()){
+        std::cout << piece->GetPieceType() << " ";
+        if(piece->GetPieceTable() == PieceTable::STASH){
+            RemoveFromBoard.push_back(piece);
+        }
+    } std::cout << "\nSTASH: ";
+    for(Piece *piece : mStash->GetPieces()){
+        std::cout << piece->GetPieceType() << " ";
+        if(piece->GetPieceTable() == PieceTable::BOARD){
+            RemoveFromStash.push_back(piece);
+        } 
+    } std::cout << "\n\n";
+    for(Piece *p : RemoveFromBoard){
+        mBoard->RemovePiece(p);
+        mStash->AddPiece(p);
+    }
+    for(Piece *p : RemoveFromStash){
+        mStash->RemovePiece(p);
+        mBoard->AddPiece(p);
+    }
+    /* update pieces */
+
     mUpdatingActors = false;
 
     for(auto pending : mPendingActors){

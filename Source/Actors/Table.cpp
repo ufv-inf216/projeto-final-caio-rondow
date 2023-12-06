@@ -29,7 +29,7 @@ void Table::RemovePiece(Piece *piece){
     if(it != mPieces.end()){
         std::iter_swap(it, mPieces.end() - 1);
         mPieces.pop_back();
-    }
+    } else std::cout << "nao encontrou\n";
 }
 
 void Table::AddPeg(Peg *peg){
