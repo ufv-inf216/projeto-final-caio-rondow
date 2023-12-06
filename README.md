@@ -69,3 +69,4 @@
 
 - [x] Add level parser
 - [x] Add IsLevelComplete function
+- [x] Handle user input

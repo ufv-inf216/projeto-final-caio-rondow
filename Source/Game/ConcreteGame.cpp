@@ -169,9 +169,7 @@ void ConcreteGame::ProcessInput(){
             Quit();
             break;
         case SDL_KEYDOWN:
-            if(!mAction){
-                mAction = true;
-            }
+            mAction = true;
             break;
         case SDL_KEYUP:
             mAction = false;
@@ -181,7 +179,8 @@ void ConcreteGame::ProcessInput(){
     const Uint8 *state = SDL_GetKeyboardState(nullptr);
     
     for(auto actor : mActors){
-        actor->ProcessInput(state);
+        if(mAction)
+            actor->ProcessInput(state);
     }
 }
 
@@ -197,8 +196,8 @@ void ConcreteGame::UpdateGame(){
 }
 
 void ConcreteGame::GenerateOutput(){
-    /* Set draw color 1a6946 */
-    SDL_SetRenderDrawColor(mRenderer, 0x1a, 0x69, 0x46, 0xFF);
+    /* Set draw color */
+    SDL_SetRenderDrawColor(mRenderer, 0x0, 0x0, 0x0, 0xFF);
     /* Clear the current rendering */
     SDL_RenderClear(mRenderer);
 
