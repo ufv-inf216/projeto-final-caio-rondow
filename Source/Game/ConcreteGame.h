@@ -28,20 +28,20 @@ public:
     /* Drawables */
     void AddDrawable(DrawComponent *drawable) override;
     void RemoveDrawable(DrawComponent *drawable) override;
+    void DrawLast(DrawComponent *drawable) override;
     
     /* Load methods */
     SDL_Texture *LoadTexture(const std::string&TextureFile) const override;
-    void LoadLevel(const std::string&LevelFile) override;
-    void LoadAnwser(const std::string&AnwserFile) override;
+    void LoadLevel(const std::string&StartLevel, const std::string&EndLevel) override;
     
     /* Game specific */
     inline Cursor *GetCursor() const override{
         return mCursor;
     }
-    inline const Table *GetBoard() const override{
+    inline Table *GetBoard() const override{
         return mBoard;
     }
-    inline const Table *GetStash() const override{
+    inline Table *GetStash() const override{
         return mStash;
     }
     inline const std::vector<Wall*> &GetWalls() const{ 
@@ -83,5 +83,5 @@ private:
     Table *mStash;
     Cursor *mCursor;
     std::vector<Wall*> mWalls; /* this is the wall cells around the table */
-    std::vector<Vector2> mAnwser;
+    char mAnswer[BOARD_HEIGHT][BOARD_WIDTH];
 };

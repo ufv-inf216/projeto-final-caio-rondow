@@ -17,13 +17,18 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
     mHeight(BLOCK_SIZE),
     mFront(true)
 {
-    /* piece start position */
-    SetPosition(Vector2(x,y));
-
     /* Load Piece Components */
     if(PieceType != char()){ /* if not a block */
-        parser::LoadPiece(this, mColliders, mDrawPolygons, rotation);
+        parser::LoadPiece(this, mColliders, mDrawPolygons);
+        for(int i=0; i < abs(rotation); i+=PIECE_ROTATION_ANGLE){
+            this->Rotate(PIECE_ROTATION_ANGLE);
+        }
+        if(flip){
+            this->Flip();
+        }
     }
+    /* piece start position */
+    this->SetPosition(Vector2(x,y));
 }
 
 /* piece actions */
@@ -85,9 +90,9 @@ void Piece::Rotate(float theta){
   
         /* update collider */
         collider->SetOffset(Vector2(x,y));
-        mDrawPolygons[i++]->SetVertices(Vector2(x,y));
+        // mDrawPolygons[i++]->SetVertices(Vector2(x,y));
     }
-
+    
     /* update current width/height */
     std::swap(mWidth, mHeight);
 
@@ -129,26 +134,60 @@ void Piece::Place(){
     }
  
     if(mCanPlace){
-        
+
         Vector2 PiecePos = this->GetPosition();
 
-        /* update current board state */
-        if(mGame->IsOnBoard(PiecePos)){
-            mCurrentTable = PieceTable::BOARD;
-        } else{
-            mCurrentTable = PieceTable::STASH;
-        }
-        
         Cursor *cursor = mGame->GetCursor();
         cursor->Enable();
         cursor->SetPosition(PiecePos);
+        cursor->GetComponent<DrawAnimatedComponent>()->SetComponentState(DRAWABLE_STATE_VISIBLE);
+
         this->Disable();
 
-        mGame->IsLevelComplete();
+        /* update current board state */
+        if(mGame->IsOnBoard(PiecePos)){
+            
+            mGame->GetStash()->RemovePiece(this);
+            mGame->GetBoard()->AddPiece(this);
+            
+            mCurrentTable = PieceTable::BOARD;
+
+            /* FOR NOW, IF LEVEL IS COMPLETED
+            SHUT DOWN THE GAME */
+            if( mGame->IsLevelComplete() ){
+                mGame->Quit();
+            }
+
+        } else{
+            mCurrentTable = PieceTable::STASH;
+            mGame->GetStash()->AddPiece(this);
+            mGame->GetBoard()->RemovePiece(this);
+        }
     }
 }
 
 void Piece::Flip(){
+    int i = 0;
+    for(AABBColliderComponent *collider : mColliders){
+
+        Vector2 offset = collider->GetOffset();
+        float x = offset.x;
+        float y = offset.y;
+
+        int theta = abs(mRotation);
+        if(theta == 0)
+            x = -x + mWidth - BLOCK_SIZE;
+        else if(theta == 90){
+            y = -y - mHeight + BLOCK_SIZE;
+        } else if(theta == 180){
+            x = -x - mWidth + BLOCK_SIZE;
+        } else {
+            y = -y + mHeight - BLOCK_SIZE;
+        }
+        collider->SetOffset(Vector2(x,y));
+        // mDrawPolygons[i++]->SetVertices(Vector2(x,y));
+    }
+
     SetFlip(!mFlip);
 }
 
@@ -181,6 +220,7 @@ void Piece::OnUpdate(float DeltaTime){
     mCanProcessInput = IsEnabled() ? !mGame->GetAction() : false;
 
     if(IsEnabled()){
+        
         /* check wall collision */
         std::vector<AABBColliderComponent*> other;
         for(Wall *wall : mGame->GetWalls()){
@@ -200,8 +240,8 @@ char Piece::GetPieceType() const {
 }
 
 /* return piece index of the piece type */
-int Piece::ToIndex() const{
-    auto it = PieceToIndex.find(mPieceType);
+int Piece::ToIndex(const char PieceType){
+    auto it = PieceToIndex.find(PieceType);
     return it->second;
 }
 

@@ -1,4 +1,5 @@
 #include "Block.h"
+#include "Table.h"
 #include "../Components/DrawComponents/DrawSpriteComponent.h"
 
 /* create a block */

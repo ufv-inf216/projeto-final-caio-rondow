@@ -51,6 +51,8 @@
 
 #define PEG_INDEX 0x9
 
+#define NUMBER_OF_PIECES 8
+
 /* this map is just to make it easier to 
 create levels */
 const std::map<char, int> PieceToIndex = {
@@ -89,18 +91,19 @@ public:
     
     virtual void AddDrawable(DrawComponent *drawable) = 0;
     virtual void RemoveDrawable(DrawComponent *drawable) = 0;
+    virtual void DrawLast(DrawComponent *drawable) = 0;
     
     virtual SDL_Texture *LoadTexture(const std::string&TextureFile) const = 0;
-    virtual void LoadLevel(const std::string&LevelFile) = 0;
-    virtual void LoadAnwser(const std::string&AnwserFile) = 0;
+    virtual void LoadLevel(const std::string&StartLevel, const std::string&EndLevel) = 0;
     
     virtual Cursor *GetCursor() const = 0;
-    virtual const Table *GetBoard() const = 0;
-    virtual const Table *GetStash() const = 0;
+    virtual Table *GetBoard() const = 0;
+    virtual Table *GetStash() const = 0;
     virtual const std::vector<Wall*> &GetWalls() const = 0;
     
     virtual bool GetAction() const = 0;
     virtual bool IsOnBoard(const Vector2 &pos) const = 0;
+
     virtual bool IsLevelComplete() const = 0;
 
 private:

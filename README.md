@@ -30,7 +30,7 @@
 
 - [x] Move function
 - [x] Rotate function
-- [ ] Flip function
+- [x] Flip function
 - [x] Place function
 - [x] Multiple Collisors
 - [x] Add Pegs
@@ -68,4 +68,4 @@
 #### Game
 
 - [x] Add level parser
-- [ ] Add IsLevelComplete function
+- [x] Add IsLevelComplete function

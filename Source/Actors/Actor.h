@@ -29,20 +29,16 @@ public:
     void SetPosition(const Vector2&position);
     
     float GetScale() const;
-    void SetScale(float scale);
+    void SetScale(const float scale);
 
     float GetRotation() const;
-    void SetRotation(float rotation);
+    void SetRotation(const float rotation);
 
     ActorState GetActorState() const;
     void SetActorState(ActorState state);
 
-    inline bool GetFlip() const{
-        return mFlip;
-    }
-    inline void SetFlip(const bool flip){
-        mFlip = flip;
-    }
+    bool GetFlip() const;
+    void SetFlip(const bool flip);
 
     InterfaceGame *GetGame() const;
 
@@ -60,7 +56,6 @@ public:
     }
 
 protected:
-    /* PROTECTED METHODS */
 
     /* Specific actor update code */
     virtual void OnUpdate(float DeltaTime);
@@ -68,12 +63,13 @@ protected:
 
     /* PROTECTED ATTRIBUTES */
     InterfaceGame *mGame;
-    ActorState mState;
-    Vector2 mPosition;
-    float mScale;
-    float mRotation;
-    bool mFlip;
     std::vector<Component*> mComponents;
+   
+    Vector2 mPosition;
+    ActorState mState;
+    float mRotation;
+    float mScale;
+    bool mFlip;
     
 private:
     /* PRIVATE METHODS */

@@ -42,23 +42,23 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
     std::vector<Actor*> responses;
 
     // Check collision against each target collider
-    for(auto collider : colliders){
+    for(auto other : colliders){
 
-        if(collider == nullptr || collider == this || !collider->IsComponentEnabled())
+        if(other == nullptr || other == this || !other->IsComponentEnabled())
             continue;
         
-        if(Intersect(collider)){
+        if(Intersect(other)){
             
-            if(collider->GetLayer() == ColliderLayer::PIECE){
-                responses.emplace_back( &collider->GetOwner() );
+            if(other->GetLayer() == ColliderLayer::PIECE){
+                responses.emplace_back( &other->GetOwner() );
                 break;
             }
-            else if(collider->GetLayer() == ColliderLayer::PEG && !mIsHollow){
-                responses.emplace_back( &collider->GetOwner() );
+            else if(other->GetLayer() == ColliderLayer::PEG && !mIsHollow){
+                responses.emplace_back( &other->GetOwner() );
                 break;
             } 
-            else if(collider->GetLayer() == ColliderLayer::WALL){
-                ResolveCollisions(GetMinOverlap(collider));
+            else if(other->GetLayer() == ColliderLayer::WALL){
+                ResolveCollisions(GetMinOverlap(other));
                 return;
             }
         }

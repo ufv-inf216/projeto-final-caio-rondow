@@ -30,7 +30,7 @@ public:
     char GetPieceType() const;
     
     /* return piece index of the piece type */
-    int ToIndex() const;
+    static int ToIndex(const char PieceType);
 
     /* mIsEnabled state makes the piece freeze or move */
     bool IsEnabled() const;

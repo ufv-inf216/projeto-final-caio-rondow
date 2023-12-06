@@ -20,8 +20,11 @@ Table::Table(InterfaceGame *game, const Vector2&origin, uint TableWidth, uint Ta
     }
 }
 
-void Table::AddPiece(Piece *piece){ 
-    mPieces.emplace_back(piece); 
+void Table::AddPiece(Piece *piece){
+    auto it = std::find(mPieces.begin(), mPieces.end(), piece);
+    if(it == mPieces.end()){
+        mPieces.emplace_back(piece);
+    } 
 }
 
 void Table::RemovePiece(Piece *piece){
@@ -29,7 +32,7 @@ void Table::RemovePiece(Piece *piece){
     if(it != mPieces.end()){
         std::iter_swap(it, mPieces.end() - 1);
         mPieces.pop_back();
-    } else std::cout << "nao encontrou\n";
+    }
 }
 
 void Table::AddPeg(Peg *peg){

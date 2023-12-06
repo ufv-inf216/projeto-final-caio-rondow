@@ -13,7 +13,7 @@ ConcreteGame::ConcreteGame(uint WindowWidth, uint WindowHeight):
     mIsRunning(true),
     mAction(false),
     mWindow(nullptr),
-    // mCursor(nullptr),
+    mCursor(nullptr),
     mRenderer(nullptr),
     mUpdatingActors(false),
     mWindowWidth(WindowWidth),
@@ -116,6 +116,14 @@ void ConcreteGame::RemoveDrawable(DrawComponent *drawable){
     mDrawables.erase(it);
 }
 
+void ConcreteGame::DrawLast(DrawComponent *drawable){
+    auto it = std::find(mDrawables.begin(), mDrawables.end(), drawable);
+    if(it != mDrawables.end()){
+        std::iter_swap(it, mDrawables.end()-1);
+    }
+}
+
+
 /* Load methods */
 SDL_Texture *ConcreteGame::LoadTexture(const std::string&TextureFile) const{
     SDL_Surface *surface = IMG_Load(TextureFile.c_str());
@@ -136,24 +144,18 @@ SDL_Texture *ConcreteGame::LoadTexture(const std::string&TextureFile) const{
     return texture;
 }
 
-void ConcreteGame::LoadLevel(const std::string&LevelFile){
+void ConcreteGame::LoadLevel(const std::string&StartLevel, const std::string&EndLevel){
 
     Vector2 BoardOrigin = Vector2(BOARD_ORIGIN_X, BOARD_ORIGIN_Y);
     Vector2 StashOrigin = Vector2(STASH_ORIGIN_X, STASH_ORIGIN_Y);
 
     mBoard  = new Table(this, BoardOrigin, BOARD_WIDTH, BOARD_HEIGHT);
     mStash  = new Table(this, StashOrigin, STASH_WIDTH, STASH_HEIGHT);
-    // mCursor = new Cursor(this, BOARD_ORIGIN_X, BOARD_ORIGIN_Y, true);
-    mCursor = new Cursor(this, STASH_ORIGIN_X, STASH_ORIGIN_Y, true);
+    mCursor = new Cursor(this, BOARD_ORIGIN_X, BOARD_ORIGIN_Y, true);
 
     parser::RaiseWalls(this, mWalls);
-    parser::LoadTable(LevelFile, *mBoard, *mStash);
-}
-
-void ConcreteGame::LoadAnwser(const std::string&AnwserFile){
-
-
-
+    parser::LoadTable(StartLevel, *mBoard, *mStash);
+    parser::LoadAnwser(EndLevel, mAnswer);
 }
 
 /* PRIVATE METHODS */
@@ -189,7 +191,6 @@ void ConcreteGame::UpdateGame(){
     float DeltaTime = (float)(SDL_GetTicks() - mTicksCount) / 1000.0f;
     if(DeltaTime > 0.05f)
         DeltaTime = 0.05f;
-    // std::cout << "Dt : " << DeltaTime << "\n";
     mTicksCount = SDL_GetTicks();
 
     UpdateActors(DeltaTime);
@@ -202,7 +203,9 @@ void ConcreteGame::GenerateOutput(){
     SDL_RenderClear(mRenderer);
 
     for(auto drawable : mDrawables){
-        drawable->Draw(mRenderer);   
+        if(drawable->IsComponentEnabled()){
+            drawable->Draw(mRenderer);   
+        }
     }
 
     /* Swap front and back buffers - actually rendering */
@@ -210,14 +213,34 @@ void ConcreteGame::GenerateOutput(){
 }
 
 void ConcreteGame::InitActors(){
-    LoadLevel("../Assets/Level/Start/example0.csv");
-    // LoadAnwser("../Assets/Level/End/example0.csv");
+    LoadLevel(
+        "../Assets/Level/Start/example0.csv",
+        "../Assets/Level/End/example0.csv"
+    );
 }
 
 bool ConcreteGame::IsLevelComplete() const{
-    return false;
-}
+    
+    if(mBoard->GetPieces().size() != NUMBER_OF_PIECES){
+        return false;
+    }
 
+    /* compare the current board state with the answer */
+    for(Piece *p : mBoard->GetPieces()){
+
+        for(AABBColliderComponent *collider : p->GetColliders()){
+            
+            char type = p->GetPieceType();
+            int i = (int)(collider->GetMin().y-BOARD_ORIGIN_Y)/BLOCK_SIZE;
+            int j = (int)(collider->GetMin().x-BOARD_ORIGIN_X)/BLOCK_SIZE;
+
+            if(type != mAnswer[i][j])
+                return false;
+        }
+    }
+
+    return true;
+}
 
 void ConcreteGame::UpdateActors(float DeltaTime){
     
@@ -226,33 +249,6 @@ void ConcreteGame::UpdateActors(float DeltaTime){
     for(auto actor : mActors){
         actor->Update(DeltaTime);
     }
-
-    /* update pieces */
-    std::vector<Piece*> RemoveFromBoard;
-    std::vector<Piece*> RemoveFromStash;
-
-    std::cout << "BOARD: ";
-    for(Piece *piece : mBoard->GetPieces()){
-        std::cout << piece->GetPieceType() << " ";
-        if(piece->GetPieceTable() == PieceTable::STASH){
-            RemoveFromBoard.push_back(piece);
-        }
-    } std::cout << "\nSTASH: ";
-    for(Piece *piece : mStash->GetPieces()){
-        std::cout << piece->GetPieceType() << " ";
-        if(piece->GetPieceTable() == PieceTable::BOARD){
-            RemoveFromStash.push_back(piece);
-        } 
-    } std::cout << "\n\n";
-    for(Piece *p : RemoveFromBoard){
-        mBoard->RemovePiece(p);
-        mStash->AddPiece(p);
-    }
-    for(Piece *p : RemoveFromStash){
-        mStash->RemovePiece(p);
-        mBoard->AddPiece(p);
-    }
-    /* update pieces */
 
     mUpdatingActors = false;
 

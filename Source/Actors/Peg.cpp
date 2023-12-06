@@ -13,12 +13,12 @@ Peg::Peg(InterfaceGame *game, float x, float y, char PegType):
         PEG_UPDATE_ORDER
     );
 
-    /* SHOW PEG COLLIDER - DEBUG ONLY */
-    std::vector<Vector2> vertices;
-    vertices.push_back(Vector2(0,0));
-    vertices.push_back(Vector2(BLOCK_SIZE,0));
-    vertices.push_back(Vector2(BLOCK_SIZE,BLOCK_SIZE));
-    vertices.push_back(Vector2(0,BLOCK_SIZE));
-    new DrawPolygonComponent(this, vertices);
-    /* SHOW PEG COLLIDER - DEBUG ONLY */
+    // /* SHOW PEG COLLIDER - DEBUG ONLY */
+    // std::vector<Vector2> vertices;
+    // vertices.push_back(Vector2(0,0));
+    // vertices.push_back(Vector2(BLOCK_SIZE,0));
+    // vertices.push_back(Vector2(BLOCK_SIZE,BLOCK_SIZE));
+    // vertices.push_back(Vector2(0,BLOCK_SIZE));
+    // new DrawPolygonComponent(this, vertices);
+    // /* SHOW PEG COLLIDER - DEBUG ONLY */
 }

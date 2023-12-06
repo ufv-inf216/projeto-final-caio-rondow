@@ -25,7 +25,6 @@ Cursor::Cursor(InterfaceGame *game, float x, float y, bool enable):
 void Cursor::OnUpdate(float DeltaTime){
     if(IsEnabled()){
         mCanProcessInput = !mGame->GetAction();
-        mDrawAnimComponent->SetAnimation("cursor");
         
         /* check if is for walls */
         std::vector<AABBColliderComponent*> colliders;
@@ -36,7 +35,6 @@ void Cursor::OnUpdate(float DeltaTime){
         
     } else{
         mCanProcessInput = false;
-        mDrawAnimComponent->SetAnimation("idle");
     }
 }
 
@@ -56,11 +54,18 @@ void Cursor::OnProcessInput(const Uint8 *KeyState){
 }
 
 void Cursor::OnCollision(const std::vector<Actor*>&responses){
+    
     if(responses.empty())
         return;
+    
     this->Disable();
-    this->SetPosition(Vector2(0,0));
-    static_cast<Piece*>(responses[0])->Enable();
+    mDrawAnimComponent->SetComponentState(false);
+    
+    Piece *piece = static_cast<Piece*>(responses[0]);
+    piece->Enable();
+    /* put piece at upper layer */
+    mGame->DrawLast(piece->GetComponent<DrawSpriteComponent>());
+
 }
 
 void Cursor::GrabPiece(){

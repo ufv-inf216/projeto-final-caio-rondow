@@ -61,7 +61,7 @@ float Actor::GetScale() const{
     return mScale;
 }
 
-void Actor::SetScale(float scale){
+void Actor::SetScale(const float scale){
     mScale = scale;
 }
 
@@ -70,7 +70,7 @@ float Actor::GetRotation() const{
     return mRotation;
 }
 
-void Actor::SetRotation(float rotation){
+void Actor::SetRotation(const float rotation){
     mRotation = rotation;
 }
 
@@ -81,6 +81,13 @@ ActorState Actor::GetActorState() const{
 
 void Actor::SetActorState(ActorState state){
     mState = state;
+}
+
+bool Actor::GetFlip() const{
+    return mFlip;
+}
+void Actor::SetFlip(const bool flip){
+    mFlip = flip;
 }
 
 /* Game */

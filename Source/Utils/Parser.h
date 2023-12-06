@@ -179,9 +179,9 @@ namespace parser{
         walls.emplace_back(StashRightWall);
     }
 
-    static void LoadPiece(Piece *piece, std::vector<AABBColliderComponent*>&colliders, std::vector<DrawPolygonComponent*>&polygons, float rotation){
+    static void LoadPiece(Piece *piece, std::vector<AABBColliderComponent*>&colliders, std::vector<DrawPolygonComponent*>&polygons){
         
-        int idx = piece->ToIndex();
+        int idx = Piece::ToIndex(piece->GetPieceType());
         
         uint width  = PieceShape[idx][0];
         uint height = PieceShape[idx][1];
@@ -189,7 +189,6 @@ namespace parser{
 
         piece->SetWidth(width);
         piece->SetHeight(height);
-        piece->Rotate(rotation);
         
         std::string PieceTexture = "../Assets/Sprite/Pieces/" + 
                                     std::string(1,piece->GetPieceType()) + ".png";
@@ -210,16 +209,43 @@ namespace parser{
 
             colliders.emplace_back(collider);
 
-            /* PIECE COLLIDER - DEBUG ONLY */
-            std::vector<Vector2> vertices;
-            vertices.push_back(Vector2(x,y));
-            vertices.push_back(Vector2(x+BLOCK_SIZE,y));
-            vertices.push_back(Vector2(x+BLOCK_SIZE,y+BLOCK_SIZE));
-            vertices.push_back(Vector2(x,y+BLOCK_SIZE));
-            DrawPolygonComponent *polygon = new DrawPolygonComponent(piece, vertices);
-            polygon->SetColor(255,255,0,255);
-            polygons.emplace_back(polygon);
-            /* PIECE COLLIDER - DEBUG ONLY */
+            // /* PIECE COLLIDER - DEBUG ONLY */
+            // std::vector<Vector2> vertices;
+            // vertices.push_back(Vector2(x,y));
+            // vertices.push_back(Vector2(x+BLOCK_SIZE,y));
+            // vertices.push_back(Vector2(x+BLOCK_SIZE,y+BLOCK_SIZE));
+            // vertices.push_back(Vector2(x,y+BLOCK_SIZE));
+            // DrawPolygonComponent *polygon = new DrawPolygonComponent(piece, vertices);
+            // polygon->SetColor(255,255,0,255);
+            // polygons.emplace_back(polygon);
+            // /* PIECE COLLIDER - DEBUG ONLY */
         }
-    }   
+    } 
+
+    static void LoadAnwser(const std::string &filename, char answer[BOARD_HEIGHT][BOARD_WIDTH]){
+
+        std::ifstream ifs(filename, std::ifstream::in);
+            if(!ifs.is_open()){
+            std::cerr << "In void ConcreteGame::LoadLevel(const std::string&LevelFile)\n";
+            std::cerr << "Could not open " << filename << ".\n";
+            exit(EXIT_FAILURE);
+        }
+
+        int i=0;
+        std::string row;
+        std::vector<std::vector<char>> tmp;
+        while (std::getline(ifs, row)) {
+            tmp.push_back(std::vector<char>());
+            for(char chr : row){
+                tmp[i].push_back(chr);
+            } 
+            i++;
+        }
+
+        for(int i=0; i<BOARD_HEIGHT; i++){
+            for(int j=0; j<BOARD_WIDTH; j++){
+                answer[i][j] = tmp[i][j];
+            }
+        }
+    }
 };
