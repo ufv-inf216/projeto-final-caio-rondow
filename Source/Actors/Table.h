@@ -14,6 +14,8 @@ public:
     inline uint GetTableHeight() const{ return mTableHeight; }
     
     void AddPiece(Piece *piece);
+    void RemovePiece(Piece *piece);
+
     void AddPeg(Peg *peg);
 
     const std::vector<Piece*> &GetPieces() const;

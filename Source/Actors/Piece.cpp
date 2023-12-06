@@ -105,10 +105,14 @@ void Piece::Place(){
     std::vector<AABBColliderComponent*> other;
 
     for(Piece *piece : mGame->GetBoard()->GetPieces()){
-        other.push_back( piece->GetComponent<AABBColliderComponent>() );
+        for(AABBColliderComponent *collider : piece->GetColliders()){
+            other.push_back(collider);
+        }
     }
     for(Piece *piece : mGame->GetStash()->GetPieces()){
-        other.push_back( piece->GetComponent<AABBColliderComponent>() );
+        for(AABBColliderComponent *collider : piece->GetColliders()){
+            other.push_back(collider);
+        }
     }
     for(Peg *peg : mGame->GetBoard()->GetPegs()){
         other.push_back( peg->GetComponent<AABBColliderComponent>() );
@@ -117,16 +121,22 @@ void Piece::Place(){
     /* check collision for piece multiple colliders */
     for(AABBColliderComponent *collider : mColliders){
         collider->DetectCollision(other);
-        if(mCanPlace == false) /* if at least one collided, break */ 
-            break;
+        /* if at least one collided, break */ 
+        if(mCanPlace == false){
+            return;
+        } 
     }
  
     if(mCanPlace){
-        Cursor *cursor = mGame->GetCursor();
+        
         Vector2 PiecePos = this->GetPosition();
+        
+        Cursor *cursor = mGame->GetCursor();
         cursor->Enable();
         cursor->SetPosition(PiecePos);
         this->Disable();
+
+        mGame->IsLevelComplete();
     }
 }
 

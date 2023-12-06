@@ -92,6 +92,7 @@ public:
     
     virtual SDL_Texture *LoadTexture(const std::string&TextureFile) const = 0;
     virtual void LoadLevel(const std::string&LevelFile) = 0;
+    virtual void LoadAnwser(const std::string&AnwserFile) = 0;
     
     virtual Cursor *GetCursor() const = 0;
     virtual const Table *GetBoard() const = 0;
@@ -100,6 +101,7 @@ public:
     
     virtual bool GetAction() const = 0;
     virtual bool IsOnBoard(const Vector2 &pos) const = 0;
+    virtual bool IsLevelComplete() const = 0;
 
 private:
     /* PRIVATE METHODS */

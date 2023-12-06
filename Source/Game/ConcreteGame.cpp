@@ -150,6 +150,12 @@ void ConcreteGame::LoadLevel(const std::string&LevelFile){
     parser::LoadTable(LevelFile, *mBoard, *mStash);
 }
 
+void ConcreteGame::LoadAnwser(const std::string&AnwserFile){
+
+
+
+}
+
 /* PRIVATE METHODS */
 void ConcreteGame::ProcessInput(){
 
@@ -204,9 +210,14 @@ void ConcreteGame::GenerateOutput(){
 }
 
 void ConcreteGame::InitActors(){
-    // Create actors here...
-    LoadLevel("../Assets/Level/example.csv");
+    LoadLevel("../Assets/Level/Start/example0.csv");
+    // LoadAnwser("../Assets/Level/End/example0.csv");
 }
+
+bool ConcreteGame::IsLevelComplete() const{
+    return false;
+}
+
 
 void ConcreteGame::UpdateActors(float DeltaTime){
     

@@ -24,6 +24,14 @@ void Table::AddPiece(Piece *piece){
     mPieces.emplace_back(piece); 
 }
 
+void Table::RemovePiece(Piece *piece){
+    auto it = std::find(mPieces.begin(), mPieces.end(), piece);
+    if(it != mPieces.end()){
+        std::iter_swap(it, mPieces.end() - 1);
+        mPieces.pop_back();
+    }
+}
+
 void Table::AddPeg(Peg *peg){
     mPegs.emplace_back(peg);
 }

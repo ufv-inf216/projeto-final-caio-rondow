@@ -32,6 +32,7 @@ public:
     /* Load methods */
     SDL_Texture *LoadTexture(const std::string&TextureFile) const override;
     void LoadLevel(const std::string&LevelFile) override;
+    void LoadAnwser(const std::string&AnwserFile) override;
     
     /* Game specific */
     inline Cursor *GetCursor() const override{
@@ -52,6 +53,7 @@ public:
     inline bool IsOnBoard(const Vector2 &pos) const override{
         return (pos.x < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
     }
+    bool IsLevelComplete() const override;
 
 private:
     /* PRIVATE METHODS */
@@ -81,4 +83,5 @@ private:
     Table *mStash;
     Cursor *mCursor;
     std::vector<Wall*> mWalls; /* this is the wall cells around the table */
+    std::vector<Vector2> mAnwser;
 };

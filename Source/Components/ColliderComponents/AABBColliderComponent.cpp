@@ -52,7 +52,7 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
             if(collider->GetLayer() == ColliderLayer::PIECE){
                 responses.emplace_back( &collider->GetOwner() );
                 break;
-            } 
+            }
             else if(collider->GetLayer() == ColliderLayer::PEG && !mIsHollow){
                 responses.emplace_back( &collider->GetOwner() );
                 break;
