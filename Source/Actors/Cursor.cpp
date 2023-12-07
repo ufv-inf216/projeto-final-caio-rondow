@@ -3,6 +3,7 @@
 #include "Wall.h"
 #include "../Components/DrawComponents/DrawAnimatedComponent.h"
 #include "../Components/DrawComponents/DrawPolygonComponent.h"
+#include "../Utils/AudioSystem.h"
 
 Cursor::Cursor(InterfaceGame *game, float x, float y, bool enable):
     Block(game, x, y, enable)
@@ -41,14 +42,22 @@ void Cursor::OnUpdate(float DeltaTime){
 void Cursor::OnProcessInput(const Uint8 *KeyState){
     if(!IsEnabled() || !mCanProcessInput)
         return;
-    if(KeyState[SDL_SCANCODE_W])
+    if(KeyState[SDL_SCANCODE_W]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::NegUnitY);
-    if(KeyState[SDL_SCANCODE_A])
+    }
+    if(KeyState[SDL_SCANCODE_A]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::NegUnitX);
-    if(KeyState[SDL_SCANCODE_S])
+    }
+    if(KeyState[SDL_SCANCODE_S]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::UnitY);
-    if(KeyState[SDL_SCANCODE_D])
+    }
+    if(KeyState[SDL_SCANCODE_D]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::UnitX);
+    }
     if(KeyState[SDL_SCANCODE_SPACE])
         GrabPiece();
 }
@@ -63,9 +72,11 @@ void Cursor::OnCollision(const std::vector<Actor*>&responses){
     
     Piece *piece = static_cast<Piece*>(responses[0]);
     piece->Enable();
+    
     /* put piece at upper layer */
     mGame->DrawLast(piece->GetComponent<DrawSpriteComponent>());
 
+    mGame->GetAudio()->PlaySound("SW_PUSH.WAV");
 }
 
 void Cursor::GrabPiece(){

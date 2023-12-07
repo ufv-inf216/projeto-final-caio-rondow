@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "../Game/InterfaceGame.h"
+#include <stack>
 
 class DrawSpriteComponent;
 class AABBColliderComponent;
@@ -21,6 +22,7 @@ public:
     void Rotate(float theta);
     void Place();
     void Flip();
+    void Cancel();
 
     void OnCollision(const std::vector<Actor*>&responses) override;
     void OnProcessInput(const Uint8 *KeyState) override;
@@ -64,7 +66,12 @@ private:
     /* Change collider based on rotation and flip */
     void RotateCounterClockWise(double& x, double& y, double cx, double cy, double theta);
     void RotateClockWise(double& x, double& y, double cx, double cy, double theta);
+    void UpdatePreviousState();
     
+    /* cancel operations */
+    Vector2 mPreviousPos;
+    std::stack<int> mUndoStack;
+
     /* Which board the piece is in it */
     PieceTable mCurrentTable;
 };

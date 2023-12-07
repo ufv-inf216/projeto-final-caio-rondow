@@ -68,6 +68,7 @@ const std::map<char, int> PieceToIndex = {
 };
 
 class DrawComponent;
+class AudioSystem;
 class Actor;
 class Table;
 class Cursor;
@@ -96,6 +97,8 @@ public:
     virtual SDL_Texture *LoadTexture(const std::string&TextureFile) const = 0;
     virtual void LoadLevel(const std::string&StartLevel, const std::string&EndLevel) = 0;
     
+    virtual AudioSystem* GetAudio() const = 0;
+
     virtual Cursor *GetCursor() const = 0;
     virtual Table *GetBoard() const = 0;
     virtual Table *GetStash() const = 0;

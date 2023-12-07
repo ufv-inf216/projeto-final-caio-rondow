@@ -1,4 +1,5 @@
 #include "../Utils/Parser.h"
+#include "../Utils/AudioSystem.h"
 #include "Piece.h"
 #include "Table.h"
 #include "Block.h"
@@ -29,6 +30,7 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
     }
     /* piece start position */
     this->SetPosition(Vector2(x,y));
+    this->UpdatePreviousState();
 }
 
 /* piece actions */
@@ -143,6 +145,10 @@ void Piece::Place(){
         cursor->GetComponent<DrawAnimatedComponent>()->SetComponentState(DRAWABLE_STATE_VISIBLE);
 
         this->Disable();
+        this->UpdatePreviousState();
+
+        std::string sound = rand()%2 <= 0.5 ? "SW_PUSH2.WAV" : "SW_PUSH3.WAV";  
+        mGame->GetAudio()->PlaySound(sound);
 
         /* update current board state */
         if(mGame->IsOnBoard(PiecePos)){
@@ -191,29 +197,68 @@ void Piece::Flip(){
     SetFlip(!mFlip);
 }
 
+void Piece::Cancel(){
+
+    while(!mUndoStack.empty()){
+        int move = mUndoStack.top();
+        mUndoStack.pop();
+
+        if(move == PIECE_ROTATION_ANGLE){
+            Rotate(-PIECE_ROTATION_ANGLE);
+        } else if(move == -PIECE_ROTATION_ANGLE){
+            Rotate(PIECE_ROTATION_ANGLE);
+        } else if(move == 1){
+            Flip();
+        }
+    }
+
+    SetPosition(mPreviousPos);
+    Place();
+}
+
 void Piece::OnCollision(const std::vector<Actor*>&responses){
     mCanPlace = responses.empty() ? true : false;
 }
 
 void Piece::OnProcessInput(const Uint8 *KeyState){
+
     if(!IsEnabled() || !mCanProcessInput)
         return;
-    if(KeyState[SDL_SCANCODE_W])
+
+    if(KeyState[SDL_SCANCODE_W]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::NegUnitY);
-    else if(KeyState[SDL_SCANCODE_A])
+    }
+    else if(KeyState[SDL_SCANCODE_A]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::NegUnitX);
-    else if(KeyState[SDL_SCANCODE_S])
+    }
+    else if(KeyState[SDL_SCANCODE_S]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::UnitY);
-    else if(KeyState[SDL_SCANCODE_D])
+    }
+    else if(KeyState[SDL_SCANCODE_D]){
+        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::UnitX);
-    else if(KeyState[SDL_SCANCODE_E])
+    }
+    else if(KeyState[SDL_SCANCODE_E]){
+        mUndoStack.push(PIECE_ROTATION_ANGLE);
         Rotate(PIECE_ROTATION_ANGLE);
-    else if(KeyState[SDL_SCANCODE_Q])
+    }
+    else if(KeyState[SDL_SCANCODE_Q]){
+        mUndoStack.push(-PIECE_ROTATION_ANGLE);
         Rotate(-PIECE_ROTATION_ANGLE);
-    else if(KeyState[SDL_SCANCODE_F])
+    }
+    else if(KeyState[SDL_SCANCODE_F]){
+        mUndoStack.push(1);
         Flip();
-    else if(KeyState[SDL_SCANCODE_SPACE])
+    }
+    else if(KeyState[SDL_SCANCODE_SPACE]){
+
         Place();
+    } else if(KeyState[SDL_SCANCODE_ESCAPE]){
+        Cancel();
+    }
 }
 
 void Piece::OnUpdate(float DeltaTime){
@@ -250,7 +295,8 @@ void Piece::Disable(){
     mIsEnabled = false; 
 }
 
-void Piece::Enable(){ 
+void Piece::Enable(){
+    UpdatePreviousState();
     mIsEnabled = true; 
 }
 
@@ -301,4 +347,11 @@ void Piece::RotateClockWise(double& x, double& y, double cx, double cy, double t
     int newY = x*(int)sin(radianTheta)+y*(int)cos(radianTheta);
     x = newX + cx;
     y = newY + cy;
+}
+
+void Piece::UpdatePreviousState(){
+    mPreviousPos = GetPosition();
+    /* remove every movement */
+    while(!mUndoStack.empty())
+        mUndoStack.pop();
 }

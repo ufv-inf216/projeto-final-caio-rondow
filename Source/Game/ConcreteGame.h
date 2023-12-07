@@ -34,6 +34,8 @@ public:
     SDL_Texture *LoadTexture(const std::string&TextureFile) const override;
     void LoadLevel(const std::string&StartLevel, const std::string&EndLevel) override;
     
+    AudioSystem* GetAudio() const{ return mAudio; }
+
     /* Game specific */
     inline Cursor *GetCursor() const override{
         return mCursor;
@@ -68,6 +70,8 @@ private:
     /* Game properties */
     SDL_Window *mWindow;
     SDL_Renderer *mRenderer;
+    AudioSystem *mAudio;
+
     uint mWindowWidth, mWindowHeight;
     bool mIsRunning, mUpdatingActors;
     bool mAction;

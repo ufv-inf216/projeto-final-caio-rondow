@@ -45,6 +45,9 @@ bool ConcreteGame::InitGame(){
         return false;
     }
 
+    mAudio = new AudioSystem();
+    // mAudio->PlaySound("SaveRoom.ogg", true);
+
     this->InitActors();
 
     return true;
@@ -191,6 +194,8 @@ void ConcreteGame::UpdateGame(){
     if(DeltaTime > 0.05f)
         DeltaTime = 0.05f;
     mTicksCount = SDL_GetTicks();
+
+    mAudio->Update(DeltaTime);
 
     UpdateActors(DeltaTime);
 }
