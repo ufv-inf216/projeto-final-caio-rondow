@@ -10,6 +10,7 @@ add_executable(
     Source/Main.cpp
     Source/Utils/Math.cpp
     Source/Utils/AudioSystem.cpp
+    Source/Utils/Random.cpp
     Source/Game/ConcreteGame.cpp
     
     Source/Actors/Cursor.cpp

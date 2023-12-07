@@ -104,7 +104,11 @@ void Actor::OnProcessInput(const Uint8 *KeyState){
 
 }
 
-void Actor::OnCollision(const std::vector<Actor*>& responses){
+void Actor::OnCollision(Actor *response){
+
+}
+
+bool Actor::DetectCollision(){
 
 }
 

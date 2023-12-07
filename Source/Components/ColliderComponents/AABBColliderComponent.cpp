@@ -39,7 +39,7 @@ bool AABBColliderComponent::Intersect(AABBColliderComponent *b) const{
 
 void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> &colliders){
     
-    std::vector<Actor*> responses;
+    Actor* responses = nullptr;
 
     // Check collision against each target collider
     for(auto other : colliders){
@@ -50,11 +50,11 @@ void AABBColliderComponent::DetectCollision(std::vector<AABBColliderComponent*> 
         if(Intersect(other)){
             
             if(other->GetLayer() == ColliderLayer::PIECE){
-                responses.emplace_back( &other->GetOwner() );
+                responses = &other->GetOwner();
                 break;
             }
             else if(other->GetLayer() == ColliderLayer::PEG && !mIsHollow){
-                responses.emplace_back( &other->GetOwner() );
+                responses = &other->GetOwner();
                 break;
             } 
             else if(other->GetLayer() == ColliderLayer::WALL){

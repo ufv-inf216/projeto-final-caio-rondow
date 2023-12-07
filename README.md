@@ -4,8 +4,8 @@
 
 ### SOUND
 
-- [ ] SFX
-- [ ] SOUNDTRACK
+- [x] SFX
+- [x] SOUNDTRACK
 
 ### USER INTERFACE (UI)
 

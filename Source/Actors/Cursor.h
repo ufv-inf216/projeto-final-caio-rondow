@@ -10,7 +10,7 @@ public:
 
     void OnUpdate(float DeltaTime) override;
     void OnProcessInput(const Uint8 *KeyState) override;
-    void OnCollision(const std::vector<Actor*>&responses) override;
+    void OnCollision(Actor *response) override;
 
 private:
     void GrabPiece();

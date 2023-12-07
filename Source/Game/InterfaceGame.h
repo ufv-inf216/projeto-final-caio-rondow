@@ -13,6 +13,8 @@
 
 #include "../Utils/Math.h"
 
+#define BLOCK_SIZE 32
+
 #define BOARD_WIDTH 8
 #define BOARD_HEIGHT 4
 #define BOARD_ORIGIN_X 128
@@ -22,8 +24,6 @@
 #define STASH_HEIGHT 8
 #define STASH_ORIGIN_X 512
 #define STASH_ORIGIN_Y BOARD_ORIGIN_Y
-
-#define BLOCK_SIZE 32
 
 #define PIECE_ROTATION_ANGLE 90.0f
 

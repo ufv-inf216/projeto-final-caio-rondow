@@ -33,7 +33,7 @@ public:
     void ProcessInput(const Uint8 *KeyState) override;
 
     bool Intersect(AABBColliderComponent *other) const;
-    void DetectCollision(std::vector<AABBColliderComponent*> &colliders);
+    void DetectCollision(std::vector<AABBColliderComponent*> &other);
     
     Vector2 GetMin() const;
     Vector2 GetMax() const;

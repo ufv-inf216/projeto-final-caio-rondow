@@ -43,40 +43,36 @@ void Cursor::OnProcessInput(const Uint8 *KeyState){
     if(!IsEnabled() || !mCanProcessInput)
         return;
     if(KeyState[SDL_SCANCODE_W]){
-        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::NegUnitY);
     }
     if(KeyState[SDL_SCANCODE_A]){
-        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::NegUnitX);
     }
     if(KeyState[SDL_SCANCODE_S]){
-        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::UnitY);
     }
     if(KeyState[SDL_SCANCODE_D]){
-        mGame->GetAudio()->PlaySound("SL_CLICK.WAV");
         Move(Vector2::UnitX);
     }
     if(KeyState[SDL_SCANCODE_SPACE])
         GrabPiece();
 }
 
-void Cursor::OnCollision(const std::vector<Actor*>&responses){
+void Cursor::OnCollision(Actor *response){
     
-    if(responses.empty())
+    if(response == nullptr)
         return;
     
     this->Disable();
     mDrawAnimComponent->SetComponentState(false);
     
-    Piece *piece = static_cast<Piece*>(responses[0]);
+    Piece *piece = static_cast<Piece*>(response);
     piece->Enable();
     
     /* put piece at upper layer */
     mGame->DrawLast(piece->GetComponent<DrawSpriteComponent>());
 
-    mGame->GetAudio()->PlaySound("SW_PUSH.WAV");
+    mGame->GetAudio()->PlaySound("Decide.wav");
 }
 
 void Cursor::GrabPiece(){

@@ -42,7 +42,16 @@ public:
 
     InterfaceGame *GetGame() const;
 
-    virtual void OnCollision(const std::vector<Actor*>&responses);
+    /*  
+        this function dictates which colliders are entering 
+        void DetectCollision(std::vector<AABBColliderComponent*> &other);
+        
+        returns true if found a collision
+    */
+    virtual bool DetectCollision();
+
+    /* Resolve specific collisions */
+    virtual void OnCollision(Actor *response);
 
     template <typename T>
     T* GetComponent() const{

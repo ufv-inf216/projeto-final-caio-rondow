@@ -4,6 +4,7 @@
 #include "../Actors/Cursor.h"
 #include "../Actors/Block.h"
 #include "../Utils/Parser.h"
+#include "../Utils/Random.h"
 
 /* PUBLIC METHODS */
 
@@ -45,8 +46,10 @@ bool ConcreteGame::InitGame(){
         return false;
     }
 
+    Random::Init();
+
     mAudio = new AudioSystem();
-    // mAudio->PlaySound("SaveRoom.ogg", true);
+    mAudio->PlaySound("SaveRoom.ogg", true);
 
     this->InitActors();
 
@@ -221,6 +224,16 @@ void ConcreteGame::InitActors(){
         "../Assets/Level/Start/example0.csv",
         "../Assets/Level/End/example0.csv"
     );
+}
+
+bool ConcreteGame::IsOnBoard(const Vector2 &pos) const{
+    return ( 
+        pos.x < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X && 
+        pos.x >= BOARD_ORIGIN_X &&
+        pos.y < BOARD_HEIGHT*BLOCK_SIZE + BOARD_ORIGIN_Y &&
+        pos.y >= BOARD_ORIGIN_Y
+    );
+            
 }
 
 bool ConcreteGame::IsLevelComplete() const{

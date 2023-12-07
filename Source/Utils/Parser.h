@@ -126,7 +126,6 @@ namespace parser{
                     board.AddPeg(peg);
                 } else{
                     piece = new Piece(board.GetGame(), x, y, type, rotation, flip);
-                    piece->SetPieceTable(PieceTable::BOARD);
                     board.AddPiece(piece);
                 }
 
@@ -135,7 +134,6 @@ namespace parser{
                 x = x*BLOCK_SIZE + STASH_ORIGIN_X;
                 y = y*BLOCK_SIZE + STASH_ORIGIN_Y;
                 piece = new Piece(stash.GetGame(), x, y, type, rotation, flip);
-                piece->SetPieceTable(PieceTable::STASH);
                 stash.AddPiece(piece);
             }
         }

@@ -52,9 +52,7 @@ public:
     inline bool GetAction() const override{
         return mAction;
     }
-    inline bool IsOnBoard(const Vector2 &pos) const override{
-        return (pos.x < BOARD_WIDTH*BLOCK_SIZE + BOARD_ORIGIN_X);
-    }
+    bool IsOnBoard(const Vector2 &pos) const override;
     bool IsLevelComplete() const override;
 
 private:
