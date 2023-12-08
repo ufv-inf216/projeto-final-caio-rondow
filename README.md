@@ -1,5 +1,9 @@
 # twisted-reality
 
+Twisted Reality é um desafiador jogo de quebra-cabeça projetado para estimular a mente do jogador. O objetivo central é habilmente posicionar todas as peças no tabuleiro principal, levando em consideração os pinos coloridos. As peças devem encaixar nos pinos correspondentes às suas cores; caso não haja pinos para todas as peças, isso indica que elas podem ser acomodadas em qualquer local. Utilize o tabuleiro auxiliar para organizar as peças que ainda não foram colocadas, adicionando uma camada estratégica ao desafio.
+
+Este jogo foi inspirado em dois outros títulos: IQ Twist, do qual herdou a ideia central do quebra-cabeça, e Resident Evil, incorporando o conceito de gerenciamento de itens no inventário. Em uma versão futura, planeja-se introduzir uma atmosfera de terror e uma narrativa envolvente. Os quebra-cabeças serão fundamentais para desvendar um mistério intrigante, acrescentando uma dimensão narrativa e emocional à experiência de jogo.
+
 ## To-Do list
 
 ### SOUND
