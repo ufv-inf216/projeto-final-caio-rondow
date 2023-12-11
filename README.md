@@ -4,6 +4,24 @@ Twisted Reality é um desafiador jogo de quebra-cabeça projetado para estimular
 
 Este jogo foi inspirado em dois outros títulos: IQ Twist, do qual herdou a ideia central do quebra-cabeça, e Resident Evil, incorporando o conceito de gerenciamento de itens no inventário. Em uma versão futura, planeja-se introduzir uma atmosfera de terror e uma narrativa envolvente. Os quebra-cabeças serão fundamentais para desvendar um mistério intrigante, acrescentando uma dimensão narrativa e emocional à experiência de jogo.
 
+## Playtest - v0.1.1
+
+### Funcionalidades para testar:
+
+* Movimentação do cursor (W,A,S,D)
+* Pegar uma peça (ESPAÇO)
+* Posicionar uma peça nos tabuleiros (ESPAÇO)
+* Movimentar uma peça pelos tabuleiros (W,A,S,D)
+* Transição entre tabuleiros - Board (tabuleiro principal) e Stash (tabuleiro auxiliar)
+* Rotacionar a peça (Q,E)
+* Inverter a peça (F)
+* Cancelar movimento (ESC)
+* Colisões:
+    * Com a parede (a peça não deve sair dos tabuleiros)
+    * Peça com Peça (não deve ser possível posicionar uma peça em cima de outra)
+    * Peça com Pino (Blocos sem furo no objeto da peça não podem ser posicionados em cima de pinos)
+* Fim de jogo (checar se a solução foi correta e o jogo finalizou)
+
 ## To-Do list
 
 ### SOUND
