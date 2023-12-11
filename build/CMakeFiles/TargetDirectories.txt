@@ -1,0 +1,3 @@
+/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles/twisted-reality.dir
+/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles/edit_cache.dir
+/home/oica/dev/sdl2-projects/projeto-final-caio-rondow/build/CMakeFiles/rebuild_cache.dir

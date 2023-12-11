@@ -35,6 +35,7 @@ Este jogo foi inspirado em dois outros títulos: IQ Twist, do qual herdou a idei
 - [ ] GUI*
 - [ ] Gameplay Submenu*
 - [ ] Scene change*
+- [ ] Preview of piece wireframe
 
 ### ART
 - [x] Add pieces sprites v1
@@ -43,7 +44,7 @@ Este jogo foi inspirado em dois outros títulos: IQ Twist, do qual herdou a idei
 - [x] Add pieces sprites v2
 - [x] Add block sprites v2
 - [x] Add pegs sprites v2
-- [ ] Add piece animation*
+- [ ] Add piece 3D animation*
 - [ ] Add level background
 
 ### GAMEPLAY
