@@ -2,6 +2,7 @@
 #include "Piece.h"
 #include "Block.h"
 #include "Peg.h"
+#include "../Components/DrawComponents/DrawSpriteComponent.h"
 
 Table::Table(InterfaceGame *game, const Vector2&origin, uint TableWidth, uint TableHeight):
     Actor(game),

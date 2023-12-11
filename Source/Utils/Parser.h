@@ -190,7 +190,7 @@ namespace parser{
         
         std::string PieceTexture = "../Assets/Sprite/Pieces/" + 
                                     std::string(1,piece->GetPieceType()) + ".png";
-        new DrawSpriteComponent(piece, PieceTexture, piece->GetWidth(), piece->GetHeight(), PIECE_DRAW_ORDER);
+        new DrawSpriteComponent(piece, PieceTexture, piece->GetWidth(), piece->GetHeight(), PIECE_DRAW_LAYER);
         
         for(int i=0; i<NumColliders; i++){
             

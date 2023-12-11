@@ -109,7 +109,7 @@ void Actor::OnCollision(Actor *response){
 }
 
 bool Actor::DetectCollision(){
-
+    return false; // standard is to ignore collisions
 }
 
 /* PRIVATE METHODS */

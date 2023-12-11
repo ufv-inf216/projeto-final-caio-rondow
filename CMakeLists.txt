@@ -20,6 +20,7 @@ add_executable(
     Source/Actors/Table.cpp
     Source/Actors/Wall.cpp
     Source/Actors/Peg.cpp
+    Source/Actors/Preview.cpp
 
     Source/Components/Component.cpp
     Source/Components/DrawComponents/DrawComponent.cpp
@@ -34,4 +35,5 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(/usr/include/freetype2)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)

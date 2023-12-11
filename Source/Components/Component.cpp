@@ -23,8 +23,12 @@ Actor &Component::GetOwner() const{
     return *mOwner;
 }
 
-void Component::SetComponentState(bool state){
-    mState = state;
+void Component::EnableComponent(){
+    mState = true;
+}
+
+void Component::DisableComponent(){
+    mState = false;
 }
 
 bool Component::IsComponentEnabled() const{

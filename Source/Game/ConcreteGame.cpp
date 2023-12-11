@@ -5,6 +5,7 @@
 #include "../Actors/Block.h"
 #include "../Utils/Parser.h"
 #include "../Utils/Random.h"
+#include "../Actors/Preview.h"
 
 /* PUBLIC METHODS */
 
@@ -18,7 +19,8 @@ ConcreteGame::ConcreteGame(uint WindowWidth, uint WindowHeight):
     mRenderer(nullptr),
     mUpdatingActors(false),
     mWindowWidth(WindowWidth),
-    mWindowHeight(WindowHeight)
+    mWindowHeight(WindowHeight),
+    mAudio(nullptr)
 {
 
 }
@@ -33,7 +35,7 @@ bool ConcreteGame::InitGame(){
     }
 
     /* Create window and renderer*/
-    mWindow = SDL_CreateWindow("Twisted Reality", 0, 0, GetWindowWidth(), GetWindowWidth(), 0);
+    mWindow = SDL_CreateWindow("Twisted Reality", 0, 0, GetWindowWidth(), GetWindowHeight(), 0);
     if(!mWindow){
         std::cerr << "In Bool ConcreteGame::InitGame()\n";
         SDL_Log("Could not initialize SDL window: %s", SDL_GetError());
@@ -68,6 +70,8 @@ void ConcreteGame::ShutDown(){
     while(!mActors.empty()){
         delete mActors.back();
     }
+    delete mAudio;
+    IMG_Quit();
     SDL_DestroyRenderer(mRenderer);
     SDL_DestroyWindow(mWindow);
     SDL_Quit();
@@ -129,7 +133,6 @@ void ConcreteGame::DrawLast(DrawComponent *drawable){
     }
 }
 
-
 /* Load methods */
 SDL_Texture *ConcreteGame::LoadTexture(const std::string&TextureFile) const{
     SDL_Surface *surface = IMG_Load(TextureFile.c_str());
@@ -158,6 +161,15 @@ void ConcreteGame::LoadLevel(const std::string&StartLevel, const std::string&End
     mBoard  = new Table(this, BoardOrigin, BOARD_WIDTH, BOARD_HEIGHT);
     mStash  = new Table(this, StashOrigin, STASH_WIDTH, STASH_HEIGHT);
     mCursor = new Cursor(this, BOARD_ORIGIN_X, BOARD_ORIGIN_Y, true);
+
+    Actor *background = new Actor(this);
+    new DrawSpriteComponent(
+        background, "../Assets/Sprite/Table/background.png", 
+        mWindowWidth, mWindowHeight, BACKGROUND_DRAW_LAYER
+    );
+
+    // Preview *prev = new Preview(this);
+    // prev->SetPosition(Vector2(BOARD_ORIGIN_X+BLOCK_SIZE/4,280));
 
     parser::RaiseWalls(this, mWalls);
     parser::LoadTable(StartLevel, *mBoard, *mStash);
@@ -205,7 +217,7 @@ void ConcreteGame::UpdateGame(){
 
 void ConcreteGame::GenerateOutput(){
     /* Set draw color */
-    SDL_SetRenderDrawColor(mRenderer, 0x0, 0x0, 0x0, 0xFF);
+    SDL_SetRenderDrawColor(mRenderer, 0xFF, 0x0, 0x0, 0xFF);
     /* Clear the current rendering */
     SDL_RenderClear(mRenderer);
 
@@ -233,7 +245,6 @@ bool ConcreteGame::IsOnBoard(const Vector2 &pos) const{
         pos.y < BOARD_HEIGHT*BLOCK_SIZE + BOARD_ORIGIN_Y &&
         pos.y >= BOARD_ORIGIN_Y
     );
-            
 }
 
 bool ConcreteGame::IsLevelComplete() const{

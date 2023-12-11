@@ -24,15 +24,19 @@ void DrawAnimatedComponent::Draw(SDL_Renderer *renderer){
 
     int SpriteIdx = mAnimations[mAnimName][(int)mAnimTimer];
 
+    Vector2 pos = mOwner->GetPosition();
+    float scale = mOwner->GetScale();
+    float angle = mOwner->GetRotation();
+    SDL_Point center = {BLOCK_SIZE/2, BLOCK_SIZE/2};
+
     if(SpriteIdx < mSpriteSheetData.size()){
 
-        Vector2 pos = mOwner->GetPosition();
-        
+
         SDL_Rect *clipRect = mSpriteSheetData[SpriteIdx];
         SDL_Rect renderQuad = {static_cast<int>(pos.x),
                                static_cast<int>(pos.y),
-                               clipRect->w,
-                               clipRect->h
+                               static_cast<int>(clipRect->w*scale),
+                               static_cast<int>(clipRect->h*scale)
                             };
 
         SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -44,7 +48,7 @@ void DrawAnimatedComponent::Draw(SDL_Renderer *renderer){
         //     flip = SDL_FLIP_HORIZONTAL;
         // }
 
-        SDL_RenderCopyEx(renderer, mSpriteSheetSurface, clipRect, &renderQuad, .0f, nullptr, flip);
+        SDL_RenderCopyEx(renderer, mSpriteSheetSurface, clipRect, &renderQuad, angle, &center, flip);
     }
 }
 

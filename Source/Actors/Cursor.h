@@ -2,7 +2,7 @@
 
 #include "Block.h"
 
-class DrawAnimatedComponent;
+class DrawSpriteComponent;
 
 class Cursor : public Block{
 public:
@@ -12,10 +12,11 @@ public:
     void OnProcessInput(const Uint8 *KeyState) override;
     void OnCollision(Actor *response) override;
 
+    const Piece *PieceSelected() const;
+
 private:
     void GrabPiece();
 
-    /* cursor components */
-    DrawAnimatedComponent *mDrawAnimComponent;
-    AABBColliderComponent *mAABBColliderComponent;
+    DrawSpriteComponent *mHighlight;
+    Piece *mOnHand; // current piece enabled
 };

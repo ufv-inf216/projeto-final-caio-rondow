@@ -6,33 +6,30 @@
 #include "../Utils/AudioSystem.h"
 
 Cursor::Cursor(InterfaceGame *game, float x, float y, bool enable):
-    Block(game, x, y, enable)
+    Block(game),
+    mOnHand(nullptr)
 {
-    std::string SpriteSheet = "../Assets/Sprite/Table/table.png";
-    std::string SpriteData  = "../Assets/Sprite/Table/table.json";
+    SetPosition(Vector2(x,y));
+    mIsEnabled = enable;
 
-    mDrawAnimComponent = new DrawAnimatedComponent(this, SpriteSheet, SpriteData, CURSOR_DRAW_ORDER);
-    mDrawAnimComponent->AddAnimation("idle", {0});
-    mDrawAnimComponent->AddAnimation("cursor", {1});
-    mDrawAnimComponent->SetAnimation("cursor");
-    mDrawAnimComponent->SetAnimationFPS(1);
+    std::string TextureFile = "../Assets/Sprite/Table/cursor.png";
+    mHighlight = new DrawSpriteComponent(this,TextureFile,BLOCK_SIZE,BLOCK_SIZE,CURSOR_DRAW_LAYER);
 
-    mAABBColliderComponent = new AABBColliderComponent(
+    AABBColliderComponent *collider = new AABBColliderComponent(
         this, Vector2(0,0), BLOCK_SIZE, BLOCK_SIZE, ColliderLayer::BLOCK,
         CURSOR_UPDATE_ORDER    
     );
+    mColliders.emplace_back(collider);
 }
 
 void Cursor::OnUpdate(float DeltaTime){
-    if(IsEnabled()){
+    if( IsEnabled() ){
+
         mCanProcessInput = !mGame->GetAction();
+        mOnHand = nullptr;
         
         /* check if is for walls */
-        std::vector<AABBColliderComponent*> colliders;
-        for(auto wall : mGame->GetWalls()){
-            colliders.push_back( wall->GetComponent<AABBColliderComponent>() );
-        }
-        mAABBColliderComponent->DetectCollision(colliders);
+        DetectWall();
         
     } else{
         mCanProcessInput = false;
@@ -62,17 +59,23 @@ void Cursor::OnCollision(Actor *response){
     
     if(response == nullptr)
         return;
-    
+
     this->Disable();
-    mDrawAnimComponent->SetComponentState(false);
+    mHighlight->DisableComponent();
     
     Piece *piece = static_cast<Piece*>(response);
     piece->Enable();
+    
+    mOnHand = piece;
     
     /* put piece at upper layer */
     mGame->DrawLast(piece->GetComponent<DrawSpriteComponent>());
 
     mGame->GetAudio()->PlaySound("Decide.wav");
+}
+
+const Piece *Cursor::PieceSelected() const{
+    return mOnHand;
 }
 
 void Cursor::GrabPiece(){

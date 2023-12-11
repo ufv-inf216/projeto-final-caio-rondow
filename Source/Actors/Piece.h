@@ -44,6 +44,7 @@ public:
     uint GetHeight() const;
     
 protected:
+    std::vector<AABBColliderComponent*> mColliders;
     bool mCanProcessInput;
     bool mIsEnabled;
     char mPieceType;
@@ -54,7 +55,6 @@ protected:
 private:
     /* piece components */
     std::vector<DrawPolygonComponent*> mDrawPolygons; /* DEBUG ONLY */
-    std::vector<AABBColliderComponent*> mColliders;
     DrawSpriteComponent *mDrawSpriteComponent;
     
     /* Change collider based on rotation and flip */

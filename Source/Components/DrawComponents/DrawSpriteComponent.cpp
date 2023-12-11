@@ -19,11 +19,12 @@ void DrawSpriteComponent::Draw(SDL_Renderer *renderer){
     Vector2 pos = mOwner->GetPosition();
     float angle = (int)mOwner->GetRotation()%360;
     bool IsFlipped = mOwner->GetFlip();
+    float scale = mOwner->GetScale();
 
     SDL_Point center = {BLOCK_SIZE/2, BLOCK_SIZE/2};
     SDL_Rect dstrect;
-    dstrect.w = mWidth;
-    dstrect.h = mHeight;
+    dstrect.w = (int)(mWidth*scale);
+    dstrect.h = (int)(mHeight*scale);
     dstrect.x = pos.x;
     dstrect.y = pos.y;
 

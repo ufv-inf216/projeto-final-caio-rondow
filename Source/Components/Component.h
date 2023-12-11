@@ -24,7 +24,8 @@ public:
     int GetUpdateOrder() const;
     Actor &GetOwner() const;
     /* Component state */
-    void SetComponentState(bool state);
+    void EnableComponent();
+    void DisableComponent();
     bool IsComponentEnabled() const;
 
 protected:

@@ -8,9 +8,6 @@
 #include "Cursor.h"
 #include "Peg.h"
 
-#define SFX_ROTATE 0
-#define SFX_PLACE 1
-
 Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotation, bool flip):
     Actor(game),
     mDrawSpriteComponent(nullptr),
@@ -24,8 +21,8 @@ Piece::Piece(InterfaceGame *game, float x, float y, char PieceType, float rotati
     /* Load Piece Components */
     if(PieceType != char()){ /* if not a block */
         parser::LoadPiece(this, mColliders, mDrawPolygons);
-        for(int i=0; i < abs(rotation); i+=PIECE_ROTATION_ANGLE){
-            this->Rotate(PIECE_ROTATION_ANGLE);
+        for(int i=0; i < abs(rotation); i+=PIECE_ROTATION_DEGREE){
+            this->Rotate(PIECE_ROTATION_DEGREE);
         }
         if(flip){
             this->Flip();
@@ -53,14 +50,14 @@ void Piece::Move(const Vector2&UnitVec){
 
     /* Move player */
     Vector2 NewPos = CurrPos + UnitVec*BLOCK_SIZE;
+    
     if( mGame->IsOnBoard(CurrPos) && IsMovingToStash(UnitVec, LeftCorner) ){
         NewPos = Vector2(STASH_ORIGIN_X, NewPos.y);
     } 
     else if( !mGame->IsOnBoard(CurrPos) && IsMovingToBoard(UnitVec, RightCorner) ){
-        NewPos = Vector2(
-            BOARD_ORIGIN_X+(BOARD_WIDTH-1)*BLOCK_SIZE,
-            (int)(NewPos.y)%(BOARD_HEIGHT*BLOCK_SIZE)+BOARD_ORIGIN_Y
-        );
+        int x = BOARD_ORIGIN_X+(BOARD_WIDTH-1)*BLOCK_SIZE;
+        int y = ((((int)NewPos.y - STASH_ORIGIN_Y) / BLOCK_SIZE) % BOARD_HEIGHT);
+        NewPos = Vector2(x,y*BLOCK_SIZE + BOARD_ORIGIN_Y);
     }  
 
     SetPosition(NewPos);
@@ -105,7 +102,7 @@ void Piece::Place(){
     Cursor *cursor = mGame->GetCursor();
     cursor->Enable();
     cursor->SetPosition(CurrPos);
-    cursor->GetComponent<DrawAnimatedComponent>()->SetComponentState(true);
+    cursor->GetComponent<DrawSpriteComponent>()->EnableComponent();
 
     this->Disable();
     this->UpdatePreviousState();
@@ -116,7 +113,8 @@ void Piece::Place(){
         mGame->GetStash()->RemovePiece(this);
         mGame->GetBoard()->AddPiece(this);
 
-        /* END GAME IF LEVEL IS COMPLETED */
+        /* When placing on board, test and
+        end game if the leve is completed */
         if( mGame->IsLevelComplete() ){
             mGame->Quit();
         }
@@ -178,10 +176,10 @@ void Piece::Cancel(){
         int move = mUndoStack.top();
         mUndoStack.pop();
 
-        if(move == PIECE_ROTATION_ANGLE){
-            Rotate(-PIECE_ROTATION_ANGLE);
-        } else if(move == -PIECE_ROTATION_ANGLE){
-            Rotate(PIECE_ROTATION_ANGLE);
+        if(move == PIECE_ROTATION_DEGREE){
+            Rotate(-PIECE_ROTATION_DEGREE);
+        } else if(move == -PIECE_ROTATION_DEGREE){
+            Rotate(PIECE_ROTATION_DEGREE);
         } else if(move == 1){
             Flip();
         }
@@ -214,13 +212,13 @@ void Piece::OnProcessInput(const Uint8 *KeyState){
     }
     else if(KeyState[SDL_SCANCODE_E]){
         mGame->GetAudio()->PlaySound("Rotate.wav");
-        mUndoStack.push(PIECE_ROTATION_ANGLE);
-        Rotate(PIECE_ROTATION_ANGLE);
+        mUndoStack.push(PIECE_ROTATION_DEGREE);
+        Rotate(PIECE_ROTATION_DEGREE);
     }
     else if(KeyState[SDL_SCANCODE_Q]){
         mGame->GetAudio()->PlaySound("Rotate.wav");
-        mUndoStack.push(-PIECE_ROTATION_ANGLE);
-        Rotate(-PIECE_ROTATION_ANGLE);
+        mUndoStack.push(-PIECE_ROTATION_DEGREE);
+        Rotate(-PIECE_ROTATION_DEGREE);
     }
     else if(KeyState[SDL_SCANCODE_F]){
         mGame->GetAudio()->PlaySound("Flip.wav");
@@ -242,20 +240,22 @@ void Piece::OnProcessInput(const Uint8 *KeyState){
 
 void Piece::OnUpdate(float DeltaTime){
     if( this->IsEnabled() ){
+        mScale = 1.0625;
         mCanProcessInput = !mGame->GetAction();
         this->DetectWall();
     } else{
+        mScale = 1.0f;
         mCanProcessInput = false;
     }
 }
 
 void Piece::DetectWall(){
-    std::vector<AABBColliderComponent*> other;
+    std::vector<AABBColliderComponent*> others;
     for(Wall *wall : mGame->GetWalls()){
-        other.push_back( wall->GetComponent<AABBColliderComponent>() );
+        others.push_back( wall->GetComponent<AABBColliderComponent>() );
     }
     for(AABBColliderComponent *collider : mColliders)
-        collider->DetectCollision(other);
+        collider->DetectCollision(others);
 }
 
 bool Piece::DetectCollision(){
