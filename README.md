@@ -1,12 +1,22 @@
-# twisted-reality
+# Twisted Reality
 
-Twisted Reality é um desafiador jogo de quebra-cabeça projetado para estimular a mente do jogador. O objetivo central é habilmente posicionar todas as peças no tabuleiro principal, levando em consideração os pinos coloridos. As peças devem encaixar nos pinos correspondentes às suas cores; caso não haja pinos para todas as peças, isso indica que elas podem ser acomodadas em qualquer local. Utilize o tabuleiro auxiliar para organizar as peças que ainda não foram colocadas, adicionando uma camada estratégica ao desafio.
+Um jogo criado para a diciplina INF216 - Projeto e Implementação de Jogos Digitais - no 2º semestre de 2023.
 
-Este jogo foi inspirado em dois outros títulos: IQ Twist, do qual herdou a ideia central do quebra-cabeça, e Resident Evil, incorporando o conceito de gerenciamento de itens no inventário. Em uma versão futura, planeja-se introduzir uma atmosfera de terror e uma narrativa envolvente. Os quebra-cabeças serão fundamentais para desvendar um mistério intrigante, acrescentando uma dimensão narrativa e emocional à experiência de jogo.
+Twisted Reality é um desafiador jogo de quebra-cabeça projetado para estimular a mente do jogador.
 
-## Playtest - v0.1.0
+- Criadores: Caio Von Rondow e Olavo Barros
+  
+## Imagens:
 
-### Funcionalidades para testar:
+## Inteção artistica:
+
+Este jogo foi inspirado em dois outros títulos: IQ Twist, do qual herdou a ideia central do quebra-cabeça, e Resident Evil, incorporando o conceito de gerenciamento de itens no inventário. O público alvo para este jogo são pessoas que gostam de jogos de desafio e puzzle!
+
+## Objetivo e regras
+
+ O objetivo central é habilmente posicionar todas as peças no tabuleiro principal, levando em consideração os pinos coloridos. As peças devem encaixar nos pinos correspondentes às suas cores; caso não haja pinos para todas as peças, isso indica que elas podem ser acomodadas em qualquer local. Utilize o tabuleiro auxiliar ( que está na vertical ) para organizar as peças que ainda não foram colocadas, adicionando uma camada estratégica ao desafio.
+
+## Funcionalidades:
 
 * Movimentação do cursor (W,A,S,D)
 * Pegar uma peça (ESPAÇO)
