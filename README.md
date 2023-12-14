@@ -5,6 +5,10 @@ Um jogo criado para a diciplina INF216 - Projeto e Implementação de Jogos Digi
 Twisted Reality é um desafiador jogo de quebra-cabeça projetado para estimular a mente do jogador.
 
 - Criadores: Caio Von Rondow e Olavo Barros
+
+## Link para a apresentação
+
+[Apresentação](https://docs.google.com/presentation/d/1fmGE9jr8PWUruS0roXJoZBWOdH2lN9Ad1rKBehh2KpA/edit?usp=sharing)
   
 ## Imagens:
 
